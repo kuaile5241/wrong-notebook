@@ -16,8 +16,18 @@ const SETUP_ADMIN_EMAIL = 'setup-admin@localhost';
 // 与 src/lib/config.ts 一致
 const CONFIG_FILE_PATH = path.join(process.env.CONFIG_DIR || path.join(process.cwd(), 'config'), 'app-config.json');
 
+// 直接读取并处理不存在的情况，避免先判断再读写之间文件被替换
+function readConfig() {
+    try {
+        return JSON.parse(fs.readFileSync(CONFIG_FILE_PATH, 'utf8'));
+    } catch (error) {
+        if (error.code === 'ENOENT') return {};
+        throw error;
+    }
+}
+
 function markSetupCompleted() {
-    const config = fs.existsSync(CONFIG_FILE_PATH) ? JSON.parse(fs.readFileSync(CONFIG_FILE_PATH, 'utf8')) : {};
+    const config = readConfig();
     if (config.setupCompletedAt) return;
     fs.mkdirSync(path.dirname(CONFIG_FILE_PATH), { recursive: true });
     fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify({ ...config, setupCompletedAt: new Date().toISOString() }, null, 2));
