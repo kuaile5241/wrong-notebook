@@ -18,6 +18,6 @@
 
 ## 独立容器更新
 
-`packaging/Dockerfile.family` 可从已验证的运行镜像构建本仓库源码；通过 `RUNTIME_IMAGE` 传入固定 digest，设置 `APP_REVISION` 与 `APP_VERSION`。构建阶段执行 lint、全量 Vitest、数据库初始化及生产构建，数据库只用于生成干净的新安装模板。
+`packaging/Dockerfile.family` 可从已验证的运行镜像构建本仓库源码；通过 `RUNTIME_IMAGE` 传入固定 digest，设置 `FAMILY_REVISION` 与 `FAMILY_VERSION`。构建阶段执行 lint、全量 Vitest、数据库初始化及生产构建，数据库只用于生成干净的新安装模板。
 
 部署前使用 SQLite backup API 一致性备份真实数据库，保存设置、环境和 Compose；只替换本应用镜像，原数据挂载、端口和资源限制保留。新应用使用 `PRESERVE_EXISTING_DATA=true`，仅增量迁移。失败时恢复原 Compose 与对应的一致性备份。不得重启其他网站或 Docker 守护进程。

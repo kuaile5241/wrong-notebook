@@ -20,12 +20,12 @@ RUN npx --no-install prisma generate \
 FROM ${RUNTIME_IMAGE} AS runner
 USER root
 WORKDIR /app
-ARG APP_REVISION=unknown
-ARG APP_VERSION=2026.10.29-1
-ENV APP_REVISION=${APP_REVISION} APP_VERSION=${APP_VERSION} NODE_ENV=production PRESERVE_EXISTING_DATA=true
+ARG FAMILY_REVISION=unknown
+ARG FAMILY_VERSION=2026.10.29-1
+ENV APP_REVISION=${FAMILY_REVISION} APP_VERSION=${FAMILY_VERSION} NODE_ENV=production PRESERVE_EXISTING_DATA=true
 LABEL org.opencontainers.image.source="https://github.com/kuaile5241/wrong-notebook" \
-      org.opencontainers.image.revision="${APP_REVISION}" \
-      org.opencontainers.image.version="${APP_VERSION}"
+      org.opencontainers.image.revision="${FAMILY_REVISION}" \
+      org.opencontainers.image.version="${FAMILY_VERSION}"
 # 只清理新镜像层中的旧程序文件，不接触宿主机挂载的数据和设置。
 RUN rm -rf .next public prisma dist-scripts node_modules
 COPY --from=builder --chown=nextjs:nodejs /build/.next/standalone ./
