@@ -14,6 +14,8 @@ An AI-powered notebook for the questions you got wrong. Snap a photo or type a q
 
 📝 **Articles**: [Stop Copying Mistakes. Start Learning from Them](https://blog.margrop.net/en/post/wrong-notebook-ai-family-learning/) · [Free MiniMax Accounts, fnOS, and Daily Review](https://blog.margrop.net/en/post/wrong-notebook-minimax-free-ai-review/)
 
+💬 **QQ user group**: `964325781` (mainly Chinese). See [Community](#-community) for the QR code.
+
 🚀 **Live demo**: <https://wrong-notebook-demo.vercel.app> (account `demo@localhost`, password `demo123456`)
 
 > The demo uses a shared account and its data is visible to every visitor. Do not enter personal information.
@@ -502,6 +504,12 @@ The `scripts/` directory contains maintenance and debugging scripts, for example
 - **Recreate the admin**: `node scripts/seed-admin.js` (default `admin@localhost` / `123456`)
 - **Rebuild system knowledge points**: `npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/rebuild-system-tags.ts` (keeps custom tags and question links; back up before running in production)
 - **Inspect the database**: `node scripts/check-db-users.js`, `node scripts/check-db-data.js`
+
+## 💬 Community
+
+To ask questions, share how you use the app or suggest ideas, join the QQ group **964325781** (conversations are mainly in Chinese), or scan the QR code below with QQ. Please still report bugs and feature requests in [Issues](https://github.com/margrop/wrong-notebook/issues) so they can be tracked. Before posting screenshots, hide your child's name, school, account details and server addresses.
+
+<img src="doc/images/qq-group.webp" alt="QR code for the wrong-notebook QQ user group, group number 964325781" width="240">
 
 ## 🤝 Contributing
 

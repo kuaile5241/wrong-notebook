@@ -14,6 +14,8 @@
 
 📝 **介绍文章**：[别让错题本变成抄题本：我给孩子用的 AI 错题本开源了](https://blog.margrop.net/post/wrong-notebook-ai-family-learning/) · [不用先配 API Key：接上 MiniMax 免费账号](https://blog.margrop.net/post/wrong-notebook-minimax-free-ai-review/)
 
+💬 **用户交流 QQ 群**：`964325781`，扫码加入见[用户交流群](#-用户交流群)。
+
 🚀 **在线演示**：<https://wrong-notebook-demo.vercel.app>（账号 `demo@localhost`，密码 `demo123456`）
 
 > 演示站点为共享账号，数据对所有访客可见，请勿录入个人信息。
@@ -500,6 +502,12 @@ bash scripts/ci.sh          # 完整 CI（Node.js 22+、Python 3，含生产构�
 - **重建管理员**：`node scripts/seed-admin.js`（默认 `admin@localhost` / `123456`）
 - **重建系统知识点**：`npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/rebuild-system-tags.ts`（保留自定义标签和题目关联；生产环境操作前请先备份）
 - **检查数据库**：`node scripts/check-db-users.js`、`node scripts/check-db-data.js`
+
+## 💬 用户交流群
+
+使用中遇到问题、想分享用法或提建议，欢迎加入 QQ 群 **964325781**，或用 QQ 扫描下方二维码。Bug 和功能需求仍建议提交到 [Issues](https://github.com/margrop/wrong-notebook/issues)，方便跟踪处理；在群里发截图前请隐去孩子姓名、学校、账号和访问地址。
+
+<img src="doc/images/qq-group.webp" alt="智能错题本用户交流 QQ 群二维码，群号 964325781" width="240">
 
 ## 🤝 参与贡献
 

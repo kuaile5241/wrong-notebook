@@ -13,6 +13,10 @@ Search the [issues](https://github.com/margrop/wrong-notebook/issues) first, the
 
 不要在公开内容中附上 API Key、密码、会话信息或完整数据库。Never post API keys, passwords, session data or a full database publicly.
 
+## 用户交流群 / Community chat
+
+QQ 群 **964325781**（[二维码](doc/images/qq-group.webp)），适合交流用法和简单提问；Bug 与功能需求请提交 Issue。QQ group **964325781** ([QR code](doc/images/qq-group.webp), mainly Chinese) for usage tips and quick questions; please file bugs and feature requests as issues.
+
 ## 安全问题 / Security
 
 安全漏洞请按 [SECURITY.md](SECURITY.md) 私下报告，不要公开提交。Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
