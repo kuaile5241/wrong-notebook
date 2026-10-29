@@ -21,7 +21,7 @@
     <string name="file_saved">Saved</string>
     <string name="file_save_failed">Failed to save file</string>
     <string name="no_app_for_action">No app can handle this action</string>
-    <string name="app_name_client">Wrong Notebook Client</string>
+    <string name="app_name_client">Rainbow Notebook</string>
     <string name="error_local_title">Wrong Notebook failed to start</string>
     <string name="starting_unpack">Preparing for first launch or update…</string>
     <string name="starting_server">Starting Wrong Notebook…</string>

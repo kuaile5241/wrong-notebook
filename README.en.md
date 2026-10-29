@@ -1,3 +1,5 @@
+> This colorful learning edition is maintained at [kuaile5241/wrong-notebook](https://github.com/kuaile5241/wrong-notebook). Upstream MIT notices are preserved. See [Family edition](doc/FAMILY_EDITION.en.md) for the interface and online Android client.
+
 <p align="center">
   <img src="public/icons/icon.png" width="128" height="128" alt="Smart Wrong Notebook app icon">
 </p>

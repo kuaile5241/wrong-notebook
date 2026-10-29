@@ -21,7 +21,7 @@
     <string name="file_saved">已保存</string>
     <string name="file_save_failed">保存文件失败</string>
     <string name="no_app_for_action">没有可以处理此操作的应用</string>
-    <string name="app_name_client">错题本客户端</string>
+    <string name="app_name_client">彩虹错题本</string>
     <string name="error_local_title">错题本启动失败</string>
     <string name="starting_unpack">首次启动或升级后正在准备，请稍候…</string>
     <string name="starting_server">正在启动错题本…</string>

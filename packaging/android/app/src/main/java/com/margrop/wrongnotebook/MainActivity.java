@@ -158,6 +158,8 @@ public class MainActivity extends Activity {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
+        // HTML 始终从线上获取，网页发布后下次打开即生效，保留登录与草稿存储。
+        if (!BuildConfig.STANDALONE) settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setAllowFileAccess(false);
         // 网页可据此识别安卓客户端，显示「更换服务器」等入口
         settings.setUserAgentString(settings.getUserAgentString()

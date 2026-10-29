@@ -13,7 +13,8 @@ final class ServerConfig {
     }
 
     static String get(Context context) {
-        return prefs(context).getString(KEY_URL, null);
+        String saved = prefs(context).getString(KEY_URL, null);
+        return saved != null ? saved : normalize(BuildConfig.DEFAULT_SERVER_URL);
     }
 
     static void set(Context context, String url) {

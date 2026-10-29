@@ -15,15 +15,17 @@ def standaloneRuntimeDir = file(project.findProperty('standaloneRuntimeDir') ?: 
 
 android {
     namespace 'com.margrop.wrongnotebook'
-    compileSdk 35
-    buildToolsVersion '35.0.0'
+    compileSdk ((project.findProperty('androidCompileSdk') ?: '35') as Integer)
+    buildToolsVersion (project.findProperty('androidBuildTools') ?: '35.0.0')
 
     defaultConfig {
-        applicationId 'com.margrop.wrongnotebook'
+        applicationId 'com.kuaile5241.wrongnotebook'
         minSdk 24
         targetSdk 35
         versionCode appVersionCode
         versionName appVersionName
+        // 在线客户端默认地址可在构建时覆盖；不打包账号或密钥。
+        buildConfigField 'String', 'DEFAULT_SERVER_URL', groovy.json.JsonOutput.toJson(project.findProperty('clientServerUrl') ?: 'http://115.159.150.79:3008')
     }
 
     signingConfigs {

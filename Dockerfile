@@ -57,7 +57,7 @@ ARG APP_VERSION=
 ENV APP_VERSION=${APP_VERSION}
 # Existing installations keep their accounts and tag IDs during deployment.
 ENV PRESERVE_EXISTING_DATA=true
-LABEL org.opencontainers.image.source="https://github.com/margrop/wrong-notebook" \
+LABEL org.opencontainers.image.source="https://github.com/kuaile5241/wrong-notebook" \
       org.opencontainers.image.revision="${APP_REVISION}" \
       org.opencontainers.image.version="${APP_VERSION}"
 

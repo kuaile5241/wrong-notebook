@@ -77,3 +77,12 @@ __pycache__/
 
 # 安装包构建产物
 /dist/
+
+# 安卓本地构建与签名材料
+/packaging/android/.gradle/
+/packaging/android/build/
+/packaging/android/app/build/
+/packaging/android/local.properties
+*.jks
+*.keystore
+*.dpapi

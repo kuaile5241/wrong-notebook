@@ -1,3 +1,5 @@
+> 本仓库为孩子使用的彩色学习版本，后续修复统一提交到 [kuaile5241/wrong-notebook](https://github.com/kuaile5241/wrong-notebook)。保留原项目 MIT 许可和作者署名。彩色界面及安卓在线更新说明见 [家庭学习版](doc/FAMILY_EDITION.md)。
+
 <p align="center">
   <img src="public/icons/icon.png" width="128" height="128" alt="智能错题本应用图标">
 </p>
