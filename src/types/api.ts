@@ -228,6 +228,10 @@ export interface TagSuggestionsResponse {
 }
 
 export interface AdminUser extends UserProfile {
+    accessExpiresAt?: string | null;
+    canUseAi?: boolean;
+    canImportExport?: boolean;
+    accessStatus?: "active" | "expired" | "disabled" | "missing";
     createdAt: string;
     _count: {
         errorItems: number;

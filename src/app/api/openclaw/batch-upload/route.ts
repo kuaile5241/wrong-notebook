@@ -1,3 +1,4 @@
+import { accountAccessStatus, requestPermission } from "@/lib/account-access";
 import { NextResponse } from "next/server";
 import { compare } from "bcryptjs";
 import { prisma } from "@/lib/prisma";
@@ -362,6 +363,10 @@ export async function POST(req: Request) {
             );
         }
 
+        const accountStatus = accountAccessStatus(dbUser);
+        if (accountStatus !== "active" || !requestPermission(dbUser, "/api/openclaw/batch-upload", "POST")) {
+            return createErrorResponse("账号已到期、停用或没有 AI 使用权限，请联系管理员。", 403, ErrorCode.FORBIDDEN);
+        }
         const timeout = parseInt(process.env.OPENCLAW_TIMEOUT || '30000', 10);
         const singleImageTimeout = Math.min(3000, timeout / images.length);
         const results: Array<{

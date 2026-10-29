@@ -7,6 +7,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 // Use vi.hoisted to ensure mocks are initialized before module imports
 const mocks = vi.hoisted(() => ({
     mockPrismaUser: {
+        count: vi.fn().mockResolvedValue(1),
         findMany: vi.fn(),
         findUnique: vi.fn(),
         update: vi.fn(),
@@ -27,6 +28,7 @@ const mocks = vi.hoisted(() => ({
 vi.mock('@/lib/prisma', () => ({
     prisma: {
         user: mocks.mockPrismaUser,
+        $transaction: vi.fn(async (callback: (client: { user: typeof mocks.mockPrismaUser }) => unknown) => callback({ user: mocks.mockPrismaUser })),
         aiUsage: mocks.mockAiUsage,
     },
 }));
@@ -164,7 +166,7 @@ describe('/api/admin/users', () => {
 
             expect(response.status).toBe(400);
             const data = await response.json();
-            expect(data.message).toBe('Cannot disable your own account');
+            expect(data.message).toBe('Cannot change your own account access');
         });
 
         it('应该阻止禁用超级管理员', async () => {
@@ -190,7 +192,7 @@ describe('/api/admin/users', () => {
 
             expect(response.status).toBe(400);
             const data = await response.json();
-            expect(data.message).toBe('Cannot disable super admin');
+            expect(data.message).toBe('Cannot change super admin access');
         });
 
         it('应该拒绝非管理员访问', async () => {
@@ -301,5 +303,40 @@ describe('/api/admin/users', () => {
 
             expect(response.status).toBe(403);
         });
+    });
+});
+
+
+describe('账号期限与权限更新', () => {
+    beforeEach(() => {
+        vi.clearAllMocks(); vi.mocked(getServerSession).mockResolvedValue(mocks.mockSession);
+        mocks.mockPrismaUser.findUnique.mockResolvedValue({ id: 'child', role: 'user', email: 'child@example.com' });
+        mocks.mockPrismaUser.count.mockResolvedValue(1);
+        mocks.mockPrismaUser.update.mockResolvedValue({ id: 'child' });
+    });
+    const context = { params: Promise.resolve({ id: 'child' }) };
+    const update = (body: object) => PATCH(new Request('http://localhost/api/admin/users/child', { method: 'PATCH', body: JSON.stringify(body) }), context);
+    it('管理员可以设置、延长和清除使用期限', async () => {
+        const date = '2030-01-01T12:30:00+08:00';
+        expect((await update({ accessExpiresAt: date, canUseAi: false, canImportExport: false })).status).toBe(200);
+        expect(mocks.mockPrismaUser.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ accessExpiresAt: new Date(date), canUseAi: false, canImportExport: false }) }));
+        expect((await update({ accessExpiresAt: null })).status).toBe(200);
+        expect(mocks.mockPrismaUser.update).toHaveBeenLastCalledWith(expect.objectContaining({ data: expect.objectContaining({ accessExpiresAt: null }) }));
+    });
+    it.each([{ role: 'owner' }, { accessExpiresAt: 'bad-date' }, { canUseAi: 'yes' }, { isActive: 1 }, { password: 'secret' }, {}])('拒绝不合法的权限或时间%j', async body => {
+        expect((await update(body)).status).toBe(400); expect(mocks.mockPrismaUser.update).not.toHaveBeenCalled();
+    });
+    it('升级管理员清除期限，返回数据不请求密码字段', async () => {
+        expect((await update({ role: 'admin', accessExpiresAt: '2030-01-01T00:00:00Z' })).status).toBe(200);
+        const options = mocks.mockPrismaUser.update.mock.calls[0][0];
+        expect(options.data.accessExpiresAt).toBeNull(); expect(options.select.password).toBeUndefined();
+    });
+    it('不能移除最后一个启用的管理员', async () => {
+        mocks.mockPrismaUser.findUnique.mockResolvedValue({ id: 'child', role: 'admin', email: 'other@example.com' }); mocks.mockPrismaUser.count.mockResolvedValue(0);
+        expect((await update({ role: 'user' })).status).toBe(400); expect(mocks.mockPrismaUser.update).not.toHaveBeenCalled();
+    });
+    it('普通用户不能自行续期', async () => {
+        vi.mocked(getServerSession).mockResolvedValue({ ...mocks.mockSession, user: { id: 'child', email: 'child@example.com', role: 'user' } });
+        expect((await update({ accessExpiresAt: null })).status).toBe(403); expect(mocks.mockPrismaUser.update).not.toHaveBeenCalled();
     });
 });

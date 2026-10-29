@@ -13,7 +13,7 @@ import { useSetupRedirect } from "@/lib/use-setup-redirect";
 import { cn } from "@/lib/utils";
 
 /** 登录、注册与打印页不显示导航 */
-const BARE_PATHS = [/^\/login/, /^\/register/, /^\/setup/, /^\/print-preview/, /^\/exams\/[^/]+\/print/];
+const BARE_PATHS = [/^\/access-denied/, /^\/login/, /^\/register/, /^\/setup/, /^\/print-preview/, /^\/exams\/[^/]+\/print/];
 
 type NavKey = "home" | "notebooks" | "review" | "stats" | "exams";
 

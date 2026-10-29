@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { accountAccessStatus } from "@/lib/account-access"
 import { requireAdmin } from "@/lib/auth-utils"
 import { forbidden, internalError } from "@/lib/api-errors"
 import { createLogger } from "@/lib/logger"
@@ -28,6 +29,9 @@ export async function GET() {
                 email: true,
                 role: true,
                 isActive: true,
+                accessExpiresAt: true,
+                canUseAi: true,
+                canImportExport: true,
                 createdAt: true,
                 _count: {
                     select: {
@@ -47,7 +51,7 @@ export async function GET() {
         })
         const usageByUser = new Map(usage.map((entry) => [entry.userId, entry._count._all]))
 
-        return NextResponse.json(users.map((user) => ({ ...user, aiUsageToday: usageByUser.get(user.id) ?? 0 })))
+        return NextResponse.json(users.map((user) => ({ ...user, accessStatus: accountAccessStatus(user), aiUsageToday: usageByUser.get(user.id) ?? 0 })))
     } catch (error) {
         logger.error({ error }, 'Error fetching users');
         return internalError("Failed to fetch users")

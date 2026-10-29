@@ -1,82 +1,49 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
+import { accountAccessStatus, requestPermission } from "@/lib/account-access";
 import { createLogger } from "@/lib/logger";
+import { prisma } from "@/lib/prisma";
 
-const logger = createLogger('middleware');
+const logger = createLogger("middleware");
+const PUBLIC_API = /^\/api\/(auth(?:\/|$)|register(?:\/status)?$|health$|version$)/;
 
 export async function middleware(req: NextRequest) {
-    // Debug logging for middleware
-    logger.debug({ method: req.method, path: req.nextUrl.pathname }, 'Processing request');
-
+    const path = req.nextUrl.pathname;
+    const api = path.startsWith("/api/");
+    if (PUBLIC_API.test(path) || path === "/access-denied") return null;
     try {
-        const token = await getToken({
-            req,
-            secret: process.env.NEXTAUTH_SECRET,
-            cookieName: "next-auth.session-token", // Explicitly look for the standardized cookie
-        });
-
-        const isAuth = !!token;
-        const isAuthPage = req.nextUrl.pathname.startsWith("/login") || req.nextUrl.pathname.startsWith("/register");
-        const isAdminPage = req.nextUrl.pathname.startsWith("/admin");
-
-        logger.debug({
-            path: req.nextUrl.pathname,
-            isAuth,
-            isAuthPage,
-            hasToken: !!token,
-            cookies: req.cookies.getAll().map(c => c.name)
-        }, 'Auth status');
-
-        if (isAuthPage) {
-            if (isAuth) {
-                logger.debug('Redirecting authenticated user to /');
-                return NextResponse.redirect(new URL("/", req.url));
-            }
-            return null;
+        const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET, cookieName: "next-auth.session-token" });
+        const authPage = path === "/login" || path === "/register";
+        if (!token) {
+            if (authPage || api) return null; // API 继续执行各自认证，兼容集成接口的 API Key 模式。
+            return NextResponse.redirect(new URL(`/login?callbackUrl=${encodeURIComponent(path + req.nextUrl.search)}`, req.url));
         }
-
-        if (!isAuth) {
-            let from = req.nextUrl.pathname;
-            if (req.nextUrl.search) {
-                from += req.nextUrl.search;
-            }
-
-            logger.debug({ callbackUrl: from }, 'Redirecting unauthenticated user to login');
-            return NextResponse.redirect(
-                new URL(`/login?callbackUrl=${encodeURIComponent(from)}`, req.url)
-            );
+        const id = token.id || token.sub;
+        const user = id ? await prisma.user.findUnique({
+            where: { id },
+            select: { id: true, role: true, isActive: true, accessExpiresAt: true, canUseAi: true, canImportExport: true },
+        }) : null;
+        const status = accountAccessStatus(user);
+        if (status !== "active") {
+            if (authPage) return null;
+            if (api) return NextResponse.json({ message: status === "expired" ? "账号使用时间已到期，请联系管理员续期。" : "账号已停用或不存在，请联系管理员。", code: `ACCOUNT_${status.toUpperCase()}` }, { status: 403, headers: { "Cache-Control": "no-store" } });
+            return NextResponse.redirect(new URL(`/access-denied?reason=${status}`, req.url));
         }
-
-        // 管理员仍使用默认密码时，所有页面都先跳到安装向导改密码
-        const isSetupPage = req.nextUrl.pathname.startsWith("/setup");
-        if (token?.mustChangePassword && !isSetupPage) {
-            logger.info({ userId: token.id, path: req.nextUrl.pathname }, 'Redirecting admin with default password to /setup');
-            return NextResponse.redirect(new URL("/setup", req.url));
+        if (authPage) return NextResponse.redirect(new URL("/", req.url));
+        if ((path.startsWith("/api/admin/") || path === "/admin" || path.startsWith("/admin/")) && user?.role !== "admin") {
+            return api ? NextResponse.json({ message: "Admin access required", code: "ADMIN_REQUIRED" }, { status: 403 }) : NextResponse.redirect(new URL("/", req.url));
         }
-
-        // Admin route protection: only allow users with admin role
-        if (isAdminPage && token?.role !== "admin") {
-            logger.warn({ userId: token?.id, path: req.nextUrl.pathname }, 'Non-admin user attempting to access admin area');
-            return NextResponse.redirect(new URL("/", req.url));
+        if (api && user && !requestPermission(user, path, req.method)) {
+            return NextResponse.json({ message: "当前账号没有此功能权限，请联系管理员。", code: "ACCOUNT_PERMISSION_DENIED" }, { status: 403 });
         }
-    } catch (e) {
-        logger.error({ error: e }, 'Error processing token');
-        return NextResponse.next();
+        if (!api && token.mustChangePassword && path !== "/setup") return NextResponse.redirect(new URL("/setup", req.url));
+    } catch (error) {
+        logger.error({ error }, "Account access verification failed");
+        return NextResponse.json({ message: "暂时无法验证账号，请稍后重试。", code: "ACCESS_CHECK_UNAVAILABLE" }, { status: 503 });
     }
 }
-
 export const config = {
-    matcher: [
-        /*
-         * Match all request paths except for the ones starting with:
-         * - api (API routes)
-         * - _next/static (static files)
-         * - _next/image (image optimization files)
-         * - favicon.ico (favicon file)
-         * - icons/、manifest.webmanifest（PWA 图标与清单，登录页也要能加载）
-         * - sw.js、offline.html（Service Worker 与离线页，未登录时也要能加载）
-         */
-        "/((?!api|_next/static|_next/image|favicon.ico|icons/|manifest.webmanifest|sw.js|offline.html).*)",
-    ],
+    runtime: "nodejs",
+    matcher: ["/((?!_next/static|_next/image|favicon.ico|icons/|manifest.webmanifest|sw.js|offline.html).*)"],
 };

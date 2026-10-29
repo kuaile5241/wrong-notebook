@@ -6,6 +6,9 @@ vi.mock('next-auth/jwt', () => ({
     getToken: vi.fn(),
 }));
 
+vi.mock('@/lib/prisma', () => ({ prisma: { user: { findUnique: vi.fn() } } }));
+import { prisma } from '@/lib/prisma';
+
 // Mock logger
 vi.mock('@/lib/logger', () => ({
     createLogger: vi.fn(() => ({
@@ -22,6 +25,7 @@ import type { JWT } from 'next-auth/jwt';
 describe('middleware', () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.mocked(prisma.user.findUnique).mockResolvedValue({ id: 'user-123', role: 'user', isActive: true, accessExpiresAt: null, canUseAi: true, canImportExport: true } as Awaited<ReturnType<typeof prisma.user.findUnique>>);
     });
 
     afterEach(() => {
@@ -124,6 +128,7 @@ describe('middleware', () => {
 
     describe('默认密码强制修改', () => {
         const flaggedToken = { id: 'admin-1', role: 'admin', mustChangePassword: true };
+        beforeEach(() => { vi.mocked(prisma.user.findUnique).mockResolvedValue({ id: 'admin-1', role: 'admin', isActive: true, accessExpiresAt: null } as Awaited<ReturnType<typeof prisma.user.findUnique>>); });
 
         it('仍使用默认密码的管理员访问任意页面都应跳到 /setup', async () => {
             vi.mocked(getToken).mockResolvedValue(flaggedToken as unknown as JWT);
@@ -153,7 +158,7 @@ describe('middleware', () => {
     });
 
     describe('错误处理', () => {
-        it('Token 验证失败时应该继续请求而不是崩溃', async () => {
+        it('Token 验证失败时应该拒绝请求但不崩溃', async () => {
             vi.mocked(getToken).mockRejectedValue(new Error('Token validation failed'));
 
             const req = new NextRequest('http://localhost:3000/notebooks');
@@ -161,8 +166,8 @@ describe('middleware', () => {
             // 不应该抛出错误
             const response = await middleware(req);
 
-            // 应该调用 NextResponse.next()，允许请求继续
-            expect(response).toBeDefined();
+            // 校验失败必须关闭访问，不能放过失效会话。
+            expect(response?.status).toBe(503);
         });
 
         it('Token 验证失败时应该记录错误日志', async () => {
@@ -234,5 +239,44 @@ describe('middleware', () => {
             expect(response).not.toBeNull();
             expect(response?.headers.get('location')).toContain('callbackUrl');
         });
+    });
+});
+
+
+describe('实时账号授权', () => {
+    beforeEach(() => { vi.clearAllMocks(); vi.mocked(getToken).mockResolvedValue({ id: 'u', role: 'admin' } as JWT); });
+    function row(values: object) { return { id: 'u', role: 'user', isActive: true, accessExpiresAt: null, canUseAi: true, canImportExport: true, ...values } as Awaited<ReturnType<typeof prisma.user.findUnique>>; }
+    it('到期后旧JWT也不能读API，重新续期后同一JWT恢复', async () => {
+        vi.mocked(prisma.user.findUnique).mockResolvedValue(row({ accessExpiresAt: new Date(0) }));
+        const blocked = await middleware(new NextRequest('http://localhost/api/notebooks'));
+        expect(blocked?.status).toBe(403); expect((await blocked?.json()).code).toBe('ACCOUNT_EXPIRED');
+        vi.mocked(prisma.user.findUnique).mockResolvedValue(row({ accessExpiresAt: new Date(Date.now() + 60000) }));
+        expect(await middleware(new NextRequest('http://localhost/api/notebooks'))).toBeUndefined();
+    });
+    it('停用账号与被删除账号无法继续访问页面', async () => {
+        vi.mocked(prisma.user.findUnique).mockResolvedValue(row({ isActive: false }));
+        expect((await middleware(new NextRequest('http://localhost/notebooks')))?.headers.get('location')).toContain('reason=disabled');
+        vi.mocked(prisma.user.findUnique).mockResolvedValue(null);
+        expect((await middleware(new NextRequest('http://localhost/api/notebooks')))?.status).toBe(403);
+    });
+    it('管理员被降级后不能凭旧角色访问后台', async () => {
+        vi.mocked(prisma.user.findUnique).mockResolvedValue(row({ role: 'user' }));
+        expect((await middleware(new NextRequest('http://localhost/api/admin/users')))?.status).toBe(403);
+    });
+    it.each(['/api/export', '/api/import'])('数据权限对%s即时生效', async path => {
+        vi.mocked(prisma.user.findUnique).mockResolvedValue(row({ canImportExport: false }));
+        expect((await middleware(new NextRequest('http://localhost'+path, { method: path.endsWith('import') ? 'POST' : 'GET' })))?.status).toBe(403);
+    });
+    it('AI权限在解析题目之前拒绝请求', async () => {
+        vi.mocked(prisma.user.findUnique).mockResolvedValue(row({ canUseAi: false }));
+        expect((await middleware(new NextRequest('http://localhost/api/analyze', { method: 'POST' })))?.status).toBe(403);
+    });
+    it('健康、注册与到期提示不受失效cookie影响', async () => {
+        for (const path of ['/api/health','/api/register','/api/register/status','/access-denied']) expect(await middleware(new NextRequest('http://localhost'+path))).toBeNull();
+        expect(prisma.user.findUnique).not.toHaveBeenCalled();
+    });
+    it('数据库异常必须拒绝访问', async () => {
+        vi.mocked(prisma.user.findUnique).mockRejectedValue(new Error('database unavailable'));
+        expect((await middleware(new NextRequest('http://localhost/api/export')))?.status).toBe(503);
     });
 });

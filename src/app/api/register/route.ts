@@ -55,7 +55,8 @@ export async function POST(req: Request) {
             { user: rest, message: "User created successfully" },
             { status: 201 }
         )
-    } catch {
+    } catch (error) {
+        if (error instanceof z.ZodError) return NextResponse.json({ user: null, message: "Invalid registration information" }, { status: 400 });
         return NextResponse.json(
             { user: null, message: "Something went wrong" },
             { status: 500 }

@@ -103,6 +103,17 @@ afterAll(async () => {
 });
 
 describe('数据导出后再导入（真实 SQLite）', () => {
+    it('访问权限元数据可备份，但导入不能自行续期或提升权限', async () => {
+        const expiry = new Date('2030-01-01T00:00:00Z');
+        await database.user.update({ where: { id: 'user-1' }, data: { accessExpiresAt: expiry, canUseAi: false, canImportExport: false } });
+        const backup = await exportBackup();
+        expect(backup.user.accessControl).toEqual({ isActive: true, accessExpiresAt: expiry.toISOString(), canUseAi: false, canImportExport: false });
+        backup.user.role = 'admin'; backup.user.accessControl = { isActive: true, accessExpiresAt: null, canUseAi: true, canImportExport: true };
+        await importBackup(backup);
+        const found = await database.user.findUniqueOrThrow({ where: { id: 'user-1' } });
+        expect(found.role).toBe('user'); expect(found.accessExpiresAt).toEqual(expiry); expect(found.canUseAi).toBe(false); expect(found.canImportExport).toBe(false);
+    });
+
     it('导出文件使用第 2 版格式', async () => {
         expect((await exportBackup()).version).toBe(2);
     });

@@ -1,5 +1,6 @@
 "use client";
 
+import { AccountAccessGuard } from "@/components/account-access-guard";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { SessionProvider } from "next-auth/react";
 import { TimeZoneProvider } from "@/contexts/TimeZoneContext";
@@ -10,11 +11,13 @@ import { ServiceWorkerRegister } from "@/components/service-worker-register";
 
 export function Providers({ children, timeZone }: { children: React.ReactNode; timeZone?: string }) {
     return (
-        <SessionProvider>
+        <SessionProvider refetchInterval={30} refetchOnWindowFocus>
             <LanguageProvider>
                 <TimeZoneProvider initialTimeZone={timeZone}>
-                    <AppShell>{children}</AppShell>
-                    <BackgroundTasksButton />
+                    <AccountAccessGuard>
+                        <AppShell>{children}</AppShell>
+                        <BackgroundTasksButton />
+                    </AccountAccessGuard>
                     <FeedbackHost />
                     <ServiceWorkerRegister />
                 </TimeZoneProvider>

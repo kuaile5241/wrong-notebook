@@ -24,6 +24,9 @@ model User {
 
   role      String   @default("user") // "admin" or "user"
   isActive  Boolean  @default(true)   // 用户是否启用
+  accessExpiresAt DateTime? // 普通账号的使用截止时间，null 表示不限时
+  canUseAi Boolean @default(true) // 普通账号是否允许使用 AI
+  canImportExport Boolean @default(true) // 普通账号是否允许导入导出数据
 
   confirmBeforeImport Boolean @default(false) // 导入题目前是否进入人工校对页
   questionDuplicateThreshold Float @default(90) // 百分比，相似度严格大于此值时判重

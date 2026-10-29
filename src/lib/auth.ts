@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { prisma } from "@/lib/prisma"
 import { compare } from "bcryptjs"
 import { createLogger } from "@/lib/logger"
+import { accountAccessStatus } from "@/lib/account-access"
 import { DEFAULT_ADMIN_PASSWORD, isDefaultAdminPassword } from "@/lib/default-admin"
 
 const logger = createLogger('auth');
@@ -58,12 +59,6 @@ export const authOptions: NextAuthOptions = {
                     return null
                 }
 
-                // Check if user is active
-                if (!user.isActive) {
-                    logger.warn('User is disabled');
-                    throw new Error("Account is disabled")
-                }
-
                 const isPasswordValid = await compare(credentials.password, user.password)
 
                 if (!isPasswordValid) {
@@ -71,6 +66,8 @@ export const authOptions: NextAuthOptions = {
                     return null
                 }
 
+                const accessStatus = accountAccessStatus(user);
+                if (accessStatus !== "active") throw new Error(accessStatus === "expired" ? "ACCOUNT_EXPIRED" : "ACCOUNT_DISABLED");
                 logger.info({ email: user.email }, 'Login successful');
 
                 return {
@@ -78,6 +75,10 @@ export const authOptions: NextAuthOptions = {
                     email: user.email,
                     name: user.name,
                     role: user.role,
+                    accessExpiresAt: user.accessExpiresAt?.toISOString() ?? null,
+                    canUseAi: user.canUseAi,
+                    canImportExport: user.canImportExport,
+                    accessStatus: "active" as const,
                     mustChangePassword: isDefaultAdminPassword(user.role, credentials.password),
                 }
             }
@@ -105,6 +106,10 @@ export const authOptions: NextAuthOptions = {
                     ...session.user,
                     id: token.id,
                     role: token.role,
+                    accessExpiresAt: token.accessExpiresAt,
+                    canUseAi: token.canUseAi,
+                    canImportExport: token.canImportExport,
+                    accessStatus: token.accessStatus,
                     mustChangePassword: token.mustChangePassword === true,
                 }
             }
@@ -116,15 +121,22 @@ export const authOptions: NextAuthOptions = {
                     ...token,
                     id: user.id,
                     role: user.role,
+                    accessExpiresAt: user.accessExpiresAt,
+                    canUseAi: user.canUseAi,
+                    canImportExport: user.canImportExport,
+                    accessStatus: user.accessStatus,
                     mustChangePassword: user.mustChangePassword === true,
                 }
             }
-            // 客户端改完密码后调用 update()，以数据库中的密码为准重新判断，不信任客户端传值
-            if (trigger === "update" && token.mustChangePassword) {
-                const dbUser = await prisma.user.findUnique({ where: { id: token.id }, select: { password: true } })
-                const stillDefault = !!dbUser && await compare(DEFAULT_ADMIN_PASSWORD, dbUser.password)
-                logger.info({ userId: token.id, stillDefault }, 'JWT callback - Re-checked default password')
-                return { ...token, mustChangePassword: stillDefault }
+            if (token.id) {
+                const dbUser = await prisma.user.findUnique({ where: { id: token.id } });
+                token = { ...token, email: dbUser?.email ?? null, name: dbUser?.name ?? null, role: dbUser?.role, accessStatus: accountAccessStatus(dbUser),
+                    accessExpiresAt: dbUser?.accessExpiresAt?.toISOString() ?? null,
+                    canUseAi: dbUser?.canUseAi, canImportExport: dbUser?.canImportExport };
+                // 只信任数据库，管理员变更或续期在下一次会话请求立即生效。
+                if (trigger === "update" && token.mustChangePassword && dbUser) {
+                    token.mustChangePassword = await compare(DEFAULT_ADMIN_PASSWORD, dbUser.password);
+                }
             }
             logger.debug('JWT callback - Subsequent call');
             return token

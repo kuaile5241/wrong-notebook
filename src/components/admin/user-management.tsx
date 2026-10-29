@@ -1,5 +1,6 @@
 "use client";
 
+import { UserAccessDialog, UserAccessStatus } from "@/components/admin/user-access-dialog";
 import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -178,7 +179,7 @@ export function UserManagement() {
             <div className="sm:hidden space-y-3">
                 {users.map((user) => (
                     <div key={user.id} className="border rounded-lg p-4 bg-card space-y-3">
-                        <div className="flex justify-between items-start">
+                        <div className="flex flex-wrap justify-between items-start gap-3">
                             <div>
                                 <div className="font-medium">{user.name || "N/A"}</div>
                                 <div className="text-sm text-muted-foreground">{user.email}</div>
@@ -191,20 +192,19 @@ export function UserManagement() {
                             <div className="text-muted-foreground">
                                 {t.admin.errors}: {user._count.errorItems} | {t.admin.practiceCount}: {user._count.practiceRecords} | {t.admin.aiUsageToday}: {user.aiUsageToday}
                             </div>
-                            <Badge variant={user.isActive ? "default" : "destructive"} className="text-xs">
-                                {user.isActive ? t.admin.active : t.admin.disabled}
-                            </Badge>
+                            <UserAccessStatus user={user} />
                         </div>
-                        <div className="flex justify-between items-center pt-2 border-t">
+                        <div className="flex flex-wrap gap-2 justify-between items-center pt-2 border-t">
                             <div className="text-xs text-muted-foreground">
                                 {formatDateTime(user.createdAt, 'yyyy-MM-dd', timeZone)}
                             </div>
-                            <div className="flex gap-2">
+                            <div className="flex flex-wrap justify-end gap-2">
+                                <UserAccessDialog user={user} onSaved={fetchUsers} />
                                 <Button
                                     variant="ghost"
                                     size="sm"
                                     onClick={() => handleToggleStatus(user)}
-                                    disabled={user.id === session?.user?.id}
+                                    disabled={user.id === session?.user?.id || user.email === "admin@localhost"}
                                 >
                                     {user.isActive ? (
                                         <Ban className="h-4 w-4 text-orange-500" />
@@ -216,7 +216,7 @@ export function UserManagement() {
                                     variant="ghost"
                                     size="sm"
                                     onClick={() => handleDelete(user)}
-                                    disabled={user.id === session?.user?.id}
+                                    disabled={user.id === session?.user?.id || user.email === "admin@localhost"}
                                 >
                                     <Trash2 className="h-4 w-4 text-destructive" />
                                 </Button>
@@ -266,16 +266,15 @@ export function UserManagement() {
                                     {formatDateTime(user.createdAt, 'yyyy-MM-dd', timeZone)}
                                 </TableCell>
                                 <TableCell>
-                                    <Badge variant={user.isActive ? "default" : "destructive"}>
-                                        {user.isActive ? t.admin.active : t.admin.disabled}
-                                    </Badge>
+                                    <UserAccessStatus user={user} />
                                 </TableCell>
                                 <TableCell className="text-right space-x-2">
+                                    <UserAccessDialog user={user} onSaved={fetchUsers} />
                                     <Button
                                         variant="ghost"
                                         size="sm"
                                         onClick={() => handleToggleStatus(user)}
-                                        disabled={user.id === session?.user?.id}
+                                        disabled={user.id === session?.user?.id || user.email === "admin@localhost"}
                                         title={user.isActive ? t.admin.disable : t.admin.enable}
                                     >
                                         {user.isActive ? (
@@ -288,7 +287,7 @@ export function UserManagement() {
                                         variant="ghost"
                                         size="sm"
                                         onClick={() => handleDelete(user)}
-                                        disabled={user.id === session?.user?.id}
+                                        disabled={user.id === session?.user?.id || user.email === "admin@localhost"}
                                         title={t.admin.delete}
                                     >
                                         <Trash2 className="h-4 w-4 text-destructive" />

@@ -33,6 +33,8 @@ interface ImportData {
         educationStage: string | null;
         enrollmentYear: number | null;
         role: string;
+        // 仅作备份元数据；访问权限必须由管理员后台重新设置，禁止用户导入自行续期。
+        accessControl?: { isActive?: boolean; accessExpiresAt?: string | null; canUseAi?: boolean; canImportExport?: boolean };
         // version 2 起导出的偏好设置
         confirmBeforeImport?: boolean;
         questionDuplicateThreshold?: number;
@@ -161,6 +163,7 @@ const PREFERENCE_SCHEMAS = {
     enableSvgAnimation: z.boolean(),
 };
 
+// 刻意不接收 accessControl、角色或有效期，避免导入绕过管理员授权。
 function parsePreferences(source: ImportData['user']) {
     const preferences: Prisma.UserUpdateInput = {};
     for (const [key, schema] of Object.entries(PREFERENCE_SCHEMAS)) {

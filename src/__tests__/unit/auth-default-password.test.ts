@@ -97,10 +97,13 @@ describe('jwt 回调', () => {
         expect(token.mustChangePassword).toBe(true);
     });
 
-    it('未标记的 token 在 update 时不查库', async () => {
+    it('未标记的 token 仍从数据库刷新访问授权', async () => {
+        mocks.findUnique.mockResolvedValue({ role: 'user', isActive: true, accessExpiresAt: null, canUseAi: false });
         const token = await jwt({ token: { id: 'user-1', mustChangePassword: false } as JWT, trigger: 'update' });
 
-        expect(mocks.findUnique).not.toHaveBeenCalled();
+        expect(mocks.findUnique).toHaveBeenCalledWith({ where: { id: 'user-1' } });
+        expect(token.accessStatus).toBe('active');
+        expect(token.canUseAi).toBe(false);
         expect(token.mustChangePassword).toBe(false);
     });
 });

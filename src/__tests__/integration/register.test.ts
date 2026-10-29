@@ -135,7 +135,7 @@ describe('/api/register', () => {
 
             const response = await POST(request);
 
-            expect(response.status).toBe(500); // Zod validation error caught as 500
+            expect(response.status).toBe(400); // 参数校验失败返回客户端错误
         });
 
         it('应该拒绝太短的密码', async () => {
@@ -150,7 +150,7 @@ describe('/api/register', () => {
 
             const response = await POST(request);
 
-            expect(response.status).toBe(500); // Zod validation error
+            expect(response.status).toBe(400); // 参数校验失败返回客户端错误
         });
 
         it('应该拒绝空用户名', async () => {
@@ -165,7 +165,7 @@ describe('/api/register', () => {
 
             const response = await POST(request);
 
-            expect(response.status).toBe(500); // Zod validation error
+            expect(response.status).toBe(400); // 参数校验失败返回客户端错误
         });
 
         it('配置中未指定注册开关时按关闭处理，返回 403', async () => {

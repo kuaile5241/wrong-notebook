@@ -81,6 +81,7 @@ export async function GET(req: Request) {
                 educationStage: user.educationStage,
                 enrollmentYear: user.enrollmentYear,
                 role: user.role,
+                accessControl: { isActive: user.isActive, accessExpiresAt: user.accessExpiresAt, canUseAi: user.canUseAi, canImportExport: user.canImportExport },
                 confirmBeforeImport: user.confirmBeforeImport,
                 questionDuplicateThreshold: user.questionDuplicateThreshold,
                 masteryThreshold: user.masteryThreshold,

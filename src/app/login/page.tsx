@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { usePageTitle } from "@/lib/page-title";
 
 export default function LoginPage() {
     const router = useRouter();
+    const { status: sessionStatus } = useSession();
     const { t } = useLanguage();
     usePageTitle(t.pageTitle.login);
     const [email, setEmail] = useState("");
@@ -33,7 +34,7 @@ export default function LoginPage() {
             });
 
             if (result?.error) {
-                setError(t.auth?.login?.failed || 'Login failed');
+                setError(result.error === "ACCOUNT_EXPIRED" ? t.access.expiredMessage : result.error === "ACCOUNT_DISABLED" || result.error === "Account is disabled" ? t.access.disabledMessage : (t.auth?.login?.failed || 'Login failed'));
             } else {
                 router.push("/");
                 router.refresh();
@@ -84,7 +85,7 @@ export default function LoginPage() {
                         {error && (
                             <div className="rounded-lg bg-destructive/10 px-3 py-2 text-center text-sm text-destructive">{error}</div>
                         )}
-                        <Button type="submit" size="lg" className="w-full" disabled={loading}>
+                        <Button type="submit" size="lg" className="w-full" disabled={loading || sessionStatus === "loading"}>
                             {loading
                                 ? (t.auth?.login?.loggingIn || 'Logging in...')
                                 : (t.auth?.login?.action || 'Login')}
