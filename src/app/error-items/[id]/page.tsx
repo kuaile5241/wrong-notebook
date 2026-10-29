@@ -176,8 +176,7 @@ export default function ErrorDetailPage() {
                         logLabel="answer"
                         rows={5}
                         placeholder="Enter answer..."
-                        cardClassName="border-primary/20"
-                        titleClassName="text-primary"
+                        cardClassName="learning-panel learning-answer"
                         contentClassName="font-semibold"
                         headerActions={<RegenerateAnswerButton errorItemId={item.id} onDone={(updated) => updateItem({ answerText: updated.answerText ?? "", analysis: updated.analysis ?? "" })} />}
                     >
@@ -195,6 +194,7 @@ export default function ErrorDetailPage() {
                         title={t.detail.analysis}
                         value={item.analysis}
                         onSave={(analysis) => saveFields({ analysis })}
+                        cardClassName="learning-panel learning-analysis"
                         logLabel="analysis"
                         rows={12}
                         placeholder="Enter analysis..."
@@ -203,6 +203,7 @@ export default function ErrorDetailPage() {
                         title={t.detail?.mistakeAnalysis || "Mistake Analysis"}
                         value={item.mistakeAnalysis}
                         onSave={(mistakeAnalysis) => saveFields({ mistakeAnalysis })}
+                        cardClassName="learning-panel learning-mistakeAnalysis"
                         logLabel="mistake analysis"
                         rows={8}
                         editorLabel={t.editor?.mistakeAnalysis || "Mistake Cause Analysis"}

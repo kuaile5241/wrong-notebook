@@ -160,7 +160,7 @@ export function CorrectionEditor({ initialData, onSave, onCancel, imagePreview, 
 
                     <MetaFields data={data} paperLevel={paperLevel} onChange={update} />
 
-                    <div className="space-y-2">
+                    <div className="learning-field learning-question space-y-2">
                         <Label>{t.editor.question}</Label>
                         <MarkdownEditor
                             value={data.questionText}
@@ -201,12 +201,12 @@ export function CorrectionEditor({ initialData, onSave, onCancel, imagePreview, 
                         </p>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="learning-field learning-answer space-y-2">
                         <Label>{t.editor.answer}</Label>
                         <MarkdownEditor value={data.answerText} onChange={(answerText) => update({ answerText })} className="min-h-[100px] font-mono text-sm" placeholder={markdownPlaceholder} />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="learning-field learning-analysis space-y-2">
                         <Label>{t.editor.analysis}</Label>
                         <MarkdownEditor value={data.analysis} onChange={(analysis) => update({ analysis })} className="min-h-[200px] font-mono text-sm" placeholder={markdownPlaceholder} />
                     </div>

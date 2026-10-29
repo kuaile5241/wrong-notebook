@@ -37,7 +37,7 @@ export function QuestionCard({ item, educationStage, saveFields, onUpdate, reloa
     });
 
     return (
-        <Card>
+        <Card className="learning-panel learning-question">
             <CardHeader><SectionHeader title={<CardTitle>{t.detail.question}</CardTitle>} actions={!question.editing && <EditButton onClick={question.start} />} /></CardHeader>
             <CardContent className="space-y-4">
                 {question.editing ? (

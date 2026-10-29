@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { BookOpen, CalendarCheck, ListChecks, Target } from "lucide-react";
+import { BookOpen, CalendarCheck, ListChecks, Sparkles, Target } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -28,9 +28,9 @@ interface StatTileProps {
 function StatTile({ href, icon: Icon, label, value }: StatTileProps) {
     return (
         <Link href={href} className="rounded-xl bg-white/15 px-4 py-3 backdrop-blur-sm transition-colors hover:bg-white/20">
-            <div className="flex items-center gap-1.5 text-xs text-white/75">
+            <div className="flex items-center gap-1.5 text-xs text-white/90">
                 <Icon className="h-3.5 w-3.5 shrink-0" />
-                <span className="truncate">{label}</span>
+                <span className="leading-snug">{label}</span>
             </div>
             <div className="mt-1 text-2xl font-bold tabular-nums">{value ?? "–"}</div>
         </Link>
@@ -52,12 +52,13 @@ export function HomeHero({ notebookCount, itemCount, dueCount, targetNotebook }:
     const name = session?.user?.name || session?.user?.email || "";
 
     return (
-        <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-indigo-500 to-violet-500 p-5 text-white shadow-lg shadow-indigo-500/20 md:p-7">
+        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 p-5 text-white shadow-lg shadow-indigo-500/20 md:p-7">
             <div className="pointer-events-none absolute -right-10 -top-12 h-44 w-44 rounded-full bg-white/10 blur-2xl" />
             <div className="pointer-events-none absolute -bottom-16 right-24 h-40 w-40 rounded-full bg-fuchsia-300/20 blur-2xl" />
 
             <div className="relative flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-                <div className="space-y-1.5">
+                <div className="space-y-2.5">
+                    <p className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold"><Sparkles className="h-4 w-4 text-yellow-200" aria-hidden="true" />{t.home.learningBadge}</p>
                     <h1 className="text-xl font-bold tracking-tight md:text-2xl">
                         {greeting}{name && `${language === "zh" ? "，" : ", "}${name}`}
                     </h1>
@@ -70,7 +71,7 @@ export function HomeHero({ notebookCount, itemCount, dueCount, targetNotebook }:
                     )}
                 </div>
 
-                <div className="grid grid-cols-3 gap-3 md:w-96">
+                <div className="grid grid-cols-3 gap-3 md:w-96 md:shrink-0">
                     <StatTile href="/notebooks" icon={BookOpen} label={t.home.notebookCount} value={notebookCount} />
                     <StatTile href="/notebooks" icon={ListChecks} label={t.home.itemCount} value={itemCount} />
                     <StatTile href="/review" icon={CalendarCheck} label={t.home.dueCount} value={dueCount} />

@@ -260,7 +260,7 @@ export function UploadZone({ onImageSelect, isAnalyzing }: UploadZoneProps) {
         <div className="space-y-4">
             <Card
                 {...getRootProps()}
-                className={`group cursor-pointer rounded-2xl border-2 border-dashed shadow-none transition-all hover:border-primary/60 hover:bg-accent/40 ${isDragActive ? "border-primary bg-accent/60" : "border-border bg-card"
+                className={`group cursor-pointer rounded-2xl border-2 border-dashed shadow-none transition-all hover:border-primary/60 hover:bg-accent/40 ${isDragActive ? "border-primary bg-accent/60" : "border-primary/25 bg-sky-50/60 dark:bg-card"
                     }`}
             >
                 <CardContent className="flex min-h-[260px] flex-col items-center justify-center space-y-4 py-10 text-center md:min-h-[300px]">

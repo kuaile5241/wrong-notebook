@@ -54,7 +54,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
     return (
         <div className="min-h-screen">
-            <header className="sticky top-0 z-40 border-b bg-card/80 backdrop-blur-md supports-[backdrop-filter]:bg-card/70 print:hidden">
+            <header className="sticky top-0 z-40 border-b-2 border-primary/10 bg-card/90 backdrop-blur-md supports-[backdrop-filter]:bg-card/70 print:hidden">
                 <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 md:h-16 md:px-8">
                     <Link href="/" className="flex shrink-0 items-center gap-2">
                         <Image src="/icons/icon.png" alt="" width={32} height={32} className="rounded-lg" priority unoptimized />
@@ -69,8 +69,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                                 <Link
                                     key={item.key}
                                     href={item.href}
+                                    data-study-nav={item.key}
                                     className={cn(
-                                        "flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                                        "study-nav flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors",
                                         active
                                             ? "bg-accent text-accent-foreground"
                                             : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -117,7 +118,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
             <div className="pb-20 md:pb-0">{children}</div>
 
-            <nav className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t bg-card/90 backdrop-blur-md md:hidden print:hidden">
+            <nav className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t-2 border-primary/10 bg-card/95 backdrop-blur-md md:hidden print:hidden">
                 <div className="grid h-16 grid-cols-5">
                     {NAV_ITEMS.map((item) => {
                         const active = item.match(pathname);
@@ -126,8 +127,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                             <Link
                                 key={item.key}
                                 href={item.href}
+                                    data-study-nav={item.key}
                                 className={cn(
-                                    "flex flex-col items-center justify-center gap-1 text-[11px] font-medium transition-colors",
+                                    "study-nav flex flex-col items-center justify-center gap-1 text-[11px] font-medium transition-colors",
                                     active ? "text-primary" : "text-muted-foreground"
                                 )}
                                 aria-current={active ? "page" : undefined}

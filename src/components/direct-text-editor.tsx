@@ -196,7 +196,7 @@ export function DirectTextEditor({ onSubmit, defaultNotebookId, defaultNotebookN
 
                 {/* Fields with edit/preview toggle */}
                 {fields.map((field) => (
-                    <div key={field.key} className="space-y-2">
+                    <div key={field.key} className={`learning-field learning-${field.key} space-y-2`}>
                         <div className="flex items-center justify-between">
                             <Label className={field.required ? "text-primary font-semibold" : ""}>
                                 {field.label} {field.required && "*"}

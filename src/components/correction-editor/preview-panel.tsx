@@ -13,9 +13,9 @@ interface PreviewPanelProps {
     children?: ReactNode;
 }
 
-function PreviewCard({ title, children, className }: { title: string; children: ReactNode; className?: string }) {
+function PreviewCard({ title, children, className, tone }: { title: string; children: ReactNode; className?: string; tone: string }) {
     return (
-        <Card>
+        <Card className={`learning-panel learning-${tone}`}>
             <CardHeader>
                 <CardTitle>{title}</CardTitle>
             </CardHeader>
@@ -35,22 +35,22 @@ export function PreviewPanel({ data, children }: PreviewPanelProps) {
 
     return (
         <div className="space-y-6">
-            <PreviewCard title={t.editor.preview?.question || "Question Preview"}>
+            <PreviewCard tone="question" title={t.editor.preview?.question || "Question Preview"}>
                 <MarkdownRenderer content={data.questionText} />
                 <QuestionFigure svg={data.figureSvg} />
             </PreviewCard>
 
             {children}
 
-            <PreviewCard title={t.editor.preview?.answer || "Answer Preview"}>
+            <PreviewCard tone="answer" title={t.editor.preview?.answer || "Answer Preview"}>
                 <MarkdownRenderer content={data.answerText} />
             </PreviewCard>
 
-            <PreviewCard title={t.editor.preview?.analysis || "Analysis Preview"}>
+            <PreviewCard tone="analysis" title={t.editor.preview?.analysis || "Analysis Preview"}>
                 <MarkdownRenderer content={data.analysis} />
             </PreviewCard>
 
-            <PreviewCard title={t.editor.preview?.mistakeAnalysis || "Mistake Analysis Preview"} className="space-y-3 text-sm">
+            <PreviewCard tone="mistakeAnalysis" title={t.editor.preview?.mistakeAnalysis || "Mistake Analysis Preview"} className="space-y-3 text-sm">
                 <div className="text-muted-foreground">
                     {t.editor.mistakeStatus || "Attempt Status"}：{statusLabels[data.mistakeStatus as keyof typeof statusLabels] ?? statusLabels.unknown}
                 </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Atom, BookOpen, BookText, ChevronRight, FlaskConical, Globe, Landmark, Languages, Leaf, Scale, Sigma } from "lucide-react";
+import type { CSSProperties } from "react";
 import type { LucideIcon } from "lucide-react";
 import { NotebookScopeLabel } from "@/components/notebook-scope-label";
 import { resolveNotebookScope } from "@/lib/notebook-scope";
@@ -38,7 +39,8 @@ export function NotebookCard({ name, stage, subjectKey, errorCount, onClick, ite
         <div
             role="link"
             tabIndex={0}
-            className="group relative flex cursor-pointer items-center gap-4 rounded-2xl border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            style={{ "--notebook-color": ({ math: "#5276ed", english: "#18a386", chinese: "#df6383", physics: "#dca424", chemistry: "#199f9e", biology: "#7aa22d", history: "#dc8734", geography: "#279db8", politics: "#c95c68" } as Record<string, string>)[scope.subject || ""] || "#8e69cb" } as CSSProperties}
+            className="notebook-tile group relative flex cursor-pointer items-center gap-4 rounded-2xl border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             onClick={onClick}
             onKeyDown={(e) => {
                 if (e.key === "Enter") onClick();

@@ -45,5 +45,5 @@ interface SectionHeaderProps {
 
 /** 卡片或小节的标题行：左侧标题，右侧操作按钮 */
 export function SectionHeader({ title, actions }: SectionHeaderProps) {
-    return <div className="flex justify-between items-center">{title}{actions}</div>;
+    return <div className="flex flex-wrap justify-between items-center gap-x-4 gap-y-2 [&>[data-slot=card-title]]:shrink-0">{title}{actions}</div>;
 }

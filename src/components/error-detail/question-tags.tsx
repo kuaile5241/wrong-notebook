@@ -48,7 +48,7 @@ export function QuestionTags({ item, educationStage, onChanged }: QuestionTagsPr
                         <RetagItemButton errorItemId={item.id} onSuggested={field.setValue} />
                     </SaveCancelButtons>
                 </div>
-            ) : <div className="flex flex-wrap gap-2">{tags.map(tag => <Badge key={tag} variant="secondary">{tag}</Badge>)}</div>}
+            ) : <div className="study-tags flex flex-wrap gap-2">{tags.map(tag => <Badge key={tag} variant="secondary">{tag}</Badge>)}</div>}
         </div>
     );
 }

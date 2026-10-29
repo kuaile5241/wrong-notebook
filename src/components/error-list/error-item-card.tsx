@@ -82,7 +82,7 @@ export function ErrorItemCard({ item, selectMode, selected, onToggleSelect, sele
                             </Badge>
                             <DifficultyStars value={item.difficultyStars} showUnrated={false} />
                         </div>
-                        <div className="flex flex-wrap gap-2 mt-3">
+                        <div className="study-tags flex flex-wrap gap-2 mt-3">
                             {(tagsExpanded ? tags : tags.slice(0, VISIBLE_TAGS)).map((tag) => (
                                 <Badge
                                     key={tag}

@@ -30,7 +30,7 @@ export function WrongAnswerCard({ item, saveFields, onEnlarge }: WrongAnswerCard
     });
 
     return (
-        <Card>
+        <Card className="learning-panel learning-wrongAnswer">
             <CardHeader><SectionHeader title={<CardTitle>{t.editor?.wrongAnswerText || "Wrong Answer / Work"}</CardTitle>} actions={!field.editing && <EditButton onClick={field.start} />} /></CardHeader>
             <CardContent className="space-y-4">
                 {field.editing ? (

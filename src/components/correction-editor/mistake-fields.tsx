@@ -18,7 +18,7 @@ export function MistakeFields({ data, onChange }: MistakeFieldsProps) {
     const { t } = useLanguage();
 
     return (
-        <Card>
+        <Card className="learning-panel learning-wrongAnswer">
             <CardHeader>
                 <CardTitle>{t.editor.mistakeAnalysisTitle || "Mistake Analysis"}</CardTitle>
             </CardHeader>
