@@ -185,20 +185,20 @@ describe('数据导出后再导入（真实 SQLite）', () => {
     it('还原本人的偏好设置，不合法的单项跳过', async () => {
         await database.user.update({
             where: { id: 'user-1' },
-            data: { confirmBeforeImport: true, questionDuplicateThreshold: 75.5, enableGeogebra: true, enableSvgAnimation: false },
+            data: { confirmBeforeImport: true, questionDuplicateThreshold: 75.5, masteryThreshold: 70, enableGeogebra: true, enableSvgAnimation: false },
         });
         const backup = await exportBackup();
-        expect(backup.user).toMatchObject({ confirmBeforeImport: true, questionDuplicateThreshold: 75.5, enableGeogebra: true, enableSvgAnimation: false });
+        expect(backup.user).toMatchObject({ confirmBeforeImport: true, questionDuplicateThreshold: 75.5, masteryThreshold: 70, enableGeogebra: true, enableSvgAnimation: false });
 
         await database.user.update({
             where: { id: 'user-1' },
-            data: { confirmBeforeImport: false, questionDuplicateThreshold: 90, enableGeogebra: false, enableSvgAnimation: true },
+            data: { confirmBeforeImport: false, questionDuplicateThreshold: 90, masteryThreshold: 50, enableGeogebra: false, enableSvgAnimation: true },
         });
         backup.user.questionDuplicateThreshold = 500;
         const { stats } = await importBackup(backup);
         expect(stats.preferencesRestored).toBe(true);
         expect(await database.user.findUniqueOrThrow({ where: { id: 'user-1' } })).toMatchObject({
-            confirmBeforeImport: true, questionDuplicateThreshold: 90, enableGeogebra: true, enableSvgAnimation: false,
+            confirmBeforeImport: true, questionDuplicateThreshold: 90, masteryThreshold: 70, enableGeogebra: true, enableSvgAnimation: false,
         });
     });
 

@@ -8,7 +8,8 @@ import { createLogger } from "@/lib/logger";
 import { startBackgroundTask } from "@/lib/background-tasks";
 import type { BackgroundTaskHandle } from "@/lib/background-tasks";
 import { generateUniqueShortId, isShortId } from "@/lib/short-id";
-import { isPracticeResult, scheduleMasteryEvaluation } from "@/lib/mastery";
+import { isPracticeResult, scheduleMasteryEvaluation, syncMasteryLevels } from "@/lib/mastery";
+import { MAX_MASTERY_THRESHOLD, MIN_MASTERY_THRESHOLD } from "@/lib/mastery-status";
 import { findDuplicateQuestion, recordDuplicateQuestion } from "@/lib/question-deduplication";
 import { parseDifficultyStars } from "@/lib/ai/schema";
 import { resolveNotebookScope } from "@/lib/notebook-scope";
@@ -35,6 +36,7 @@ interface ImportData {
         // version 2 起导出的偏好设置
         confirmBeforeImport?: boolean;
         questionDuplicateThreshold?: number;
+        masteryThreshold?: number;
         enableGeogebra?: boolean;
         enableSvgAnimation?: boolean;
     };
@@ -154,6 +156,7 @@ interface ImportData {
 const PREFERENCE_SCHEMAS = {
     confirmBeforeImport: z.boolean(),
     questionDuplicateThreshold: z.number().min(1).max(100),
+    masteryThreshold: z.number().int().min(MIN_MASTERY_THRESHOLD).max(MAX_MASTERY_THRESHOLD),
     enableGeogebra: z.boolean(),
     enableSvgAnimation: z.boolean(),
 };
@@ -568,6 +571,11 @@ export async function POST(req: Request) {
                 });
                 stats.practiceRecordsCreated++;
                 if (errorItemId && result && !evaluatedIds.has(errorItemId)) masteryIds.add(errorItemId);
+            }
+
+            // 8. 还原了已掌握阈值时，按新阈值同步该账户全部错题的 masteryLevel
+            if (typeof preferences.masteryThreshold === 'number') {
+                await syncMasteryLevels(tx, user.id, preferences.masteryThreshold);
             }
         }, {
             timeout: 60000,

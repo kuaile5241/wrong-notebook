@@ -135,10 +135,12 @@ export interface UserProfile {
     enableGeogebra?: boolean;
     enableSvgAnimation?: boolean;
     questionDuplicateThreshold?: number;
+    masteryThreshold?: number;
 }
 
 export interface UpdateUserProfileRequest {
     questionDuplicateThreshold?: number;
+    masteryThreshold?: number;
     name?: string;
     email?: string;
     educationStage?: string;
@@ -333,6 +335,8 @@ export interface PracticeHistoryResponse {
     masteryReason: string | null;
     masterySource: string | null;
     masteryEvaluatedAt: string | null;
+    /** 当前用户的已掌握阈值（百分比） */
+    masteryThreshold: number;
     records: PracticeHistoryRecord[];
 }
 

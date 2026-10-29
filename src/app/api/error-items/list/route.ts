@@ -68,7 +68,7 @@ export async function GET(req: Request) {
 
         // 复习状态筛选：new 待复习 / reviewing 复习中 / mastered 已掌握
         if (isMasteryStatus(mastery)) {
-            andConditions.push(masteryStatusWhere(mastery));
+            andConditions.push(masteryStatusWhere(mastery, user.masteryThreshold));
         }
 
         // Time range filter
@@ -164,7 +164,7 @@ export async function GET(req: Request) {
         return NextResponse.json({
             items: errorItems.map(({ _count, ...item }) => ({
                 ...item,
-                masteryStatus: masteryStatusOf(_count.practiceRecords, item.masteryProbability),
+                masteryStatus: masteryStatusOf(_count.practiceRecords, item.masteryProbability, user.masteryThreshold),
             })),
             total,
             page,

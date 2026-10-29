@@ -3,7 +3,8 @@ import type { Prisma } from "@prisma/client";
 import { getAIService } from "@/lib/ai";
 import type { DifficultyLevel } from "@/lib/ai/types";
 import { createLogger } from "@/lib/logger";
-import { masteryStatusWhere } from "@/lib/mastery-status";
+import { getMasteryThreshold } from "@/lib/mastery";
+import { DEFAULT_MASTERY_THRESHOLD, masteryStatusWhere } from "@/lib/mastery-status";
 import { startBackgroundTask, trackBackgroundTask } from "@/lib/background-tasks";
 import { resolveNotebookScope, SUBJECT_DISPLAY_NAMES } from "@/lib/notebook-scope";
 import type { BackgroundTaskHandle } from "@/lib/background-tasks";
@@ -30,8 +31,8 @@ export interface ExamSelection {
     pickRule?: ExamPickRule;
 }
 
-/** 构造抽题条件：限定错题本、掌握范围，可选按知识点标签 */
-export function buildSourceWhere(userId: string, selection: ExamSelection): Prisma.ErrorItemWhereInput {
+/** 构造抽题条件：限定错题本、掌握范围（按用户的已掌握阈值），可选按知识点标签 */
+export function buildSourceWhere(userId: string, selection: ExamSelection, masteryThreshold = DEFAULT_MASTERY_THRESHOLD): Prisma.ErrorItemWhereInput {
     const where: Prisma.ErrorItemWhereInput = {
         userId,
         subjectId: { in: selection.subjectIds },
@@ -39,9 +40,9 @@ export function buildSourceWhere(userId: string, selection: ExamSelection): Pris
     };
     // 未掌握包括待复习和复习中
     if (selection.scope === 'unmastered') {
-        where.NOT = masteryStatusWhere('mastered');
+        where.NOT = masteryStatusWhere('mastered', masteryThreshold);
     } else if (selection.scope === 'mastered') {
-        where.AND = [masteryStatusWhere('mastered')];
+        where.AND = [masteryStatusWhere('mastered', masteryThreshold)];
     }
     if (selection.tagNames && selection.tagNames.length > 0) {
         where.tags = { some: { name: { in: selection.tagNames } } };
@@ -69,7 +70,7 @@ export function pickLeastPracticed<T extends { practiceCount: number }>(items: T
 /** 按抽题规则选取原题，练习次数为该题的全部举一反三记录数 */
 export async function selectSourceItems(userId: string, selection: ExamSelection) {
     const candidates = await prisma.errorItem.findMany({
-        where: buildSourceWhere(userId, selection),
+        where: buildSourceWhere(userId, selection, await getMasteryThreshold(userId)),
         select: { id: true, shortId: true, _count: { select: { practiceRecords: true } } },
     });
     const items = candidates.map(({ _count, ...item }) => ({ ...item, practiceCount: _count.practiceRecords }));

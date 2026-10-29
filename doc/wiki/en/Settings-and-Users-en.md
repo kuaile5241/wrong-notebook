@@ -10,6 +10,7 @@ After signing in, open "Settings → General" to adjust your own preferences:
 | SVG animated explanations | On |
 | GeoGebra interactive demos | Off |
 | Duplicate similarity threshold | 90%; a question is a duplicate when the similarity is strictly greater |
+| Mastered threshold | 50%; a question counts as mastered once its mastery probability reaches it |
 
 Personal preferences are saved per user. The AI service configuration and the app time zone are global settings that require admin rights.
 

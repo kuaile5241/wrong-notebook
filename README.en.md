@@ -59,7 +59,7 @@ The home page offers photo upload, manual input and direct entry, with drag-and-
 
 ![Photo upload, manual input, direct entry, clipboard paste and screenshot on the home page](doc/screenshots/en/upload.png)
 
-General settings control review before import, SVG animated explanations, GeoGebra demos and the similarity threshold for duplicate detection.
+General settings control review before import, SVG animated explanations, GeoGebra demos, the similarity threshold for duplicate detection and the mastered threshold.
 
 ![Review before import, animated explanations, GeoGebra and duplicate threshold in General settings](doc/screenshots/en/preferences.png)
 
@@ -153,7 +153,7 @@ Practice statistics show total practice, accuracy and active months, with distri
 ### Review and practice
 
 - **🔄 Practice similar questions**: generate variant questions (fill-in-the-blank or free response) on the same knowledge point, choose the difficulty and submit an answer: it is checked automatically (an identical answer is marked correct right away, otherwise the AI compares it with the reference answer and explains why), and you can change the result before saving. The most recently generated question and solution are kept for each mistake and shown directly next time; click Regenerate for a new one.
-- **📈 Mastery probability**: AI estimates how likely you have mastered each question from the answer history of practice and exams. Questions fall into three states: **To Review** (no practice records yet), **Reviewing** (has records, probability below 50%) and **Mastered** (has records, probability 50% or above).
+- **📈 Mastery probability**: AI estimates how likely you have mastered each question from the answer history of practice and exams. Questions fall into three states: **To Review** (no practice records yet), **Reviewing** (has records, probability below the mastered threshold) and **Mastered** (has records, probability at or above the threshold). The threshold is 50% by default and each user can adjust it in settings.
 - **📅 Daily review**: each question is scheduled at Ebbinghaus intervals of 1, 2, 4, 7, 15 and 30 days. A correct answer moves it to the next interval; a wrong answer starts over. The **Review** page lists questions due today (earliest first), and the home page shows how many are due.
 - **🧾 Mistake exams**: draw questions at random by notebook, knowledge point and mastery, and turn them into a printable exam of similar questions. After finishing, enter results per question; they are added to the original question's answer history.
 - **🖨️ Print mistakes**: print filtered questions with your choice of question text or original image, answer, analysis and knowledge points, adjust image scale, then print or save as PDF.
@@ -467,7 +467,7 @@ The credentials are stored in `minimax-code.json` in the server's config directo
 | Base URL | Default `https://generativelanguage.googleapis.com`; usually unchanged |
 | Model | `gemini-3.8-flash` (recommended), etc. |
 
-> **Permissions**: AI settings, prompts, connection tests and model lists are admin-only. Regular users can only change their own preferences in **Settings → General** (review before importing, SVG animated explanations, GeoGebra demos, duplicate threshold). The application time zone is set by administrators.
+> **Permissions**: AI settings, prompts, connection tests and model lists are admin-only. Regular users can only change their own preferences in **Settings → General** (review before importing, SVG animated explanations, GeoGebra demos, duplicate threshold, mastered threshold). The application time zone is set by administrators.
 
 ## 🧪 Development and testing
 

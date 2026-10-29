@@ -24,6 +24,11 @@ describe('buildSourceWhere', () => {
         expect(where.tags).toEqual({ some: { name: { in: ['函数'] } } });
     });
 
+    it('按用户的已掌握阈值划分掌握范围', () => {
+        const where = buildSourceWhere('u1', { subjectIds: ['s1'], scope: 'mastered', count: 5 }, 80);
+        expect(where.AND).toEqual([{ ...MASTERED, masteryProbability: { gte: 0.8 } }]);
+    });
+
     it('全部范围不限制掌握状态', () => {
         const where = buildSourceWhere('u1', { subjectIds: ['s1'], scope: 'all', count: 5 });
         expect(where).not.toHaveProperty('NOT');

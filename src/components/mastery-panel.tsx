@@ -14,7 +14,7 @@ import { QuestionFigure } from "@/components/question-figure";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { apiClient } from "@/lib/api-client";
 import { toast, confirmDialog } from "@/lib/feedback";
-import { MASTERY_THRESHOLD } from "@/lib/mastery-status";
+import { isMastered } from "@/lib/mastery-status";
 import type { MasteryStatus } from "@/lib/mastery-status";
 import type { PracticeHistoryResponse } from "@/types/api";
 
@@ -86,7 +86,7 @@ export function MasteryPanel({ errorItemId, onMasteryStatusChange }: MasteryPane
 
     const probability = data.masteryProbability;
     const percent = probability === null ? null : Math.round(probability * 100);
-    const barColor = percent === null ? "" : probability !== null && probability >= MASTERY_THRESHOLD ? "bg-green-500" : percent >= 30 ? "bg-amber-500" : "bg-red-500";
+    const barColor = percent === null ? "" : isMastered(probability, data.masteryThreshold) ? "bg-green-500" : percent >= 30 ? "bg-amber-500" : "bg-red-500";
     const difficultyLabels = t.practice.difficulty as Record<string, string>;
 
     return (
@@ -113,7 +113,7 @@ export function MasteryPanel({ errorItemId, onMasteryStatusChange }: MasteryPane
                             <div className={`h-full ${barColor} transition-all`} style={{ width: `${percent}%` }} />
                         </div>
                         {data.masteryReason && <p className="text-sm text-muted-foreground">{data.masteryReason}</p>}
-                        <p className="text-xs text-muted-foreground">{t.mastery.thresholdHint}</p>
+                        <p className="text-xs text-muted-foreground">{t.mastery.thresholdHint.replace("{threshold}", String(data.masteryThreshold))}</p>
                     </div>
                 )}
 

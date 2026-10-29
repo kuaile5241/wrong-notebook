@@ -83,6 +83,7 @@ export async function GET(req: Request) {
                 role: user.role,
                 confirmBeforeImport: user.confirmBeforeImport,
                 questionDuplicateThreshold: user.questionDuplicateThreshold,
+                masteryThreshold: user.masteryThreshold,
                 enableGeogebra: user.enableGeogebra,
                 enableSvgAnimation: user.enableSvgAnimation,
             },

@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { DuplicateThresholdSetting } from "@/components/settings/duplicate-threshold-setting";
 import { GeogebraPreferenceSetting } from "@/components/settings/geogebra-preference-setting";
 import { ImportPreferenceSetting } from "@/components/settings/import-preference-setting";
+import { MasteryThresholdSetting } from "@/components/settings/mastery-threshold-setting";
 import { SvgAnimationPreferenceSetting } from "@/components/settings/svg-animation-preference-setting";
 import { TimeZoneSetting } from "@/components/settings/time-zone-setting";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -78,6 +79,7 @@ export function GeneralSettings({ config, setConfig, isAdmin, disabled }: Genera
             <SvgAnimationPreferenceSetting />
             <GeogebraPreferenceSetting />
             <DuplicateThresholdSetting />
+            <MasteryThresholdSetting />
         </div>
     );
 }

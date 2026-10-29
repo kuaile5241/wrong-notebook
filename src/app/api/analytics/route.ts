@@ -6,6 +6,7 @@ import { getAppTimeZone } from "@/lib/config";
 import { formatDateTime, getDayRange } from "@/lib/date-time";
 import { unauthorized, internalError } from "@/lib/api-errors";
 import { createLogger } from "@/lib/logger";
+import { getMasteryThreshold } from "@/lib/mastery";
 import { masteryStatusWhere } from "@/lib/mastery-status";
 
 const logger = createLogger('api:analytics');
@@ -27,7 +28,7 @@ export async function GET() {
 
         // 2. Mastered Count
         const masteredCount = await prisma.errorItem.count({
-            where: { AND: [{ userId }, masteryStatusWhere('mastered')] }
+            where: { AND: [{ userId }, masteryStatusWhere('mastered', await getMasteryThreshold(userId))] }
         });
 
         // 3. Mastery Rate

@@ -24,6 +24,7 @@ const mocks = vi.hoisted(() => ({
 vi.mock('@/lib/prisma', () => ({
     prisma: {
         errorItem: mocks.mockPrismaErrorItem,
+        user: { findUnique: vi.fn(async () => ({ masteryThreshold: 50 })) },
     },
 }));
 

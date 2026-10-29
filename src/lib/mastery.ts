@@ -1,14 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import { getAIService } from "@/lib/ai";
 import { createLogger } from "@/lib/logger";
-import { MASTERY_THRESHOLD, masteryLevelOf, masteryStatusWhere } from "@/lib/mastery-status";
+import { DEFAULT_MASTERY_THRESHOLD, isMastered, masteryLevelOf, masteryStatusWhere } from "@/lib/mastery-status";
 import type { MasteryStatus } from "@/lib/mastery-status";
 import type { Prisma } from "@prisma/client";
 import type { MasteryHistoryEntry, PracticeResult } from "@/lib/ai/types";
 
 const logger = createLogger('mastery');
 
-export { MASTERY_THRESHOLD };
+export { DEFAULT_MASTERY_THRESHOLD };
 
 export const PRACTICE_RESULTS: readonly PracticeResult[] = ['correct', 'wrong', 'not_attempted'];
 
@@ -46,8 +46,23 @@ export function computeRuleMastery(history: Pick<MasteryHistoryEntry, 'result' |
 }
 
 /** 有举一反三记录时的 masteryLevel：1 复习中，2 已掌握 */
-export function masteryLevelFor(probability: number): number {
-    return masteryLevelOf(probability >= MASTERY_THRESHOLD ? 'mastered' : 'reviewing');
+export function masteryLevelFor(probability: number, threshold = DEFAULT_MASTERY_THRESHOLD): number {
+    return masteryLevelOf(isMastered(probability, threshold) ? 'mastered' : 'reviewing');
+}
+
+/** 读取用户的已掌握阈值（百分比），用户不存在时返回默认值 */
+export async function getMasteryThreshold(userId: string): Promise<number> {
+    const user = await prisma.user.findUnique({ where: { id: userId }, select: { masteryThreshold: true } });
+    return user?.masteryThreshold ?? DEFAULT_MASTERY_THRESHOLD;
+}
+
+/** 阈值变化后按新阈值同步用户错题的 masteryLevel；只更新状态改变的错题，避免无关错题的 updatedAt 被刷新 */
+export function syncMasteryLevels(client: Prisma.TransactionClient, userId: string, threshold: number) {
+    return Promise.all((['reviewing', 'mastered'] as const).map((status) =>
+        client.errorItem.updateMany({
+            where: { AND: [{ userId, masteryLevel: { not: masteryLevelOf(status) } }, masteryStatusWhere(status, threshold)] },
+            data: { masteryLevel: masteryLevelOf(status) },
+        })));
 }
 
 /**
@@ -60,6 +75,7 @@ export async function evaluateErrorItemMastery(errorItemId: string): Promise<voi
             id: true,
             questionText: true,
             mistakeStatus: true,
+            user: { select: { masteryThreshold: true } },
             tags: { select: { name: true } },
             practiceRecords: {
                 where: { result: { not: null } },
@@ -117,19 +133,25 @@ export async function evaluateErrorItemMastery(errorItemId: string): Promise<voi
             masteryReason: reason,
             masterySource: source,
             masteryEvaluatedAt: new Date(),
-            masteryLevel: masteryLevelFor(probability),
+            masteryLevel: masteryLevelFor(probability, item.user.masteryThreshold),
         },
     });
     logger.info({ errorItemId, probability, source }, 'Mastery evaluated');
 }
 
-/** 按复习状态统计错题数量 */
+/** 按复习状态统计错题数量；不同用户的阈值可能不同，按阈值分组统计后汇总 */
 export async function countByMasteryStatus(where: Prisma.ErrorItemWhereInput = {}): Promise<Record<MasteryStatus, number>> {
-    const [newCount, reviewing, mastered] = await Promise.all(
-        (['new', 'reviewing', 'mastered'] as const).map((status) =>
-            prisma.errorItem.count({ where: { AND: [where, masteryStatusWhere(status)] } })),
-    );
-    return { new: newCount, reviewing, mastered };
+    const thresholds = await prisma.user.findMany({ distinct: ['masteryThreshold'], select: { masteryThreshold: true } });
+    const results = await Promise.all(thresholds.flatMap(({ masteryThreshold }) =>
+        (['new', 'reviewing', 'mastered'] as const).map(async (status) => ({
+            status,
+            count: await prisma.errorItem.count({
+                where: { AND: [where, { user: { masteryThreshold } }, masteryStatusWhere(status, masteryThreshold)] },
+            }),
+        }))));
+    const counts: Record<MasteryStatus, number> = { new: 0, reviewing: 0, mastered: 0 };
+    results.forEach(({ status, count }) => { counts[status] += count; });
+    return counts;
 }
 
 // 后台评估队列：串行执行，同一题重复入队时只评估一次

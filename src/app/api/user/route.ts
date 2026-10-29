@@ -8,6 +8,8 @@ import type { Prisma } from "@prisma/client";
 import { unauthorized, notFound, badRequest, validationError, internalError } from "@/lib/api-errors";
 import { createLogger } from "@/lib/logger";
 import { isDefaultAdminPassword } from "@/lib/default-admin";
+import { syncMasteryLevels } from "@/lib/mastery";
+import { MAX_MASTERY_THRESHOLD, MIN_MASTERY_THRESHOLD } from "@/lib/mastery-status";
 
 const logger = createLogger('api:user');
 
@@ -21,6 +23,7 @@ const userUpdateSchema = z.object({
     enableGeogebra: z.boolean().optional(),
     enableSvgAnimation: z.boolean().optional(),
     questionDuplicateThreshold: z.number().min(1).max(100).multipleOf(0.01).optional(),
+    masteryThreshold: z.number().int().min(MIN_MASTERY_THRESHOLD).max(MAX_MASTERY_THRESHOLD).optional(),
 });
 
 export async function GET() {
@@ -42,6 +45,7 @@ export async function GET() {
                 enableGeogebra: true,
                 enableSvgAnimation: true,
                 questionDuplicateThreshold: true,
+                masteryThreshold: true,
                 // Do not return password
             }
         });
@@ -68,7 +72,7 @@ export async function PATCH(req: Request) {
 
     try {
         const body = await req.json();
-        const { name, email, password, educationStage, enrollmentYear, confirmBeforeImport, enableGeogebra, enableSvgAnimation, questionDuplicateThreshold } = userUpdateSchema.parse(body);
+        const { name, email, password, educationStage, enrollmentYear, confirmBeforeImport, enableGeogebra, enableSvgAnimation, questionDuplicateThreshold, masteryThreshold } = userUpdateSchema.parse(body);
 
         const updateData: Prisma.UserUpdateInput = {};
 
@@ -89,6 +93,9 @@ export async function PATCH(req: Request) {
         }
         if (typeof questionDuplicateThreshold === 'number') {
             updateData.questionDuplicateThreshold = questionDuplicateThreshold;
+        }
+        if (typeof masteryThreshold === 'number') {
+            updateData.masteryThreshold = masteryThreshold;
         }
 
         // 验证邮箱格式（如果提供了邮箱）
@@ -112,22 +119,33 @@ export async function PATCH(req: Request) {
             updateData.password = await hash(password, 10);
         }
 
-        const updatedUser = await prisma.user.update({
-            where: { email: session.user.email },
-            data: updateData,
-            select: {
-                name: true,
-                email: true,
-                educationStage: true,
-                enrollmentYear: true,
-                confirmBeforeImport: true,
-                enableGeogebra: true,
-                enableSvgAnimation: true,
-                questionDuplicateThreshold: true,
+        const sessionEmail = session.user.email;
+        const updatedUser = await prisma.$transaction(async (tx) => {
+            const updated = await tx.user.update({
+                where: { email: sessionEmail },
+                data: updateData,
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    educationStage: true,
+                    enrollmentYear: true,
+                    confirmBeforeImport: true,
+                    enableGeogebra: true,
+                    enableSvgAnimation: true,
+                    questionDuplicateThreshold: true,
+                    masteryThreshold: true,
+                }
+            });
+            // 阈值变化后同步已存的 masteryLevel，与按阈值推导的复习状态保持一致
+            if (typeof masteryThreshold === 'number') {
+                await syncMasteryLevels(tx, updated.id, masteryThreshold);
             }
+            return updated;
         });
 
-        return NextResponse.json(updatedUser);
+        const { id: _id, ...profile } = updatedUser;
+        return NextResponse.json(profile);
     } catch (error) {
         logger.error({ error }, 'Failed to update user profile');
         if (error instanceof z.ZodError) {

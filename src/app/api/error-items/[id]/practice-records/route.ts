@@ -64,7 +64,8 @@ export async function GET(
         const { userId: _userId, practiceRecords, ...mastery } = item;
         return NextResponse.json({
             ...mastery,
-            masteryStatus: masteryStatusOf(practiceRecords.length, mastery.masteryProbability),
+            masteryStatus: masteryStatusOf(practiceRecords.length, mastery.masteryProbability, user.masteryThreshold),
+            masteryThreshold: user.masteryThreshold,
             records: practiceRecords.map(({ examQuestion, ...record }) => ({
                 ...record,
                 exam: examQuestion

@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/auth";
 import { getAppTimeZone } from "@/lib/config";
 import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "@/lib/constants/pagination";
 import { createLogger } from "@/lib/logger";
+import { getMasteryThreshold } from "@/lib/mastery";
 import { PRACTICE_RECORD_COUNT, masteryStatusOf } from "@/lib/mastery-status";
 import { prisma } from "@/lib/prisma";
 import { getReviewPlan, isReviewDue } from "@/lib/review-schedule";
@@ -36,6 +37,7 @@ export async function GET(req: Request) {
             },
         });
 
+        const masteryThreshold = await getMasteryThreshold(session.user.id);
         const due = candidates
             .map((item) => ({ id: item.id, plan: getReviewPlan(item.createdAt, item.practiceRecords, timeZone) }))
             .filter(({ plan }) => isReviewDue(plan, timeZone, now))
@@ -59,7 +61,7 @@ export async function GET(req: Request) {
                 const { _count, ...item } = found;
                 return [{
                     ...item,
-                    masteryStatus: masteryStatusOf(_count.practiceRecords, item.masteryProbability),
+                    masteryStatus: masteryStatusOf(_count.practiceRecords, item.masteryProbability, masteryThreshold),
                     reviewStage: plan.stage,
                     nextReviewAt: plan.nextReviewAt,
                 }];

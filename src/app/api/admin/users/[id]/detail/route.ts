@@ -34,6 +34,7 @@ export async function GET(
                 createdAt: true,
                 educationStage: true,
                 enrollmentYear: true,
+                masteryThreshold: true,
             }
         })
 
@@ -133,7 +134,7 @@ export async function GET(
                 id: item.id,
                 questionText: item.questionText,
                 ocrText: item.ocrText,
-                masteryStatus: masteryStatusOf(item._count.practiceRecords, item.masteryProbability),
+                masteryStatus: masteryStatusOf(item._count.practiceRecords, item.masteryProbability, user.masteryThreshold),
                 createdAt: item.createdAt,
                 subject: item.subject,
             })),

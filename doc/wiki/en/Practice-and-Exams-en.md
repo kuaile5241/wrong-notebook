@@ -17,8 +17,9 @@ Mastery probability is estimated from the actual answer history linked to the or
 - AI evaluation is used first; if the AI call fails, a rule-based estimate is used and the source is recorded.
 - A question's status is decided automatically by its answer records and mastery probability, not marked manually:
   - **To review**: no similar-question records yet.
-  - **Reviewing**: has records and a mastery probability below 50% (also used while a new record is still being evaluated).
-  - **Mastered**: has records and a mastery probability of at least 50%.
+  - **Reviewing**: has records and a mastery probability below the mastered threshold (also used while a new record is still being evaluated).
+  - **Mastered**: has records and a mastery probability at or above the mastered threshold.
+- The mastered threshold defaults to 50% and each user can change it in **Settings → General** (a whole number from 1% to 100%). Status filters, statistics and the mastery scope of random exam papers use the new threshold immediately.
 - Notebooks can be filtered by these three statuses; the "not mastered" scope of random exam papers covers both to review and reviewing.
 - Without usable answer records, the mastery probability is empty.
 - Evaluation runs in the background, so after recording results you may need to wait or refresh to see the update.

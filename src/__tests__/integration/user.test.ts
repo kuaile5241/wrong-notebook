@@ -10,6 +10,9 @@ const mocks = vi.hoisted(() => ({
         findUnique: vi.fn(),
         update: vi.fn(),
     },
+    mockPrismaErrorItem: {
+        updateMany: vi.fn(async () => ({ count: 0 })),
+    },
     mockSession: {
         user: {
             email: 'test@example.com',
@@ -22,6 +25,7 @@ const mocks = vi.hoisted(() => ({
 vi.mock('@/lib/prisma', () => ({
     prisma: {
         user: mocks.mockPrismaUser,
+        $transaction: vi.fn((fn: (tx: unknown) => unknown) => fn({ user: mocks.mockPrismaUser, errorItem: mocks.mockPrismaErrorItem })),
     },
 }));
 
@@ -125,6 +129,48 @@ describe('/api/user', () => {
             expect(response.status).toBe(200);
             expect(mocks.mockPrismaUser.update.mock.calls[0][0].data).toEqual({ enableSvgAnimation: false });
             expect(mocks.mockPrismaUser.update.mock.calls[0][0].select.enableSvgAnimation).toBe(true);
+        });
+
+        it('应该更新已掌握阈值，并按新阈值同步错题的 masteryLevel', async () => {
+            mocks.mockPrismaUser.update.mockResolvedValue({ id: 'user-1', masteryThreshold: 80 });
+
+            const response = await PATCH(new Request('http://localhost/api/user', {
+                method: 'PATCH',
+                body: JSON.stringify({ masteryThreshold: 80 }),
+                headers: { 'Content-Type': 'application/json' },
+            }));
+
+            expect(response.status).toBe(200);
+            expect(await response.json()).toEqual({ masteryThreshold: 80 });
+            expect(mocks.mockPrismaUser.update.mock.calls[0][0].data).toEqual({ masteryThreshold: 80 });
+            const syncCalls = mocks.mockPrismaErrorItem.updateMany.mock.calls as unknown as [{ where: unknown; data: unknown }][];
+            expect(syncCalls.map(([args]) => args)).toEqual(expect.arrayContaining([
+                expect.objectContaining({ where: { AND: expect.arrayContaining([{ userId: 'user-1', masteryLevel: { not: 2 } }, expect.objectContaining({ masteryProbability: { gte: 0.8 } })]) }, data: { masteryLevel: 2 } }),
+                expect.objectContaining({ data: { masteryLevel: 1 } }),
+            ]));
+        });
+
+        it('未修改已掌握阈值时不同步 masteryLevel', async () => {
+            mocks.mockPrismaUser.update.mockResolvedValue({ id: 'user-1', name: 'New Name' });
+
+            await PATCH(new Request('http://localhost/api/user', {
+                method: 'PATCH',
+                body: JSON.stringify({ name: 'New Name' }),
+                headers: { 'Content-Type': 'application/json' },
+            }));
+
+            expect(mocks.mockPrismaErrorItem.updateMany).not.toHaveBeenCalled();
+        });
+
+        it.each([0, 101, 50.5, '60'])('已掌握阈值为 %s 时拒绝更新', async (value) => {
+            const response = await PATCH(new Request('http://localhost/api/user', {
+                method: 'PATCH',
+                body: JSON.stringify({ masteryThreshold: value }),
+                headers: { 'Content-Type': 'application/json' },
+            }));
+
+            expect(response.status).toBeGreaterThanOrEqual(400);
+            expect(mocks.mockPrismaUser.update).not.toHaveBeenCalled();
         });
 
         it('GeoGebra 偏好不是布尔值时拒绝更新', async () => {
