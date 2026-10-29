@@ -37,5 +37,6 @@ COPY --from=builder --chown=nextjs:nodejs /build/node_modules/@prisma ./node_mod
 COPY --from=builder --chown=nextjs:nodejs /build/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /build/dist-scripts ./dist-scripts
 COPY --from=builder --chown=nextjs:nodejs /build/scripts/seed-admin.js ./dist-scripts/scripts/seed-admin.js
-COPY --from=builder --chown=nextjs:nodejs --chmod=755 /build/docker-entrypoint.sh ./docker-entrypoint.sh
+COPY --from=builder --chown=nextjs:nodejs /build/docker-entrypoint.sh ./docker-entrypoint.sh
+RUN chmod 755 /app/docker-entrypoint.sh
 COPY --from=builder --chown=nextjs:nodejs /build/https-server.js ./https-server.js
