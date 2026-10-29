@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { RegionSelector } from "@/components/region-selector";
 import { ZoomControls } from "@/components/zoom-controls";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { cropImageRegions } from "@/lib/image-crop";
+import { cropImageRegions, toSafeImageSrc } from "@/lib/image-crop";
 import type { ImageRegion } from "@/lib/image-crop";
 import { frontendLogger } from "@/lib/frontend-logger";
 import { useImageZoom } from "@/lib/use-image-zoom";
@@ -32,6 +32,7 @@ interface ImageCropperProps {
 
 export function ImageCropper({ imageSrc, open, onClose, onCropComplete, onMultiCropComplete }: ImageCropperProps) {
     const { t } = useLanguage();
+    const safeImageSrc = toSafeImageSrc(imageSrc);
     // 始终保存百分比坐标，缩放改变图片显示尺寸后仍然准确
     const [crop, setCrop] = useState<Crop>();
     const imgRef = useRef<HTMLImageElement>(null);
@@ -95,7 +96,7 @@ export function ImageCropper({ imageSrc, open, onClose, onCropComplete, onMultiC
                             {mode === "multi" ? (
                                 <RegionSelector
                                     ref={multiImgRef}
-                                    imageSrc={imageSrc}
+                                    imageSrc={safeImageSrc}
                                     regions={regions}
                                     onChange={setRegions}
                                     imageStyle={imageStyle}
@@ -106,7 +107,7 @@ export function ImageCropper({ imageSrc, open, onClose, onCropComplete, onMultiC
                                     <img
                                         ref={imgRef}
                                         alt="Crop me"
-                                        src={imageSrc}
+                                        src={safeImageSrc}
                                         onLoad={onImageLoad}
                                         style={imageStyle}
                                     />

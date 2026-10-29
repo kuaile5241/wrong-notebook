@@ -8,7 +8,7 @@ import { regionFromPoints } from "@/lib/image-crop";
 import type { ImageRegion } from "@/lib/image-crop";
 
 interface RegionSelectorProps {
-    imageSrc: string;
+    imageSrc?: string;
     regions: ImageRegion[];
     onChange: (regions: ImageRegion[]) => void;
     /** 图片显示样式，缩放时由外部传入 */

@@ -7,6 +7,11 @@ export interface ImageRegion {
 }
 
 /** 规范化拖拽得到的两个角点为矩形，并限制在图片范围内 */
+/** 待裁剪图片只来自本地文件生成的 blob/data 地址，其他地址一律不渲染 */
+export function toSafeImageSrc(src: string): string | undefined {
+    return /^(blob:|data:image\/)/i.test(src) ? src : undefined;
+}
+
 export function regionFromPoints(ax: number, ay: number, bx: number, by: number): ImageRegion {
     const clamp = (value: number) => Math.min(1, Math.max(0, value));
     const x1 = clamp(Math.min(ax, bx));
