@@ -53,7 +53,8 @@ export function learningView(row: LearningSession): LearningView {
         const result = state.engine.status[id];
         const pending = !result && state.engine.attempts[id]?.some(a => a.result !== 'correct');
         if (!result && !pending) continue;
-        const status = pending ? 'pending' : result.s === 'mastered' ? (result.src === 'direct' ? 'direct' : 'inferred') : result.s === 'shaky' ? 'shaky' : 'weak';
+        const selfAssessed = state.history.some(h => h.question.topicId === id && h.method === 'self');
+        const status = pending ? 'pending' : result.s === 'mastered' ? (result.src === 'direct' ? (selfAssessed ? 'self' : 'direct') : 'inferred') : result.s === 'shaky' ? 'shaky' : 'weak';
         topics.push({ id, name: topic.name, chapter: topic.chapter, status });
     }
     return { id: row.id, title: row.title, mode: row.mode, revision: row.revision, finished: !question,

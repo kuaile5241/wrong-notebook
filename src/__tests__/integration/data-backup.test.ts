@@ -75,6 +75,7 @@ beforeAll(() => {
 }, 120000);
 
 beforeEach(async () => {
+    mocks.session.user.role = 'user';
     mocks.scheduleMasteryEvaluation.mockClear();
     await database.user.deleteMany();
     await database.user.create({ data: { id: 'user-1', email: mocks.session.user.email, password: 'test-only' } });
@@ -108,6 +109,22 @@ afterAll(async () => {
 });
 
 describe('数据导出后再导入（真实 SQLite）', () => {
+    it('管理员全量导入也不能把学习会话的错题链接到另一账户', async () => {
+        mocks.session.user.role = 'admin';
+        await database.user.create({ data: { id: 'user-2', email: 'second@example.com', password: 'test-only' } });
+        await database.errorItem.create({ data: { id: 'foreign-item', userId: 'user-2', originalImageUrl: '', questionText: '另一账户的题' } });
+        const state = createLearningState(['cnm_p001'], 'practice', 3), q = nextLearningQuestion(state)!;
+        const result = applyLearningAnswer(state, q, { revision: 0, questionId: q.id, requestId: '12345678-1234-4234-8234-123456789012', answer: '', skip: true });
+        if ('manual' in result) throw new Error('Unexpected manual');
+        result.history.errorItemId = 'foreign-item';
+        await database.learningSession.create({ data: { id: 'foreign-link', userId: 'user-1', title: '学习', mode: 'practice', datasetVersion: DATASET_REVISION, state: JSON.stringify(result.state) } });
+        const exported = await EXPORT(new Request('http://localhost/api/export?all=true')); const backup = await exported.json();
+        await database.learningSession.deleteMany();
+        const imported = await IMPORT(new Request('http://localhost/api/import?all=true', { method: 'POST', body: JSON.stringify(backup) }));
+        expect(imported.status).toBe(200);
+        const restored = parseLearning((await database.learningSession.findUniqueOrThrow({ where: { id: 'foreign-link' } })).state);
+        expect(restored.history[0].errorItemId).toBeUndefined();
+    });
     it('在线学习会话可备份恢复并重建答案与错题关联', async () => {
         const state = createLearningState(['cnm_p001'], 'practice', 3), q = nextLearningQuestion(state)!;
         const answer = applyLearningAnswer(state, q, { revision: 0, questionId: q.id, requestId: '12345678-1234-4234-8234-123456789012', answer: '', skip: true });

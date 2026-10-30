@@ -7,7 +7,7 @@ export const learningEn = {
     home: 'Back to topics', submit: 'Check answer', skip: 'I don’t know', next: 'Next question', answer: 'Your answer', reference: 'Reference answer', explanation: 'Explanation',
     correct: 'Well done!', wrong: 'Let’s review this step', skipped: 'We’ll add this to your review', manual: 'This answer needs your review. Compare with the reference, then choose:', selfCorrect: 'My answer is correct', selfWrong: 'I need more practice', selfLabel: 'Self-assessed',
     archived: 'Saved to your mistake notebook', openMistake: 'Open mistake', progress: 'Answered', result: 'Learning summary', accuracy: 'Correct', history: 'Your answers',
-    direct: 'Passed this check', inferred: 'Likely familiar · not tested', shaky: 'Needs practice', weak: 'Foundation to review', pending: 'Needs confirmation',
+    direct: 'Passed this check', self: 'Passed by self-assessment', inferred: 'Likely familiar · not tested', shaky: 'Needs practice', weak: 'Foundation to review', pending: 'Needs confirmation',
     diagnosisHint: 'Checks follow required foundations. Two correct answers are a clue, not proof of lasting mastery. Inferred knowledge stays separate from tested results.',
     back: 'Back', pick: 'Choose a topic to begin', currentTopic: 'Current topic', rule: 'Rule-graded', sourceContent: 'Question content is in the source language.', prerequisites: 'Helpful foundations', required: 'Required', suggested: 'Suggested', related: 'Practice related topics',
 };
@@ -20,7 +20,7 @@ export const learningZh: typeof learningEn = {
     home: '返回知识点', submit: '提交答案', skip: '这题我还不会', next: '继续下一题', answer: '我的答案', reference: '参考答案', explanation: '分步解析',
     correct: '做得好，继续加油！', wrong: '一起把这一步弄明白', skipped: '已加入复习，慢慢来', manual: '这种答案需要对照参考答案自评，请确认：', selfCorrect: '我的答案正确', selfWrong: '还需要练习', selfLabel: '自主评定',
     archived: '已归入你的错题本', openMistake: '查看错题', progress: '已答题数', result: '本次学习小结', accuracy: '答对', history: '我的作答',
-    direct: '本次实测通过', inferred: '推测已会 · 尚未验证', shaky: '还不太稳定', weak: '建议补一补', pending: '还需要确认',
+    direct: '本次实测通过', self: '自主评定通过', inferred: '推测已会 · 尚未验证', shaky: '还不太稳定', weak: '建议补一补', pending: '还需要确认',
     diagnosisHint: '沿必需的前置基础出题。连续答对两题只是掌握线索；推测已会和实际做题通过分别记录，不会覆盖以前的错题。',
     back: '返回', pick: '选一个知识点，开始今天的进步', currentTopic: '当前知识点', rule: '规则判分', sourceContent: '题目保持来源语言。', prerequisites: '先学哪些基础', required: '必需基础', suggested: '建议了解', related: '练习相关知识点',
 };

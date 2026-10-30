@@ -25,7 +25,7 @@ export interface AnswerHistory {
 export interface StoredLearning {
     engine: EngineSession | null; queue: string[]; history: AnswerHistory[];
 }
-export interface TopicStatus { id: string; name: string; chapter: string; status: 'direct' | 'inferred' | 'shaky' | 'weak' | 'pending' }
+export interface TopicStatus { id: string; name: string; chapter: string; status: 'direct' | 'self' | 'inferred' | 'shaky' | 'weak' | 'pending' }
 export interface LearningView {
     id: string; title: string; mode: string; revision: number; finished: boolean;
     answered: number; limit: number; correct: number; question: PublicQuestion | null;

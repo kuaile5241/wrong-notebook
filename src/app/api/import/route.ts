@@ -584,7 +584,8 @@ export async function POST(req: Request) {
             for (const raw of (body.learningSessions || [])) {
                 const record = learningBackupSchema.parse(raw);
                 const targetUserId = importAll ? record.userId : user.id;
-                const state = restoreLearningState(record.state, record.mode, errorItemIdMap);
+                const ownedItemMap = new Map([...errorItemIdMap].filter(([oldId]) => errorItemOwnerMap.get(oldId) === targetUserId));
+                const state = restoreLearningState(record.state, record.mode, ownedItemMap);
                 const existing = await tx.learningSession.findFirst({ where: { id: record.id } });
                 if (existing) continue; // 不覆盖任何现有会话，包括其他用户的同 ID。
                 await tx.learningSession.create({ data: {
