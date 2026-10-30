@@ -23,7 +23,9 @@ export async function synthesizeAliyun(text: string, config: AliyunTtsConfig, si
     if (!aliyunReady(config)) throw new Error('AUDIO_NOT_CONFIGURED');
     const timeout = AbortSignal.timeout(30_000);
     const requestSignal = signal ? AbortSignal.any([signal, timeout]) : timeout;
-    const response = await fetch(`https://${config.workspaceId}.cn-beijing.maas.aliyuncs.com/api/v1/services/audio/tts/SpeechSynthesizer`, {
+    // 旧业务空间提供数字 ID，未分配专属 API Host 时使用官方 DashScope 域名。
+    const host = /^\d+$/.test(config.workspaceId) ? 'dashscope.aliyuncs.com' : `${config.workspaceId}.cn-beijing.maas.aliyuncs.com`;
+    const response = await fetch(`https://${host}/api/v1/services/audio/tts/SpeechSynthesizer`, {
         method: 'POST', redirect: 'error', signal: requestSignal,
         headers: { Authorization: `Bearer ${config.apiKey}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ model: ALIYUN_MODEL, input: { text, voice: config.voice, format: 'wav', sample_rate: 24000, rate: 0.95 } }),

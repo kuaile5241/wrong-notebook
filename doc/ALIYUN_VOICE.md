@@ -12,3 +12,5 @@
 
 官方接口：https://help.aliyun.com/zh/model-studio/cosyvoice-tts-http-api
 音色：https://help.aliyun.com/zh/model-studio/cosyvoice-voice-list
+
+旧数字业务空间 ID 使用阿里云官方 DashScope 兼容域名；API Host 形式的空间 ID 使用北京专属域名。

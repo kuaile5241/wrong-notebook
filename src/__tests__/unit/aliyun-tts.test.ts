@@ -27,4 +27,9 @@ describe('阿里云自然语音协议与边界', () => {
         expect(aliyunTtsSchema.safeParse({ ...config, workspaceId: 'evil.com/path' }).success).toBe(false);
         expect(aliyunTtsSchema.safeParse({ ...config, voice: 'unknown' }).success).toBe(false);
     });
+    it('旧数字业务空间使用官方兼容域名，仍不向客户端传递密钥', async () => {
+        const request = vi.fn().mockResolvedValueOnce(Response.json({ output: { audio: { url: 'https://dashscope-result-bj.oss-cn-beijing.aliyuncs.com/voice.wav' } } })).mockResolvedValueOnce(new Response(new Uint8Array([1]))); vi.stubGlobal('fetch', request);
+        await synthesizeAliyun('学习', { ...config, workspaceId: '123456' });
+        expect(request.mock.calls[0][0]).toBe('https://dashscope.aliyuncs.com/api/v1/services/audio/tts/SpeechSynthesizer');
+    });
 });

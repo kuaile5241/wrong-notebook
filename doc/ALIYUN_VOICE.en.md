@@ -10,3 +10,5 @@ Optional environment defaults: DASHSCOPE_API_KEY, DASHSCOPE_WORKSPACE_ID. Admini
 
 Official API: https://help.aliyun.com/zh/model-studio/cosyvoice-tts-http-api
 Voices: https://help.aliyun.com/zh/model-studio/cosyvoice-voice-list
+
+Legacy numeric workspace IDs use the official DashScope endpoint; API Host workspace IDs use the dedicated Beijing endpoint.
