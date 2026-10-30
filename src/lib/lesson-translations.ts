@@ -11,6 +11,8 @@ export const lessonEn = {
     notConfigured: 'Ask an administrator to configure Aliyun natural voice in Settings → AI Provider.', credentials: 'Aliyun credentials are invalid or lack permission. Ask an administrator to check.',
     voiceSettings: 'Aliyun natural narration', configHint: 'Use a Beijing Model Studio API Key and Workspace ID. Keys stay on the server. Saving and previewing incurs a small synthesis charge. Use HTTPS or a secure tunnel to enter credentials.',
     enableNatural: 'Enable natural voice for all accounts', workspace: 'Beijing Workspace ID', apiKey: 'Model Studio API Key', female: 'Long Xiaochun · warm female voice', male: 'Long Anyang · sunny male voice', saveVoice: 'Save voice settings', previewVoice: 'Save & preview', saved: 'Voice settings saved.', configFailed: 'Check the API Key and Workspace ID, then save again.', tapPreview: 'Audio is ready. Use the player below.',
+    speechText: 'Show exactly what will be read', teacher: 'Long Xiaoxia · clear teacher voice',
+    animationVoice: 'Detailed animation narration', animationPlay: 'Play with narration', animationSilent: 'Return to silent controls', animationDetailed: 'The animation follows each spoken step. Pause, resume or choose a step here.', animationFallback: 'This animation uses the original explanation as narration. Regenerate the animation for a detailed script for each scene.', animationEmpty: 'Add an explanation before using narrated animation.',
     long: 'This explanation is long. Read the full text below for the remaining content.',
 };
 export const lessonZh: typeof lessonEn = {
@@ -26,5 +28,7 @@ export const lessonZh: typeof lessonEn = {
     notConfigured: '请管理员在“设置 → AI 渠道”配置阿里云自然语音。', credentials: '阿里云密钥无效或权限不足，请管理员检查。',
     voiceSettings: '阿里云自然朗读', configHint: '使用百炼北京地域的 API Key 和业务空间 ID，密钥仅保存在服务器。试听会产生少量语音费用。请通过 HTTPS 或安全隧道填写密钥。',
     enableNatural: '为所有账号启用自然语音', workspace: '北京地域业务空间 ID', apiKey: '百炼 API Key', female: '龙小淳 · 温暖女声', male: '龙安洋 · 阳光男声', saveVoice: '保存语音设置', previewVoice: '保存并试听', saved: '语音设置已保存。', configFailed: '请检查 API Key 和业务空间 ID 后重新保存。', tapPreview: '语音已生成，请使用下方播放器播放。',
+    speechText: '查看本步朗读文字', teacher: '龙小夏 · 清晰讲题女声',
+    animationVoice: '动画详细语音讲解', animationPlay: '播放动画和讲解', animationSilent: '切回无声动画控件', animationDetailed: '动画跟随本步语音播放；可在这里暂停、继续或切换步骤。', animationFallback: '当前动画使用原解析配音，重新生成动画可获得逐场景的详细讲稿。', animationEmpty: '请先补充解析，再使用动画配音。',
     long: '解析较长，剩余内容请在下方完整解析中查看。',
 };

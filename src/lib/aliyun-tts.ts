@@ -5,7 +5,7 @@ export const aliyunTtsSchema = z.object({
     enabled: z.boolean(),
     apiKey: z.string().trim().max(512).refine(v => !/[\r\n]/.test(v)),
     workspaceId: z.string().trim().max(100).regex(/^[a-zA-Z0-9-]*$/),
-    voice: z.enum(['longanyang', 'longxiaochun_v3']),
+    voice: z.enum(['longanyang', 'longxiaochun_v3', 'longxiaoxia_v3']),
 });
 export type AliyunTtsConfig = z.infer<typeof aliyunTtsSchema>;
 export const ALIYUN_MODEL = 'cosyvoice-v3-flash';
@@ -14,7 +14,7 @@ export function getAliyunTtsConfig(): AliyunTtsConfig {
     return { enabled: stored?.enabled ?? !!process.env.DASHSCOPE_API_KEY,
         apiKey: stored?.apiKey || process.env.DASHSCOPE_API_KEY || '',
         workspaceId: stored?.workspaceId || process.env.DASHSCOPE_WORKSPACE_ID || '',
-        voice: stored?.voice ?? 'longxiaochun_v3' };
+        voice: stored?.voice ?? 'longxiaoxia_v3' };
 }
 export function aliyunReady(config = getAliyunTtsConfig()) { return config.enabled && !!config.apiKey && /^[a-zA-Z0-9-]+$/.test(config.workspaceId); }
 

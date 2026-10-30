@@ -24,7 +24,7 @@ export interface OpenAIInstance {
 type VendorConfigs = { [K in VendorProviderId]?: VendorConfig };
 
 export interface AppConfig extends VendorConfigs {
-    aliyunTts?: { enabled: boolean; apiKey: string; workspaceId: string; voice: 'longanyang' | 'longxiaochun_v3' };
+    aliyunTts?: { enabled: boolean; apiKey: string; workspaceId: string; voice: 'longanyang' | 'longxiaochun_v3' | 'longxiaoxia_v3' };
     aiProvider: 'gemini' | 'openai' | 'azure' | 'anthropic' | 'minimax-code' | VendorProviderId;
     allowRegistration?: boolean;
     /** 普通用户每天可发起的 AI 调用次数，0 表示不限制；管理员不受限制 */

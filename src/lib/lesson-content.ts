@@ -1,5 +1,6 @@
+import { chineseNumber } from './speech-numbers';
 export interface LessonContent { question?: string | null; answer?: string | null; analysis?: string | null; figure?: string | null }
-export type LessonSource = { kind: 'learning'; id: string; questionId: string } | { kind: 'error'; id: string };
+export type LessonSource = { kind: 'learning'; id: string; questionId: string } | { kind: 'error'; id: string } | { kind: 'animation'; id: string; language: 'zh' | 'en' };
 export interface LessonStep { kind: 'question' | 'analysis' | 'answer'; markdown: string }
 export function questionLesson(q: { prompt: string; answer: string; explanation: string; figure?: string; choices?: { key: string; text: string }[] }): LessonContent {
     return { question: [q.prompt, ...(q.choices ?? []).map(c => `${c.key}. ${c.text}`)].join('\n'), answer: q.answer, analysis: q.explanation, figure: q.figure };
@@ -26,10 +27,12 @@ export function buildLesson(content: LessonContent) {
         if (raw.length > 80_000) truncated = true;
         for (const markdown of paragraphs(raw.slice(0, 80_000))) steps.push({ kind, markdown });
     }
-    return { steps, truncated, language: /[\u3400-\u9fff]/.test(steps.map(s => s.markdown).join('')) ? 'zh' as const : 'en' as const,
+    const text = steps.map(s => s.markdown).join('');
+    return { steps, truncated, language: /[\u3400-\u9fff]/.test(text) || !/[a-zA-Z]{2,}/.test(text) ? 'zh' as const : 'en' as const,
         fingerprint: lessonFingerprint(steps.map(s => `${s.kind}:${s.markdown}`).join('\n')) };
 }
 export function lessonFingerprint(text: string) {
+    text = 'spoken-v2\0' + text;
     let hash = 2166136261;
     for (let i = 0; i < text.length; i++) hash = Math.imul(hash ^ text.charCodeAt(i), 16777619);
     return (hash >>> 0).toString(16);
@@ -38,9 +41,14 @@ export function lessonFingerprint(text: string) {
 /** 常见数学符号转为可朗读文本；不做代数化简或求值。 */
 export function speechText(markdown: string, language?: 'zh' | 'en'): string {
     const chinese = language ? language === 'zh' : /[\u3400-\u9fff]/.test(markdown);
-    let text = markdown.replace(/<(svg|script|style)\b[\s\S]*?<\/\1>/gi, '').replace(/<\/?(?:p|div|span|br|strong|em|sup|sub|table|thead|tbody|tr|td|th)\b[^>]*>/gi, ' ')
+    let text = markdown.replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xfee0))
+        .replace(/[＝﹦]/g, '=').replace(/＋/g, '+').replace(/[﹣–—]/g, '−').replace(/％/g, '%')
+        .replace(/&#(x[\da-f]+|\d+);/gi, (_, code: string) => { const n = code[0].toLowerCase() === 'x' ? parseInt(code.slice(1), 16) : Number(code); return n > 0 && n <= 0x10ffff && !(n >= 0xd800 && n <= 0xdfff) ? String.fromCodePoint(n) : ''; })
+        .replace(/&(?:equals|minus|plus|times|divide);/g, c => ({ '&equals;': '=', '&minus;': '−', '&plus;': '+', '&times;': '×', '&divide;': '÷' })[c] || c)
+        .replace(/\\(?:leqslant|le)\b/g, '≤').replace(/\\(?:geqslant|ge)\b/g, '≥').replace(/\\ne\b|\\not\s*=/g, '≠')
+        .replace(/<(svg|script|style)\b[\s\S]*?<\/\1>/gi, '').replace(/<\/?(?:p|div|span|br|strong|em|sup|sub|table|thead|tbody|tr|td|th)\b[^>]*>/gi, ' ')
         .replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
-        .replace(/```[^\n]*\n|```|~~~/g, ' ').replace(/^\s*(?:#{1,6}\s*|>\s*|[-*+]\s+|\d+[.)、]\s*)/gm, '')
+        .replace(/```[^\n]*\n|```|~~~/g, ' ').replace(/^\s*(?:#{1,6}\s*|>\s*|[-*+]\s+(?!\s*\d)|\d+[.)]\s+|\d+、\s*)/gm, '')
         .replace(/\\(?:left|right|displaystyle|textstyle)\b/g, '').replace(/\\(?:text|mathrm|mathbf|operatorname)\{([^{}]*)\}/g, '$1');
     text = text.replace(/\\%/g, '%').replace(/\\(?:qquad|quad)\b/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
         .replace(/\$/g, ' ').replace(/\\[()[\]]/g, ' ')
@@ -60,27 +68,33 @@ export function speechText(markdown: string, language?: 'zh' | 'en'): string {
     text = text.replace(/[-−－](?=\s*[\da-zA-Z])/g, (sign, offset: number) =>
         /[0-9a-zA-Z²³π方)\]}）]$/.test(beforeSigns.slice(0, offset).trimEnd()) ? sign : chinese ? '负' : 'negative ');
     const symbols: Record<string, [string, string]> = {
+        '<=': ['小于等于', ' less than or equal to '], '>=': ['大于等于', ' greater than or equal to '], '!=': ['不等于', ' not equal to '],
         '\\times': ['乘以', ' times '], '\\cdot': ['乘以', ' times '], '\\div': ['除以', ' divided by '],
         '\\leq': ['小于等于', ' less than or equal to '], '\\geq': ['大于等于', ' greater than or equal to '],
         '\\neq': ['不等于', ' not equal to '], '\\pm': ['正负', ' plus or minus '], '\\pi': ['派', ' pi '],
+        '\\approx': ['约等于', ' approximately equals '], '\\equiv': ['恒等于', ' identically equals '], '\\Rightarrow': ['因此', ' implies '], '\\rightarrow': ['趋向', ' tends to '],
+        '\\infty': ['无穷大', ' infinity '], '\\sin': ['正弦', ' sine '], '\\cos': ['余弦', ' cosine '], '\\tan': ['正切', ' tangent '],
         '≤': ['小于等于', ' less than or equal to '], '≥': ['大于等于', ' greater than or equal to '], '≠': ['不等于', ' not equal to '],
         '×': ['乘以', ' times '], '÷': ['除以', ' divided by '], '±': ['正负', ' plus or minus '], '√': ['根号', 'square root of '], 'π': ['派', ' pi '],
-        '+': ['加', ' plus '], '=': ['等于', ' equals '], '%': ['百分号', ' percent '], '°': ['度', ' degrees '],
+        '≈': ['约等于', ' approximately equals '], '∠': ['角', ' angle '], '⊥': ['垂直于', ' perpendicular to '], '∥': ['平行于', ' parallel to '],
+        '≡': ['恒等于', ' identically equals '], '∵': ['因为', ' because '], '∴': ['所以', ' therefore '], '⇒': ['因此', ' implies '], '∞': ['无穷大', ' infinity '],
+        '+': ['加上', ' plus '], '=': ['，等于', ' equals '], '%': ['百分号', ' percent '], '°': ['度', ' degrees '],
     };
     for (const [symbol, names] of Object.entries(symbols)) text = text.split(symbol).join(names[chinese ? 0 : 1]);
-    text = text.replace(/(?:-|−|－)/g, chinese ? '减' : ' minus ').replace(/[<>]/g, m => chinese ? (m === '<' ? '小于' : '大于') : (m === '<' ? ' less than ' : ' greater than '));
+    text = text.replace(/(?:-|−|－)/g, chinese ? '减去' : ' minus ').replace(/[<>]/g, m => chinese ? (m === '<' ? '小于' : '大于') : (m === '<' ? ' less than ' : ' greater than '));
     // 未覆盖的 TeX 用屏幕公式提示，避免将未知命令当作已理解的数学念出来。
     text = text.replace(/\\[a-zA-Z]+(?:\[[^\]]*\])?/g, chinese ? '（公式请看屏幕）' : ' (see the formula) ')
         .replace(/\\[()[\]!,:;]|[$`*#{}]/g, ' ').replace(/&(?:nbsp|amp|lt|gt);/g, ' ')
         .replace(/\s+/g, ' ').trim();
-    return text;
+    return chinese ? text.replace(/\d+(?:\.\d+)?/g, chineseNumber) : text;
 }
-export function speechChunks(text: string, limit = 150) {
+export function speechChunks(text: string, limit = 450) {
     const chunks: string[] = [];
     let rest = text.trim();
     while (rest.length > limit) {
         let at = -1;
-        for (let i = limit; i >= Math.floor(limit / 2); i--) if (/[。！？；，,;.!?\s]/.test(rest[i])) { at = i + 1; break; }
+        for (let i = limit - 1; i >= Math.floor(limit / 2); i--) if (/[。！？；;!?]/.test(rest[i])) { at = i + 1; break; }
+        if (at < 0) for (let i = limit - 1; i >= Math.floor(limit / 2); i--) if (/[，,\s]/.test(rest[i])) { at = i + 1; break; }
         const end = at > 0 ? at : limit;
         chunks.push(rest.slice(0, end)); rest = rest.slice(end).trim();
     }

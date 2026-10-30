@@ -4,7 +4,7 @@ import { Headphones, Pause, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MarkdownRenderer } from '@/components/markdown-renderer';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { buildLesson } from '@/lib/lesson-content';
+import { buildLesson, speechText } from '@/lib/lesson-content';
 import type { LessonContent, LessonSource } from '@/lib/lesson-content';
 import { INITIAL_PLAYBACK, LessonPlayer } from '@/lib/lesson-player';
 import type { VoiceMode } from '@/lib/lesson-player';
@@ -15,7 +15,8 @@ export function StepLesson({ content, source }: { content: LessonContent; source
     const { question, answer, analysis, figure } = content;
     const lesson = useMemo(() => buildLesson({ question, answer, analysis }), [question, answer, analysis]);
     const { kind, id } = source, questionId = source.kind === 'learning' ? source.questionId : '';
-    const player = useMemo(() => new LessonPlayer(lesson.steps, lesson.fingerprint, kind === 'learning' ? { kind, id, questionId } : { kind, id }), [lesson, kind, id, questionId]);
+    const sourceLanguage = source.kind === 'animation' ? source.language : 'zh';
+    const player = useMemo(() => new LessonPlayer(lesson.steps, lesson.fingerprint, kind === 'learning' ? { kind, id, questionId } : kind === 'animation' ? { kind, id, language: sourceLanguage } : { kind, id }, lesson.language), [lesson, kind, id, questionId, sourceLanguage]);
     const state = useSyncExternalStore(player.subscribe, player.getSnapshot, () => INITIAL_PLAYBACK);
     useEffect(() => {
         const onVisibility = () => { if (document.hidden) player.pause(); };
@@ -48,6 +49,7 @@ export function StepLesson({ content, source }: { content: LessonContent; source
         {state.mode === 'compatible' && <p className="text-xs text-muted-foreground">{l.compatibleHint}</p>}
         {(state.mode === 'auto' || state.mode === 'natural') && <p className="text-xs text-muted-foreground">{l.naturalHint}</p>}
         {lesson.truncated && <p className="text-sm">{l.long}</p>}
+        <details className="rounded-xl border bg-background p-3"><summary className="cursor-pointer text-sm">{l.speechText}</summary><p className="mt-2 text-sm leading-7">{speechText(selected.markdown, lesson.language)}</p></details>
         <details className="rounded-xl border bg-background p-3"><summary className="cursor-pointer text-sm font-semibold">{l.full}</summary><div className="mt-3"><MarkdownRenderer content={analysis} /><MarkdownRenderer content={answer} /></div></details>
     </section>;
 }

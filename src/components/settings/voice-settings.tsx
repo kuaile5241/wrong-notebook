@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-interface VoiceConfig { enabled: boolean; apiKey: string; workspaceId: string; voice: 'longanyang' | 'longxiaochun_v3'; ready?: boolean }
+interface VoiceConfig { enabled: boolean; apiKey: string; workspaceId: string; voice: 'longanyang' | 'longxiaochun_v3' | 'longxiaoxia_v3'; ready?: boolean }
 export function VoiceSettings() {
     const l = useLanguage().t.lesson;
-    const [config, setConfig] = useState<VoiceConfig>({ enabled: false, apiKey: '', workspaceId: '', voice: 'longxiaochun_v3' });
+    const [config, setConfig] = useState<VoiceConfig>({ enabled: false, apiKey: '', workspaceId: '', voice: 'longxiaoxia_v3' });
     const [busy, setBusy] = useState(false), [message, setMessage] = useState(''), [loaded, setLoaded] = useState(false);
     const [previewUrl, setPreviewUrl] = useState('');
     const audio = useRef<HTMLAudioElement | null>(null), url = useRef('');
@@ -37,7 +37,7 @@ export function VoiceSettings() {
             <label className="flex items-center gap-2"><input type="checkbox" checked={config.enabled} onChange={e => setConfig({ ...config, enabled: e.target.checked })} />{l.enableNatural}</label>
             <label className="block text-sm">{l.workspace}<input autoComplete="off" className="mt-1 block min-h-10 w-full rounded border bg-background px-3" value={config.workspaceId} onChange={e => setConfig({ ...config, workspaceId: e.target.value })} /></label>
             <label className="block text-sm">{l.apiKey}<input type="password" autoComplete="new-password" className="mt-1 block min-h-10 w-full rounded border bg-background px-3" value={config.apiKey} onChange={e => setConfig({ ...config, apiKey: e.target.value })} /></label>
-            <label className="block text-sm">{l.voice}<select className="ml-2 min-h-10 rounded border bg-background px-3" value={config.voice} onChange={e => setConfig({ ...config, voice: e.target.value as VoiceConfig['voice'] })}><option value="longxiaochun_v3">{l.female}</option><option value="longanyang">{l.male}</option></select></label>
+            <label className="block text-sm">{l.voice}<select className="ml-2 min-h-10 rounded border bg-background px-3" value={config.voice} onChange={e => setConfig({ ...config, voice: e.target.value as VoiceConfig['voice'] })}><option value="longxiaochun_v3">{l.female}</option><option value="longxiaoxia_v3">{l.teacher}</option><option value="longanyang">{l.male}</option></select></label>
             <div className="flex flex-wrap gap-2"><Button onClick={() => void save(false)}>{l.saveVoice}</Button><Button variant="outline" onClick={() => void save(true)}>{busy ? l.preparing : l.previewVoice}</Button></div>
         </fieldset>
         <p role="status" className="text-sm">{message}</p>

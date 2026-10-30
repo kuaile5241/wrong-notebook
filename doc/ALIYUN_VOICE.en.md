@@ -1,6 +1,6 @@
 # Aliyun natural narration
 
-Administrators open Settings → AI Provider → Aliyun natural narration. Enter a Beijing Model Studio API Key and Workspace ID over HTTPS or an SSH tunnel, enable and save. Long Xiaochun female and Long Anyang male voices are available. Save & preview uses billable synthesis. Keys remain in server config/app-config.json, are masked in API responses, and never enter the app or Git. Protect configuration backups.
+Administrators open Settings → AI Provider → Aliyun natural narration. Enter a Beijing Model Studio API Key and Workspace ID over HTTPS or an SSH tunnel, enable and save. Long Xiaoxia is the default teacher voice; Long Xiaochun and Long Anyang remain available. Save & preview uses billable synthesis. Keys remain in server config/app-config.json, are masked in API responses, and never enter the app or Git. Protect configuration backups.
 
 Automatic mode uses Aliyun when enabled, otherwise the existing compatible voice. Natural voice errors remain visible; there is no silent mechanical fallback. Device mode reports missing voices immediately. Phones need no proxy or app reinstall. Speed, pause, replay and continuous steps remain available.
 

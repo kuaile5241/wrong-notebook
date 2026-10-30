@@ -2,8 +2,8 @@ import { speechChunks, speechText } from './lesson-content';
 import type { LessonSource, LessonStep } from './lesson-content';
 
 export type VoiceMode = 'auto' | 'device' | 'compatible' | 'natural';
-export interface LessonPlayback { index: number; status: 'idle' | 'loading' | 'playing' | 'paused' | 'error'; error: string; rate: number; mode: VoiceMode; continuous: boolean }
-export const INITIAL_PLAYBACK: LessonPlayback = { index: 0, status: 'idle', error: '', rate: 1, mode: 'auto', continuous: false };
+export interface LessonPlayback { index: number; status: 'idle' | 'loading' | 'playing' | 'paused' | 'error'; error: string; rate: number; mode: VoiceMode; continuous: boolean; progress: number }
+export const INITIAL_PLAYBACK: LessonPlayback = { index: 0, status: 'idle', error: '', rate: 1, mode: 'auto', continuous: false, progress: 0 };
 let activePlayer: { owner: object; stop: () => void } | null = null;
 
 /** 短句播放控制器。暂停后从当前短句继续，不依赖 Android 的 pause/resume 实现。 */
@@ -17,9 +17,11 @@ export class LessonPlayer {
     private objectUrl = '';
     private utterance: SpeechSynthesisUtterance | null = null;
     private abort: AbortController | null = null;
+    private prepared: { key: string; promise: Promise<Blob>; abort: AbortController } | null = null;
     private watchdog: ReturnType<typeof setTimeout> | undefined;
     private language: 'zh' | 'en';
-    constructor(private steps: LessonStep[], private fingerprint: string, private source: LessonSource) { this.language = steps.some(s => /[\u3400-\u9fff]/.test(s.markdown)) ? 'zh' : 'en'; }
+    private segments = new Map<number, string[]>();
+    constructor(private steps: LessonStep[], private fingerprint: string, private source: LessonSource, language?: 'zh' | 'en') { this.language = language ?? (steps.some(s => /[\u3400-\u9fff]/.test(s.markdown)) ? 'zh' : 'en'); }
     subscribe = (fn: () => void) => { this.listeners.add(fn); return () => { this.listeners.delete(fn); }; };
     getSnapshot = () => this.state;
     private update(patch: Partial<LessonPlayback>) { this.state = { ...this.state, ...patch }; this.listeners.forEach(fn => fn()); }
@@ -28,17 +30,19 @@ export class LessonPlayer {
         if (activePlayer?.owner === this.owner && typeof window !== 'undefined' && typeof window.speechSynthesis?.cancel === 'function') window.speechSynthesis.cancel();
     }
     private clearAudio() {
-        this.audio?.pause(); if (this.audio) { this.audio.onended = null; this.audio.onerror = null; this.audio.removeAttribute('src'); this.audio.load(); }
+        this.audio?.pause(); if (this.audio) { this.audio.onended = null; this.audio.onerror = null; this.audio.ontimeupdate = null; this.audio.removeAttribute('src'); this.audio.load(); }
         if (this.objectUrl) URL.revokeObjectURL(this.objectUrl); this.objectUrl = '';
     }
     stop = () => {
         this.generation++; this.abort?.abort(); this.clearNative(); this.clearAudio(); this.chunk = 0;
+        this.prepared?.abort.abort(); this.prepared = null;
         if (activePlayer?.owner === this.owner) activePlayer = null;
-        this.update({ status: 'idle', error: '', continuous: false });
+        this.update({ status: 'idle', error: '', continuous: false, progress: 0 });
     };
     pause = () => {
         if (this.state.status !== 'playing' && this.state.status !== 'loading') return;
         this.generation++; this.abort?.abort(); this.clearNative(); this.audio?.pause(); this.update({ status: 'paused' });
+        this.prepared?.abort.abort(); this.prepared = null;
     };
     select = (index: number) => { this.stop(); this.update({ index: Math.max(0, Math.min(this.steps.length - 1, index)) }); };
     setMode = (mode: VoiceMode) => {
@@ -64,7 +68,7 @@ export class LessonPlayer {
         const resumeAudio = this.state.status === 'paused' && !!this.objectUrl;
         const gen = ++this.generation; this.abort?.abort(); this.clearNative();
         if (!resumeAudio) this.clearAudio();
-        this.update({ continuous, error: '', status: 'loading' });
+        this.update({ continuous, error: '', status: 'loading', ...(!resumeAudio ? { progress: this.chunk / this.chunks(this.state.index).length } : {}) });
         if (resumeAudio) { void this.playAudio(gen); return; }
         const text = speechChunks(speechText(this.steps[this.state.index].markdown, this.language))[this.chunk];
         if (!text) { this.advance(gen); return; }
@@ -85,22 +89,47 @@ export class LessonPlayer {
         } else if (this.state.mode === 'device') this.update({ status: 'error', error: 'DEVICE_VOICE_UNAVAILABLE' });
         else void this.playAudio(gen);
     };
+    private chunks(index: number) {
+        if (!this.segments.has(index)) this.segments.set(index, speechChunks(speechText(this.steps[index].markdown, this.language)));
+        return this.segments.get(index)!;
+    }
+    getProgress = () => this.audio && this.objectUrl && Number.isFinite(this.audio.duration) && this.audio.duration > 0
+        ? (this.chunk + Math.min(1, this.audio.currentTime / this.audio.duration)) / this.chunks(this.state.index).length : this.state.progress;
+    private requestKey(index: number, chunk: number) { return `${this.state.mode}:${index}:${chunk}`; }
+    private async requestAudio(index: number, chunk: number, signal: AbortSignal) {
+        const response = await fetch('/api/lesson-audio', { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal,
+            body: JSON.stringify({ source: this.source, fingerprint: this.fingerprint, step: index, chunk, mode: this.state.mode === 'device' ? 'auto' : this.state.mode }) });
+        if (!response.ok) { const body = await response.json(); throw new Error(typeof body.code === 'string' ? body.code : 'AUDIO_FAILED'); }
+        return response.blob();
+    }
+    private prepareNext() {
+        let index = this.state.index, chunk = this.chunk + 1;
+        if (chunk >= this.chunks(index).length) { if (!this.state.continuous || index + 1 >= this.steps.length) return; index++; chunk = 0; }
+        const key = this.requestKey(index, chunk); if (this.prepared?.key === key) return;
+        this.prepared?.abort.abort();
+        const abort = new AbortController(), promise = this.requestAudio(index, chunk, abort.signal);
+        // 预取失败留到实际播放时重新请求，不影响当前段，且不产生未处理拒绝。
+        this.prepared = { key, abort, promise };
+        void promise.catch(() => { if (this.prepared?.promise === promise) this.prepared = null; });
+    }
     private async playAudio(gen: number) {
         try {
             this.audio ??= new Audio();
             if (!this.objectUrl) {
-                this.abort = new AbortController();
-                const response = await fetch('/api/lesson-audio', { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: this.abort.signal,
-                    body: JSON.stringify({ source: this.source, fingerprint: this.fingerprint, step: this.state.index, chunk: this.chunk, mode: this.state.mode === 'device' ? 'auto' : this.state.mode }) });
-                if (!response.ok) { const body = await response.json(); throw new Error(typeof body.code === 'string' ? body.code : 'AUDIO_FAILED'); }
-                const blob = await response.blob(); if (gen !== this.generation) return;
+                const prepared = this.prepared?.key === this.requestKey(this.state.index, this.chunk) ? this.prepared : null;
+                this.abort = prepared?.abort ?? new AbortController();
+                if (prepared) this.prepared = null;
+                const blob = await (prepared?.promise ?? this.requestAudio(this.state.index, this.chunk, this.abort.signal)); if (gen !== this.generation) return;
                 this.objectUrl = URL.createObjectURL(blob); this.audio.src = this.objectUrl;
             }
             if (gen !== this.generation) return;
             this.audio.playbackRate = this.state.rate;
             this.audio.onended = () => { if (gen === this.generation) { this.clearAudio(); this.advance(gen); } };
             this.audio.onerror = () => { if (gen === this.generation) this.update({ status: 'error', error: 'AUDIO_FAILED' }); };
-            await this.audio.play(); if (gen === this.generation) this.update({ status: 'playing' });
+            this.audio.ontimeupdate = () => {
+                if (gen === this.generation && this.audio && Number.isFinite(this.audio.duration) && this.audio.duration > 0) this.update({ progress: (this.chunk + Math.min(1, this.audio.currentTime / this.audio.duration)) / this.chunks(this.state.index).length });
+            };
+            await this.audio.play(); if (gen === this.generation) { this.update({ status: 'playing' }); this.prepareNext(); }
         } catch (error) {
             if (gen !== this.generation) return;
             const blocked = error instanceof Error && error.name === 'NotAllowedError';
@@ -113,7 +142,7 @@ export class LessonPlayer {
         const count = speechChunks(speechText(this.steps[this.state.index].markdown, this.language)).length;
         if (this.chunk < count) { this.play(this.state.continuous); return; }
         this.chunk = 0;
-        if (this.state.continuous && this.state.index + 1 < this.steps.length) { this.update({ index: this.state.index + 1 }); this.play(true); }
-        else { if (activePlayer?.owner === this.owner) activePlayer = null; this.update({ status: 'idle', continuous: false }); }
+        if (this.state.continuous && this.state.index + 1 < this.steps.length) { this.update({ index: this.state.index + 1, progress: 0 }); this.play(true); }
+        else { if (activePlayer?.owner === this.owner) activePlayer = null; this.update({ status: 'idle', continuous: false, progress: 1 }); }
     }
 }
