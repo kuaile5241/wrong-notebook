@@ -48,6 +48,7 @@ RUN npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
+RUN apk add --no-cache espeak-ng
 WORKDIR /app
 
 ARG APP_REVISION=unknown

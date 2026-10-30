@@ -197,6 +197,7 @@ export default function ErrorDetailPage() {
                         onSave={(analysis) => saveFields({ analysis })}
                         cardClassName="learning-panel learning-analysis"
                         logLabel="analysis"
+                        lesson={{ source: { kind: 'error', id: item.id }, question: item.questionText, answer: item.answerText, figure: item.figureSvg }}
                         rows={12}
                         placeholder="Enter analysis..."
                     />

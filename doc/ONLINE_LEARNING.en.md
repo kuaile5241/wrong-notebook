@@ -9,3 +9,5 @@ Checks follow required prerequisites, with two correct responses as a limited in
 The pinned dataset in resources/learning contains 2804 topics and 11363 questions across six subjects. AI-generated source content is not teacher-reviewed and some textbook mappings remain provisional. The data and diagnostic engine are CC BY-NC 4.0, with attribution, license and modification notices preserved. Commercial use requires separate authorization. See resources/learning/NOTICE.md.
 
 Video is deferred. Apply migration 20261030033211_add_learning_sessions before running. Standalone file tracing and the family Docker image include resources/learning separately from persistent /app/data.
+
+[Spoken step-by-step lessons](SPOKEN_LESSONS.en.md) are now available in feedback, history and mistake details. Video remains deferred.

@@ -1,9 +1,11 @@
 import { learningEn, learningZh } from "./learning-translations";
+import { lessonEn, lessonZh } from './lesson-translations';
 export type Language = 'zh' | 'en';
 
 export const translations = {
     en: {
         learning: learningEn,
+        lesson: lessonEn,
         pageTitle: {
             base: "AI Smart Error Notebook",
             home: "Add Mistakes",
@@ -1206,6 +1208,7 @@ export const translations = {
     },
     zh: {
         learning: learningZh,
+        lesson: lessonZh,
         pageTitle: {
             base: "AI智能错题本",
             home: "录入错题",

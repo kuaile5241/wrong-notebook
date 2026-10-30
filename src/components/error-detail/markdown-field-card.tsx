@@ -3,6 +3,8 @@
 import type { ReactNode } from "react";
 import { MarkdownEditor } from "@/components/markdown-editor";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { StepLesson } from '@/components/step-lesson';
+import type { LessonSource } from '@/lib/lesson-content';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EditButton, SaveCancelButtons, SectionHeader } from "./edit-controls";
 import { useEditableField } from "./use-editable-field";
@@ -25,10 +27,11 @@ interface MarkdownFieldCardProps {
     headerActions?: ReactNode;
     /** 显示在内容下方（编辑与查看状态都显示） */
     children?: ReactNode;
+    lesson?: { source: LessonSource; question?: string | null; answer?: string | null; figure?: string | null };
 }
 
 /** 可编辑的 Markdown 字段卡片：答案、解析、错因分析等 */
-export function MarkdownFieldCard({ title, value, onSave, logLabel, rows, placeholder, editorLabel, emptyText, cardClassName, titleClassName, contentClassName, headerActions, children }: MarkdownFieldCardProps) {
+export function MarkdownFieldCard({ title, value, onSave, logLabel, rows, placeholder, editorLabel, emptyText, cardClassName, titleClassName, contentClassName, headerActions, children, lesson }: MarkdownFieldCardProps) {
     const field = useEditableField({ read: () => value || "", save: onSave, logLabel });
     const editor = <MarkdownEditor value={field.value} onChange={field.setValue} placeholder={placeholder} rows={rows} className="w-full font-mono text-sm" />;
 
@@ -48,7 +51,7 @@ export function MarkdownFieldCard({ title, value, onSave, logLabel, rows, placeh
                     </div>
                 ) : (!value && emptyText) ? (
                     <p className="text-sm text-muted-foreground italic">{emptyText}</p>
-                ) : <MarkdownRenderer content={value} className={contentClassName} />}
+                ) : lesson && value ? <StepLesson content={{ ...lesson, analysis: value }} source={lesson.source} /> : <MarkdownRenderer content={value} className={contentClassName} />}
                 {children}
             </CardContent>
         </Card>

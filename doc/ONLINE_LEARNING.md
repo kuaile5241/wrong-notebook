@@ -14,3 +14,5 @@
 视频暂未接入。后续可增加知识点/单题 NAS 课程，或文字解析配语音和分步动画，不影响现有学习记录。
 
 部署必须执行正式迁移 20261030033211_add_learning_sessions。家庭 Docker 构建显式复制 resources/learning，避免被 /app/data 持久化挂载遮蔽；Next standalone 也配置了文件跟踪。
+
+[解析朗读与分步讲解](SPOKEN_LESSONS.md)已接入练习反馈、历史记录和错题详情，视频继续暂缓。

@@ -20,6 +20,10 @@ RUN npx --no-install prisma generate \
 FROM ${RUNTIME_IMAGE} AS runner
 USER root
 WORKDIR /app
+# 仅镜像内使用签名包镜像源，避免国内下载过慢，不修改宿主机仓库配置。
+RUN sed 's|https://dl-cdn.alpinelinux.org/alpine|https://mirrors.aliyun.com/alpine|' /etc/apk/repositories > /tmp/voice-repositories \
+    && apk --repositories-file /tmp/voice-repositories add --no-cache espeak-ng \
+    && rm /tmp/voice-repositories
 ARG FAMILY_REVISION=unknown
 ARG FAMILY_VERSION=2026.10.29-1
 ENV APP_REVISION=${FAMILY_REVISION} APP_VERSION=${FAMILY_VERSION} NODE_ENV=production PRESERVE_EXISTING_DATA=true
