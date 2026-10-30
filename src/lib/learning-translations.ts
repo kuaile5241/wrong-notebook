@@ -1,0 +1,26 @@
+export const learningEn = {
+    title: 'Practice & discover', subtitle: 'Small steps, stronger foundations', intro: 'Choose a chapter or topic. Answers and explanations appear after you submit. Mistakes join your notebook.',
+    subject: 'Subject', volume: 'Book', chapter: 'Chapter', all: 'All chapters', search: 'Find a topic', practice: 'Practice', diagnose: 'Check foundations', chapterPractice: 'Practice this chapter', chapterDiagnose: 'Check this chapter',
+    count: 'Question limit', loading: 'Loading…', failure: 'Unable to load. Please try again.', retry: 'Retry', recent: 'Recent learning', resume: 'Open', active: 'In progress', completed: 'Completed',
+    preview: 'Preview content: AI-generated source material, not teacher-reviewed. Report suspected errors; results are learning clues.',
+    license: 'Source: cn-math-taxonomy · CC BY-NC 4.0 · Personal, non-commercial learning', empty: 'No matching topics', more: 'Showing the first 100 matches. Narrow your search.',
+    home: 'Back to topics', submit: 'Check answer', skip: 'I don’t know', next: 'Next question', answer: 'Your answer', reference: 'Reference answer', explanation: 'Explanation',
+    correct: 'Well done!', wrong: 'Let’s review this step', skipped: 'We’ll add this to your review', manual: 'This answer needs your review. Compare with the reference, then choose:', selfCorrect: 'My answer is correct', selfWrong: 'I need more practice', selfLabel: 'Self-assessed',
+    archived: 'Saved to your mistake notebook', openMistake: 'Open mistake', progress: 'Answered', result: 'Learning summary', accuracy: 'Correct', history: 'Your answers',
+    direct: 'Passed this check', inferred: 'Likely familiar · not tested', shaky: 'Needs practice', weak: 'Foundation to review', pending: 'Needs confirmation',
+    diagnosisHint: 'Checks follow required foundations. Two correct answers are a clue, not proof of lasting mastery. Inferred knowledge stays separate from tested results.',
+    back: 'Back', pick: 'Choose a topic to begin', currentTopic: 'Current topic', rule: 'Rule-graded', sourceContent: 'Question content is in the source language.', prerequisites: 'Helpful foundations', required: 'Required', suggested: 'Suggested', related: 'Practice related topics',
+};
+export const learningZh: typeof learningEn = {
+    title: '在线练习', subtitle: '每天进步一点点，知识更牢一点点', intro: '按章节或知识点开始练习，提交后看答案与解析，做错的题会自动进入错题本。',
+    subject: '学科', volume: '教材册次', chapter: '章节', all: '全部章节', search: '搜索知识点', practice: '练一练', diagnose: '查查基础', chapterPractice: '本章练习', chapterDiagnose: '本章诊断',
+    count: '最多题数', loading: '正在准备…', failure: '加载失败，请稍后重试。', retry: '重试', recent: '最近的学习', resume: '打开', active: '进行中', completed: '已完成',
+    preview: '试用题库：来源内容由 AI 生成，尚未经教师审核。发现疑问请反馈，诊断结果仅作为补学线索。',
+    license: '来源：cn-math-taxonomy · CC BY-NC 4.0 · 个人非商业学习使用', empty: '没有找到相应知识点', more: '当前显示前 100 项，请缩小搜索范围。',
+    home: '返回知识点', submit: '提交答案', skip: '这题我还不会', next: '继续下一题', answer: '我的答案', reference: '参考答案', explanation: '分步解析',
+    correct: '做得好，继续加油！', wrong: '一起把这一步弄明白', skipped: '已加入复习，慢慢来', manual: '这种答案需要对照参考答案自评，请确认：', selfCorrect: '我的答案正确', selfWrong: '还需要练习', selfLabel: '自主评定',
+    archived: '已归入你的错题本', openMistake: '查看错题', progress: '已答题数', result: '本次学习小结', accuracy: '答对', history: '我的作答',
+    direct: '本次实测通过', inferred: '推测已会 · 尚未验证', shaky: '还不太稳定', weak: '建议补一补', pending: '还需要确认',
+    diagnosisHint: '沿必需的前置基础出题。连续答对两题只是掌握线索；推测已会和实际做题通过分别记录，不会覆盖以前的错题。',
+    back: '返回', pick: '选一个知识点，开始今天的进步', currentTopic: '当前知识点', rule: '规则判分', sourceContent: '题目保持来源语言。', prerequisites: '先学哪些基础', required: '必需基础', suggested: '建议了解', related: '练习相关知识点',
+};

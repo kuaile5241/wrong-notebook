@@ -40,6 +40,23 @@ model User {
   customTags KnowledgeTag[] // User's custom tags
   examPapers ExamPaper[]
   aiUsages   AiUsage[]
+  learningSessions LearningSession[]
+}
+
+// 公共题库不按用户复制；会话存服务端状态与每次作答快照。
+model LearningSession {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title          String
+  mode           String
+  datasetVersion String
+  state          String
+  status         String   @default("active")
+  revision       Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  @@index([userId, updatedAt])
 }
 
 // 统一知识点标签表 (支持无限层级)

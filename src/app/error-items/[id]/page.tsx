@@ -150,6 +150,7 @@ export default function ErrorDetailPage() {
 
                     <div className="flex flex-wrap gap-2">
                         <FixLatexButton errorItemId={item.id} fields={item} onDone={updateItem} />
+                        <Link href={`/learn?search=${encodeURIComponent(item.tags?.[0]?.name.replace(/ · .*$/, '') || '')}`}><Button variant="outline" size="sm">{t.learning.related}</Button></Link>
                         <Link href={`/practice?id=${item.id}`}>
                             <Button variant="outline" size="sm">
                                 <RefreshCw className="mr-2 h-4 w-4" />

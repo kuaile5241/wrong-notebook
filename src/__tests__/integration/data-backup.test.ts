@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { PrismaClient } from '@prisma/client';
@@ -25,6 +25,8 @@ import { GET as EXPORT } from '@/app/api/export/route';
 import { POST as IMPORT } from '@/app/api/import/route';
 import { sanitizeFigureSvg } from '@/lib/figure-svg';
 import { sanitizeSvgAnimation } from '@/lib/svg-animation';
+import { createLearningState, nextLearningQuestion, applyLearningAnswer, parseLearning } from '@/lib/learning/session';
+import { DATASET_REVISION } from '@/lib/learning/catalog';
 
 let database: PrismaClient;
 let directory: string;
@@ -50,6 +52,7 @@ async function importBackup(body: object) {
 
 /** 清空当前用户的学习数据（保留账户），模拟换机后导入 */
 async function clearUserData() {
+    await database.learningSession.deleteMany({ where: { userId: 'user-1' } });
     await database.examPaper.deleteMany({ where: { userId: 'user-1' } });
     await database.subject.deleteMany({ where: { userId: 'user-1' } });
     await database.knowledgeTag.deleteMany({ where: { userId: 'user-1' } });
@@ -60,6 +63,8 @@ beforeAll(() => {
     // 所有真实读写和迁移均使用系统临时数据库，不接触开发或生产数据。
     directory = mkdtempSync(join(tmpdir(), 'wrong-notebook-backup-test-'));
     const url = `file:${join(directory, 'test.db')}`;
+    // Prisma 5 在本机 Windows 上不能自动创建不存在的 SQLite 文件。
+    writeFileSync(join(directory, 'test.db'), '');
     execFileSync(process.execPath, [resolve('node_modules/prisma/build/index.js'), 'migrate', 'deploy'], {
         env: { ...process.env, DATABASE_URL: url },
         stdio: 'pipe',
@@ -103,6 +108,21 @@ afterAll(async () => {
 });
 
 describe('数据导出后再导入（真实 SQLite）', () => {
+    it('在线学习会话可备份恢复并重建答案与错题关联', async () => {
+        const state = createLearningState(['cnm_p001'], 'practice', 3), q = nextLearningQuestion(state)!;
+        const answer = applyLearningAnswer(state, q, { revision: 0, questionId: q.id, requestId: '12345678-1234-4234-8234-123456789012', answer: '', skip: true });
+        if ('manual' in answer) throw new Error('Unexpected manual');
+        answer.history.errorItemId = 'item-1';
+        await database.learningSession.create({ data: { id: 'learning-backup', userId: 'user-1', title: '练习存档', mode: 'practice', datasetVersion: DATASET_REVISION, state: JSON.stringify(answer.state) } });
+        const backup = await exportBackup(); expect(backup.learningSessions).toHaveLength(1);
+        const tampered = parseLearning(backup.learningSessions[0].state); tampered.history[0].question.answer = '伪造答案';
+        backup.learningSessions[0].state = JSON.stringify(tampered);
+        await clearUserData(); const result = await importBackup(backup); expect(result.stats.learningSessionsCreated).toBe(1);
+        const restored = parseLearning((await database.learningSession.findUniqueOrThrow({ where: { id: 'learning-backup' } })).state);
+        expect(restored.history[0].question.answer).toBe(q.answer);
+        expect(await database.errorItem.findUnique({ where: { id: restored.history[0].errorItemId } })).not.toBeNull();
+        await importBackup(backup); expect(await database.learningSession.count()).toBe(1);
+    });
     it('访问权限元数据可备份，但导入不能自行续期或提升权限', async () => {
         const expiry = new Date('2030-01-01T00:00:00Z');
         await database.user.update({ where: { id: 'user-1' }, data: { accessExpiresAt: expiry, canUseAi: false, canImportExport: false } });

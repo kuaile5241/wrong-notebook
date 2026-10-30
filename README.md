@@ -524,3 +524,7 @@ bash scripts/ci.sh          # 完整 CI（Node.js 22+、Python 3，含生产构�
 [MIT License](LICENSE)
 
 © 2026 margrop。本项目基于 [wttwins/wrong-notebook](https://github.com/wttwins/wrong-notebook) 扩展，原项目代码版权归原作者所有。
+
+## 在线题库与基础诊断
+
+导航“在线练习”支持按学科/册次/章节练习、规则判分、基础追查和错题自动归档，进度随账号保存，沿用到期限制。第三方题库为未经过教师审核的 AI 初稿，CC BY-NC 4.0，仅按非商业学习用途接入。使用与部署见 [在线练习说明](doc/ONLINE_LEARNING.md)。

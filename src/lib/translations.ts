@@ -1,7 +1,9 @@
+import { learningEn, learningZh } from "./learning-translations";
 export type Language = 'zh' | 'en';
 
 export const translations = {
     en: {
+        learning: learningEn,
         pageTitle: {
             base: "AI Smart Error Notebook",
             home: "Add Mistakes",
@@ -86,6 +88,7 @@ export const translations = {
             emptyHint: "Questions come back on schedule after you record practice results. Add new mistakes or check back tomorrow.",
         },
         nav: {
+            learn: "Practice",
             home: "Add",
             notebooks: "Notebooks",
             review: "Review",
@@ -1202,6 +1205,7 @@ export const translations = {
         },
     },
     zh: {
+        learning: learningZh,
         pageTitle: {
             base: "AI智能错题本",
             home: "录入错题",
@@ -1286,6 +1290,7 @@ export const translations = {
             emptyHint: "录入举一反三结果后，错题会按计划回到这里。可以继续录入新错题，或明天再来。",
         },
         nav: {
+            learn: "在线练习",
             home: "录入",
             notebooks: "错题本",
             review: "复习",

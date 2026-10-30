@@ -526,3 +526,7 @@ Issues and pull requests are welcome. Please read the [contributing guide](CONTR
 [MIT License](LICENSE)
 
 © 2026 margrop. This project extends [wttwins/wrong-notebook](https://github.com/wttwins/wrong-notebook); copyright in the original code remains with its author.
+
+## Online practice and foundation checks
+
+Practice includes topic/chapter selection, rule-based grading, prerequisite checks and automatic mistake archiving, with account-based progress and expiry enforcement. Third-party content is an unreviewed AI draft under CC BY-NC 4.0 for non-commercial learning. See [online learning](doc/ONLINE_LEARNING.en.md).

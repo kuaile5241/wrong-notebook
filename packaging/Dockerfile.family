@@ -31,6 +31,7 @@ RUN rm -rf .next public prisma dist-scripts node_modules
 COPY --from=builder --chown=nextjs:nodejs /build/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /build/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /build/public ./public
+COPY --from=builder --chown=nextjs:nodejs /build/resources/learning ./resources/learning
 COPY --from=builder --chown=nextjs:nodejs /build/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder --chown=nextjs:nodejs /build/node_modules/prisma ./node_modules/prisma
 COPY --from=builder --chown=nextjs:nodejs /build/node_modules/@prisma ./node_modules/@prisma

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { BarChart3, BookOpen, CalendarCheck, FileText, LogOut, PlusCircle, Shield } from "lucide-react";
+import { BarChart3, BookOpen, CalendarCheck, FileText, LogOut, PlusCircle, Shield, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { SettingsDialog } from "@/components/settings-dialog";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 /** 登录、注册与打印页不显示导航 */
 const BARE_PATHS = [/^\/access-denied/, /^\/login/, /^\/register/, /^\/setup/, /^\/print-preview/, /^\/exams\/[^/]+\/print/];
 
-type NavKey = "home" | "notebooks" | "review" | "stats" | "exams";
+type NavKey = "home" | "notebooks" | "review" | "stats" | "exams" | "learn";
 
 interface NavItem {
     key: NavKey;
@@ -25,6 +25,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
+    { key: "learn", href: "/learn", icon: Sparkles, match: p => p.startsWith("/learn") },
     { key: "home", href: "/", icon: PlusCircle, match: (p) => p === "/" },
     {
         key: "notebooks",
@@ -58,7 +59,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 md:h-16 md:px-8">
                     <Link href="/" className="flex shrink-0 items-center gap-2">
                         <Image src="/icons/icon.png" alt="" width={32} height={32} className="rounded-lg" priority unoptimized />
-                        <span className="text-base font-semibold tracking-tight">{t.pageTitle.base}</span>
+                        <span className="hidden lg:inline text-base font-semibold tracking-tight">{t.pageTitle.base}</span>
                     </Link>
 
                     <nav className="ml-4 hidden items-center gap-1 md:flex">
@@ -119,7 +120,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <div className="pb-20 md:pb-0">{children}</div>
 
             <nav className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t-2 border-primary/10 bg-card/95 backdrop-blur-md md:hidden print:hidden">
-                <div className="grid h-16 grid-cols-5">
+                <div className="grid h-16 grid-cols-6">
                     {NAV_ITEMS.map((item) => {
                         const active = item.match(pathname);
                         const Icon = item.icon;

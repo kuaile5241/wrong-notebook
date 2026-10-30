@@ -19,6 +19,8 @@ import { parseLastPractice } from "@/lib/last-practice";
 import { getDefaultPaperLevel } from "@/lib/paper-level";
 import { EXAM_DIFFICULTIES, EXAM_SCOPES, summarizePaperStatus } from "@/lib/exam";
 import type { Prisma } from "@prisma/client";
+import { learningBackupSchema, restoreLearningState } from '@/lib/learning/backup';
+import { nextLearningQuestion } from '@/lib/learning/session';
 
 const logger = createLogger('api:import');
 
@@ -26,6 +28,7 @@ interface ImportData {
     version: number;
     exportedAt: string;
     scope?: string;
+    learningSessions?: unknown[];
     user: {
         id: string;
         email: string;
@@ -261,6 +264,7 @@ export async function POST(req: Request) {
             practiceRecordsCreated: 0,
             tagsLinked: 0,
             duplicateErrorItems: 0,
+            learningSessionsCreated: 0,
         };
         const masteryIds = new Set<string>();
         // 已带掌握概率导入的新题无需重新评估
@@ -566,7 +570,7 @@ export async function POST(req: Request) {
                             mistakeAnalysis: record.mistakeAnalysis,
                             originalImageUrl: record.originalImageUrl,
                             figureSvg: sanitizeFigureSvg(record.figureSvg),
-                            source: ['practice', 'manual', 'exam', 'duplicate_import'].includes(record.source || '') ? record.source : 'practice',
+                            source: ['practice', 'manual', 'exam', 'duplicate_import', 'learning'].includes(record.source || '') ? record.source : 'practice',
                             examQuestionId,
                         } : {}),
                         createdAt: safeParseDate(record.createdAt),
@@ -576,7 +580,23 @@ export async function POST(req: Request) {
                 if (errorItemId && result && !evaluatedIds.has(errorItemId)) masteryIds.add(errorItemId);
             }
 
-            // 8. 还原了已掌握阈值时，按新阈值同步该账户全部错题的 masteryLevel
+            // 8. 学习会话按所属用户恢复；目标状态由原题与作答重算，不能信任导入的答案或 SVG。
+            for (const raw of (body.learningSessions || [])) {
+                const record = learningBackupSchema.parse(raw);
+                const targetUserId = importAll ? record.userId : user.id;
+                const state = restoreLearningState(record.state, record.mode, errorItemIdMap);
+                const existing = await tx.learningSession.findFirst({ where: { id: record.id } });
+                if (existing) continue; // 不覆盖任何现有会话，包括其他用户的同 ID。
+                await tx.learningSession.create({ data: {
+                    id: record.id, userId: targetUserId, title: record.title, mode: record.mode,
+                    datasetVersion: record.datasetVersion, state: JSON.stringify(state),
+                    status: nextLearningQuestion(state) ? 'active' : 'completed', revision: state.history.length,
+                    createdAt: safeParseDate(record.createdAt),
+                } });
+                stats.learningSessionsCreated++;
+            }
+
+            // 9. 还原了已掌握阈值时，按新阈值同步该账户全部错题的 masteryLevel
             if (typeof preferences.masteryThreshold === 'number') {
                 await syncMasteryLevels(tx, user.id, preferences.masteryThreshold);
             }

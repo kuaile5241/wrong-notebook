@@ -70,6 +70,7 @@ export async function GET(req: Request) {
             },
         });
 
+        const learningSessions = await prisma.learningSession.findMany({ where: userFilter });
         const exportData = {
             version: 2,
             exportedAt: new Date().toISOString(),
@@ -94,6 +95,7 @@ export async function GET(req: Request) {
             reviewSchedules,
             practiceRecords,
             examPapers,
+            learningSessions,
         };
 
         logger.info({

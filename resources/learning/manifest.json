@@ -1,0 +1,33 @@
+{
+  "repository": "https://github.com/xiaoyang111222/cn-math-taxonomy",
+  "mirror": "https://github.com/kuaile5241/cn-math-taxonomy",
+  "revision": "27f7cce7e8c875fd740184c93e99d0777ae8bf06",
+  "license": "CC-BY-NC-4.0",
+  "files": [
+    {
+      "path": "resources/learning/topics.json",
+      "sha256": "431ffd0b75533a3a5b225e41a15bd18b04b61dadb4879b1cb15f22804271cb6a",
+      "bytes": 2434868
+    },
+    {
+      "path": "resources/learning/dependencies.json",
+      "sha256": "aa22afb30a926ffa9a34c79963d7e88c47ac04b67285484e7f63456fd065ed06",
+      "bytes": 833065
+    },
+    {
+      "path": "resources/learning/questions.json",
+      "sha256": "2a188c466822e4e0a91805eefc431b02b465ef29d9f5b9a61d3b008b943f8022",
+      "bytes": 7239736
+    },
+    {
+      "path": "src/lib/learning/vendor/engine.js",
+      "sha256": "1d607cfc521c60dbbf7af709156760dad5df2205898169318dec2b5d259e3c07",
+      "bytes": 48392
+    },
+    {
+      "path": "resources/learning/LICENSE",
+      "sha256": "41003d4a74749c0220e33dd415042164b5a1093ed401f36277234f772d22d3d0",
+      "bytes": 19347
+    }
+  ]
+}
