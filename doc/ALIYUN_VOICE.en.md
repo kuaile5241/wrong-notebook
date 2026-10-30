@@ -4,7 +4,7 @@ Administrators open Settings → AI Provider → Aliyun natural narration. Enter
 
 Automatic mode uses Aliyun when enabled, otherwise the existing compatible voice. Natural voice errors remain visible; there is no silent mechanical fallback. Device mode reports missing voices immediately. Phones need no proxy or app reinstall. Speed, pause, replay and continuous steps remain available.
 
-The server sends lesson text to Aliyun CosyVoice HTTP (cosyvoice-v3-flash, Beijing workspace endpoint). WAV audio is cached in memory per user for ten minutes, limited to 8MB/32 chunks, without local audio files. Provider download URLs have their own expiry. Ownership, submitted-question checks, active-account checks, 60 chunks/user/minute and two concurrent synthesis jobs remain enforced. Model/voice/credential/workspace changes isolate the cache.
+The server sends lesson text to Aliyun CosyVoice HTTP (cosyvoice-v3-flash, Beijing workspace endpoint). WAV audio is persisted and reused by text and synthesis parameters; see [persistent audio](PERSISTENT_AUDIO.en.md). Provider download URLs have their own expiry. Ownership, submitted-question checks, active-account checks, 60 chunks/user/minute and two concurrent synthesis jobs remain enforced. Text/model/voice/synthesis parameter changes create a new cache entry; credential rotation does not regenerate completed audio.
 
 Optional environment defaults: DASHSCOPE_API_KEY, DASHSCOPE_WORKSPACE_ID. Administrator configuration takes precedence.
 

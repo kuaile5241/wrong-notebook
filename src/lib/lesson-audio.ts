@@ -1,10 +1,11 @@
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { getAliyunTtsConfig, synthesizeAliyun, ALIYUN_MODEL } from './aliyun-tts';
+import { AudioCacheError, persistentLessonAudio } from './lesson-audio-cache';
+import { createLogger } from './logger';
 
 let running = 0;
-const cache = new Map<string, { data: Buffer; expires: number }>();
-let cacheBytes = 0;
+const logger = createLogger('lesson-audio');
 const usage = new Map<string, { count: number; until: number }>();
 export class LessonAudioError extends Error { constructor(public code: string, public status: number) { super(code); } }
 export function checkAudioQuota(userId: string, now = Date.now()) {
@@ -25,32 +26,31 @@ export function normalizeWave(input: Buffer) {
     throw new LessonAudioError('AUDIO_FAILED', 503);
 }
 export async function synthesizeLessonAudio(userId: string, text: string, signal?: AbortSignal, language?: 'zh' | 'en', mode: 'auto' | 'natural' | 'compatible' = 'auto') {
+    // 权限在路由校验。用户离开后仍完成同一生成任务并保存，后续请求复用，不再次付费。
+    void [userId, signal];
     const config = getAliyunTtsConfig();
     const natural = mode === 'natural' || (mode === 'auto' && config.enabled);
-    if (natural && (!config.enabled || !config.apiKey || !config.workspaceId)) throw new LessonAudioError('AUDIO_NOT_CONFIGURED', 503);
-    const identity = natural ? JSON.stringify([ALIYUN_MODEL, config.voice, config.workspaceId, config.apiKey]) : 'espeak';
-    const key = createHash('sha256').update(userId + '\0' + language + '\0' + identity + '\0' + text).digest('hex'), now = Date.now();
-    for (const [id, entry] of cache) if (entry.expires < now) { cacheBytes -= entry.data.length; cache.delete(id); }
-    const hit = cache.get(key); if (hit) return hit.data;
-    if (running >= 2) throw new LessonAudioError('AUDIO_BUSY', 429);
-    running++;
-    try {
-        const voice = (language ? language === 'zh' : /[\u3400-\u9fff]/.test(text)) ? 'cmn' : 'en-us';
-        const output = natural ? await synthesizeAliyun(text, config, signal).catch((error: unknown) => {
-            const code = error instanceof Error && ['AUDIO_NOT_CONFIGURED', 'AUDIO_CREDENTIALS', 'AUDIO_BUSY'].includes(error.message) ? error.message : 'AUDIO_PROVIDER_FAILED';
-            throw new LessonAudioError(code, code === 'AUDIO_BUSY' ? 429 : 503);
-        }) : await new Promise<Buffer>((resolve, reject) => {
-            // 固定程序、固定参数、正文仅走 stdin，绝不拼接 shell 或写入音频文件。
-            const child = execFile('espeak-ng', ['--stdout', '-v', voice, '-s', '145', '--stdin'],
-                { encoding: 'buffer', maxBuffer: 8 * 1024 * 1024, timeout: 15_000, signal },
-                (error, stdout) => error ? reject(new LessonAudioError('AUDIO_UNAVAILABLE', 503)) : resolve(stdout));
-            child.stdin?.on('error', () => {}); child.stdin?.end(text, 'utf8');
-        });
-        const data = normalizeWave(output);
-        while (cache.size && (cacheBytes + data.length > 8 * 1024 * 1024 || cache.size >= 32)) {
-            const first = cache.keys().next().value!; cacheBytes -= cache.get(first)!.data.length; cache.delete(first);
-        }
-        if (data.length <= 8 * 1024 * 1024) { cache.set(key, { data, expires: now + 600_000 }); cacheBytes += data.length; }
-        return data;
-    } finally { running--; }
+    if (natural && !config.enabled) throw new LessonAudioError('AUDIO_NOT_CONFIGURED', 503);
+    const deviceVoice = (language ? language === 'zh' : /[\u3400-\u9fff]/.test(text)) ? 'cmn' : 'en-us';
+    const identity = natural ? [ALIYUN_MODEL, config.voice, 0.95, 24000, 'wav'] : ['espeak-ng', deviceVoice, 145, 'wav'];
+    const key = createHash('sha256').update(JSON.stringify([identity, text])).digest('hex');
+    return persistentLessonAudio(key, async () => {
+        if (running >= 2) throw new LessonAudioError('AUDIO_BUSY', 429);
+        if (natural && (!config.apiKey || !config.workspaceId)) throw new LessonAudioError('AUDIO_NOT_CONFIGURED', 503);
+        running++;
+        try {
+            logger.info({ audioKey: key, provider: natural ? 'aliyun' : 'espeak', model: natural ? ALIYUN_MODEL : 'espeak-ng', voice: natural ? config.voice : deviceVoice }, 'Generating new lesson audio');
+            const output = natural ? await synthesizeAliyun(text, config).catch((error: unknown) => {
+                const code = error instanceof Error && ['AUDIO_NOT_CONFIGURED', 'AUDIO_CREDENTIALS', 'AUDIO_BUSY'].includes(error.message) ? error.message : 'AUDIO_PROVIDER_FAILED';
+                throw new LessonAudioError(code, code === 'AUDIO_BUSY' ? 429 : 503);
+            }) : await new Promise<Buffer>((resolve, reject) => {
+                // 固定程序、固定参数、正文仅走 stdin，不拼接 shell；完成后统一原子保存。
+                const child = execFile('espeak-ng', ['--stdout', '-v', deviceVoice, '-s', '145', '--stdin'],
+                    { encoding: 'buffer', maxBuffer: 8 * 1024 * 1024, timeout: 15_000 },
+                    (error, stdout) => error ? reject(new LessonAudioError('AUDIO_UNAVAILABLE', 503)) : resolve(stdout));
+                child.stdin?.on('error', () => {}); child.stdin?.end(text, 'utf8');
+            });
+            return normalizeWave(output);
+        } finally { running--; }
+    }).catch((error: unknown) => { if (error instanceof AudioCacheError) throw new LessonAudioError(error.message, error.message === 'AUDIO_BUSY' ? 429 : 503); throw error; });
 }

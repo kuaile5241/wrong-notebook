@@ -16,6 +16,7 @@ describe('连续讲解预取与音频进度', () => {
         player.play(true); await flush();
         expect(fetcher).toHaveBeenCalledTimes(2); expect(JSON.parse(String(fetcher.mock.calls[1][1]?.body)).step).toBe(1); expect(player.getSnapshot().index).toBe(0);
         audio.currentTime = 4; audio.ontimeupdate?.(); expect(player.getProgress()).toBe(0.4);
+        player.setRate(1.25); expect(audio.playbackRate).toBe(1.25); expect(fetcher).toHaveBeenCalledTimes(2);
         audio.onended?.(); await flush(); expect(player.getSnapshot().index).toBe(1); expect(fetcher).toHaveBeenCalledTimes(2);
         player.pause(); expect(audio.paused).toBe(true); player.select(0); expect(player.getSnapshot().progress).toBe(0); player.stop();
     });

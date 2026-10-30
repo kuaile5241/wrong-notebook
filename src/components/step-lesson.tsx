@@ -26,7 +26,7 @@ export function StepLesson({ content, source }: { content: LessonContent; source
     if (!lesson.steps.length) return null;
     const selected = lesson.steps[state.index], svg = sanitizeFigureSvg(figure);
     const running = state.status === 'playing' || state.status === 'loading';
-    const error = state.error === 'DEVICE_VOICE_UNAVAILABLE' ? l.deviceUnavailable : state.error === 'AUDIO_NOT_CONFIGURED' ? l.notConfigured : state.error === 'AUDIO_CREDENTIALS' ? l.credentials : state.error === 'AUDIO_BUSY' ? l.busy : state.error === 'LESSON_CHANGED' ? l.changed : state.error === 'AUDIO_TAP_TO_PLAY' ? l.tap : state.error ? l.failed : '';
+    const error = state.error.startsWith('AUDIO_CACHE_') ? l.cacheFailed : state.error === 'DEVICE_VOICE_UNAVAILABLE' ? l.deviceUnavailable : state.error === 'AUDIO_NOT_CONFIGURED' ? l.notConfigured : state.error === 'AUDIO_CREDENTIALS' ? l.credentials : state.error === 'AUDIO_BUSY' ? l.busy : state.error === 'LESSON_CHANGED' ? l.changed : state.error === 'AUDIO_TAP_TO_PLAY' ? l.tap : state.error ? l.failed : '';
     return <section data-step-lesson className="space-y-4 rounded-2xl border-2 border-violet-200 bg-gradient-to-br from-violet-50 via-sky-50 to-white p-4 text-slate-900 dark:border-violet-800 dark:from-violet-950 dark:via-slate-900 dark:to-slate-900 dark:text-slate-100">
         <header><h3 className="flex items-center gap-2 text-lg font-bold text-violet-700 dark:text-violet-300"><Headphones className="h-5 w-5" />{l.title}</h3><p className="mt-2 text-sm text-muted-foreground">{l.hint}</p></header>
         <div className="flex flex-wrap gap-3 text-sm">

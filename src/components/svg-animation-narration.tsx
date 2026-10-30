@@ -33,7 +33,7 @@ export function SvgAnimationNarration({ id, svg, content, onTime }: Props) {
     }, [player]);
     if (!lesson.steps.length) return <p className="text-sm">{l.animationEmpty}</p>;
     const running = state.status === 'playing' || state.status === 'loading';
-    const error = state.error === 'AUDIO_NOT_CONFIGURED' ? l.notConfigured : state.error === 'AUDIO_CREDENTIALS' ? l.credentials : state.error === 'AUDIO_BUSY' ? l.busy : state.error === 'AUDIO_TAP_TO_PLAY' ? l.tap : state.error === 'LESSON_CHANGED' ? l.changed : state.error ? l.failed : '';
+    const error = state.error.startsWith('AUDIO_CACHE_') ? l.cacheFailed : state.error === 'AUDIO_NOT_CONFIGURED' ? l.notConfigured : state.error === 'AUDIO_CREDENTIALS' ? l.credentials : state.error === 'AUDIO_BUSY' ? l.busy : state.error === 'AUDIO_TAP_TO_PLAY' ? l.tap : state.error === 'LESSON_CHANGED' ? l.changed : state.error ? l.failed : '';
     return <section data-animation-narration className="mt-3 space-y-3 rounded-xl border border-violet-200 bg-violet-50/60 p-3 dark:bg-violet-950/20">
         <h4 className="font-bold text-violet-700 dark:text-violet-300">{l.animationVoice}</h4>
         <p className="text-xs text-muted-foreground">{lesson.detailed ? l.animationDetailed : l.animationFallback}</p>

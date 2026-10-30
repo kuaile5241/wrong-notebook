@@ -536,3 +536,5 @@ Explanations now include device speech, compatible app audio and step-by-step fo
 Aliyun natural narration supports Beijing CosyVoice. See [configuration and preview](doc/ALIYUN_VOICE.en.md).
 
 [Math speech and detailed SVG narration](doc/ANIMATED_NARRATION.en.md) now include one-segment lookahead for continuous playback.
+
+[Persistent audio and concurrent synthesis deduplication](doc/PERSISTENT_AUDIO.en.md) reuse completed audio for identical text and synthesis parameters.

@@ -534,3 +534,5 @@ bash scripts/ci.sh          # 完整 CI（Node.js 22+、Python 3，含生产构�
 阿里云自然朗读：支持百炼北京地域 CosyVoice，管理员配置与试听见 [接入说明](doc/ALIYUN_VOICE.md)。
 
 新增[公式完整读法与SVG详细语音讲解](doc/ANIMATED_NARRATION.md)，连续朗读支持提前准备下一段。
+
+讲题音频[持久保存和并发去重](doc/PERSISTENT_AUDIO.md)，相同文本与配音参数直接复用，重听不重复合成。
