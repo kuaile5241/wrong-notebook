@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
 import type { LearningView, Topic } from '@/lib/learning/types';
+import { readLearningFilters, reconcileLearningFilters, useLearningFilters } from '@/lib/learning/preferences';
 import { learningRequest } from './client';
 import { LearningAttribution } from './attribution';
 
@@ -17,21 +18,33 @@ interface CatalogView {
 }
 export function TopicBrowser({ initialSearch = '' }: { initialSearch?: string }) {
     const { t } = useLanguage(), l = t.learning, router = useRouter();
-    const [subject, setSubject] = useState('math'), [volume, setVolume] = useState(''), [chapter, setChapter] = useState('');
-    const [search, setSearch] = useState(initialSearch), [query, setQuery] = useState(initialSearch), [count, setCount] = useState(10);
-    const [data, setData] = useState<CatalogView | null>(null), [error, setError] = useState(''), [busy, setBusy] = useState(false), [refresh, setRefresh] = useState(0);
+    const { filters, ready, userId, update } = useLearningFilters();
+    const { subject, volume, chapter, count } = filters;
+    const [search, setSearch] = useState(initialSearch), [query, setQuery] = useState(initialSearch);
+    const [catalog, setCatalog] = useState<{ owner: string; value: CatalogView } | null>(null), [error, setError] = useState(''), [busy, setBusy] = useState(false), [refresh, setRefresh] = useState(0);
+    const data = ready && catalog?.owner === userId ? catalog.value : null;
     useEffect(() => { const timer = setTimeout(() => setQuery(search), 300); return () => clearTimeout(timer); }, [search]);
     useEffect(() => {
+        if (!ready) return;
         let cancelled = false;
         const p = new URLSearchParams({ subject, volume, chapter, search: query });
-        learningRequest<CatalogView>(`/api/learning?${p}`).then(value => { if (!cancelled) { setData(value); setError(''); } }).catch(() => { if (!cancelled) setError(l.failure); });
+        learningRequest<CatalogView>(`/api/learning?${p}`).then(value => {
+            if (cancelled || readLearningFilters(userId) !== filters) return;
+            const corrected = reconcileLearningFilters(filters, value);
+            if (corrected.subject !== subject || corrected.volume !== volume || corrected.chapter !== chapter) {
+                update(corrected);
+                if (corrected.subject !== subject || (!!volume && corrected.volume !== volume) || corrected.chapter !== chapter) return;
+            }
+            setCatalog({ owner: userId, value }); setError('');
+        }).catch(() => { if (!cancelled) setError(l.failure); });
         return () => { cancelled = true; };
-    }, [subject, volume, chapter, query, refresh, l.failure]);
+    }, [subject, volume, chapter, query, refresh, l.failure, ready, userId, filters, update]);
     async function start(topicIds: string[], mode: string) {
         setBusy(true); setError('');
         try { const view = await learningRequest<LearningView>('/api/learning', { topicIds, mode, count }); router.push(`/learn/${view.id}`); }
         catch { setError(l.failure); setBusy(false); }
     }
+    if (!ready) return <main className="mx-auto max-w-5xl px-4 py-6"><p>{l.loading}</p></main>;
     const selectClass = 'min-h-11 w-full rounded-xl border border-input bg-background px-3 text-sm';
     return <main className="mx-auto max-w-5xl space-y-6 px-4 py-6 md:px-8">
         <header className="rounded-3xl border border-primary/15 bg-gradient-to-br from-violet-100 via-sky-50 to-emerald-100 p-6 text-slate-900 dark:from-violet-950 dark:via-slate-900 dark:to-emerald-950 dark:text-slate-100">
@@ -41,12 +54,12 @@ export function TopicBrowser({ initialSearch = '' }: { initialSearch?: string })
         <LearningAttribution />
         <section className="space-y-4 rounded-2xl border bg-card p-4">
             <div className="grid gap-3 sm:grid-cols-3">
-                <label className="space-y-1 text-sm">{l.subject}<select aria-label={l.subject} className={selectClass} value={subject} onChange={e => { setSubject(e.target.value); setVolume(''); setChapter(''); setSearch(''); }}>{(data?.subjects ?? [{ key: 'math', name: '数学', topics: 870 }]).map(s => <option key={s.key} value={s.key}>{s.name} · {s.topics}</option>)}</select></label>
-                <label className="space-y-1 text-sm">{l.volume}<select aria-label={l.volume} className={selectClass} value={volume || data?.volume || ''} onChange={e => { setVolume(e.target.value); setChapter(''); }}>{data?.volumes.map(v => <option key={v.key} value={v.key}>{v.name}</option>)}</select></label>
-                <label className="space-y-1 text-sm">{l.count}<select aria-label={l.count} className={selectClass} value={count} onChange={e => setCount(Number(e.target.value))}>{[5, 10, 20, 30].map(n => <option key={n}>{n}</option>)}</select></label>
+                <label className="space-y-1 text-sm">{l.subject}<select aria-label={l.subject} disabled={!data} className={selectClass} value={subject} onChange={e => { update({ subject: e.target.value, volume: '', chapter: '' }); setSearch(''); }}>{(data?.subjects ?? [{ key: subject, name: '', topics: 0 }]).map(s => <option key={s.key} value={s.key}>{s.name} · {s.topics}</option>)}</select></label>
+                <label className="space-y-1 text-sm">{l.volume}<select aria-label={l.volume} disabled={!data} className={selectClass} value={volume || data?.volume || ''} onChange={e => update({ volume: e.target.value, chapter: '' })}>{data?.volumes.map(v => <option key={v.key} value={v.key}>{v.name}</option>)}</select></label>
+                <label className="space-y-1 text-sm">{l.count}<select aria-label={l.count} className={selectClass} value={count} onChange={e => update({ count: Number(e.target.value) })}>{[5, 10, 20, 30].map(n => <option key={n}>{n}</option>)}</select></label>
             </div>
             <Input aria-label={l.search} placeholder={l.search} value={search} onChange={e => setSearch(e.target.value)} />
-            {!query && <div className="flex flex-wrap gap-2">{['', ...(data?.chapters ?? [])].map(c => <Button key={c} size="sm" variant={chapter === c ? 'default' : 'outline'} className="h-auto min-h-10 max-w-full whitespace-normal text-left" onClick={() => setChapter(c)}>{c || l.all}</Button>)}</div>}
+            {!query && <div className="flex flex-wrap gap-2">{['', ...(data?.chapters ?? [])].map(c => <Button key={c} size="sm" variant={chapter === c ? 'default' : 'outline'} aria-pressed={chapter === c} className="h-auto min-h-10 max-w-full whitespace-normal text-left" onClick={() => update({ chapter: c, volume: volume || data?.volume || '' })}>{c || l.all}</Button>)}</div>}
             {chapter && !query && <div className="flex flex-wrap gap-2"><Button disabled={busy || !data?.topics.length} onClick={() => start(data!.topics.map(t => t.id), 'practice')}>{l.chapterPractice}</Button><Button variant="outline" disabled={busy || !data?.topics.length} onClick={() => start(data!.topics.map(t => t.id), 'diagnose')}>{l.chapterDiagnose}</Button></div>}
         </section>
         {error && <p role="alert" className="text-destructive">{error} <Button variant="outline" onClick={() => setRefresh(n => n + 1)}>{l.retry}</Button></p>}

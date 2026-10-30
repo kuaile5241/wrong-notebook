@@ -538,3 +538,5 @@ Aliyun natural narration supports Beijing CosyVoice. See [configuration and prev
 [Math speech and detailed SVG narration](doc/ANIMATED_NARRATION.en.md) now include one-segment lookahead for continuous playback.
 
 [Persistent audio and concurrent synthesis deduplication](doc/PERSISTENT_AUDIO.en.md) reuse completed audio for identical text and synthesis parameters.
+
+The learning homepage [remembers subject, grade, chapter and count per account](doc/LEARNING_FILTER_MEMORY.en.md).

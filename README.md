@@ -536,3 +536,5 @@ bash scripts/ci.sh          # 完整 CI（Node.js 22+、Python 3，含生产构�
 新增[公式完整读法与SVG详细语音讲解](doc/ANIMATED_NARRATION.md)，连续朗读支持提前准备下一段。
 
 讲题音频[持久保存和并发去重](doc/PERSISTENT_AUDIO.md)，相同文本与配音参数直接复用，重听不重复合成。
+
+在线练习首页会[按账号记住学科、年级、章节和题数](doc/LEARNING_FILTER_MEMORY.md)，返回时自动恢复。
