@@ -18,6 +18,8 @@ describe('原解析分步与公式朗读', () => {
     it('转换分数根号和百分数，中文上下文中纯公式仍读中文', () => {
         expect(speechText('$\\frac{1}{2}$', 'zh')).toContain('（2）分之（1）');
         expect(speechText('得到 50%')).toContain('百分之50');
+        expect(speechText('得到 $50\\%$')).toContain('百分之50');
+        expect(speechText('满足 x&lt;3')).toContain('x小于3');
         expect(speechText('取 $\\sqrt{9}$')).toContain('根号（9）');
         expect(speechText('Compute x^2=4')).toContain('squared');
     });

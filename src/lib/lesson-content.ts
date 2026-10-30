@@ -42,6 +42,7 @@ export function speechText(markdown: string, language?: 'zh' | 'en'): string {
         .replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
         .replace(/```[^\n]*\n|```|~~~/g, ' ').replace(/^\s*(?:#{1,6}\s*|>\s*|[-*+]\s+|\d+[.)、]\s*)/gm, '')
         .replace(/\\(?:left|right|displaystyle|textstyle)\b/g, '').replace(/\\(?:text|mathrm|mathbf|operatorname)\{([^{}]*)\}/g, '$1');
+    text = text.replace(/\\%/g, '%').replace(/\\(?:qquad|quad)\b/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
     for (let i = 0; i < 8; i++) {
         const before = text;
         text = text.replace(/\\(?:dfrac|tfrac|frac)\{([^{}]+)\}\{([^{}]+)\}/g, (_, a: string, b: string) => chinese ? `（${b}）分之（${a}）` : `(${a}) over (${b})`)
