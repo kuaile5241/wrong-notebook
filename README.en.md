@@ -534,3 +534,5 @@ Practice includes topic/chapter selection, rule-based grading, prerequisite chec
 Explanations now include device speech, compatible app audio and step-by-step formulas/diagrams, with pause, replay and speed controls. No videos are generated or stored. See [spoken lessons](doc/SPOKEN_LESSONS.en.md).
 
 Aliyun natural narration supports Beijing CosyVoice. See [configuration and preview](doc/ALIYUN_VOICE.en.md).
+
+[Math speech and detailed SVG narration](doc/ANIMATED_NARRATION.en.md) now include one-segment lookahead for continuous playback.

@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 interface SvgAnimationPlayerProps {
     svg: string;
+    narrationTime?: number | null;
 }
 
 function formatTime(seconds: number): string {
@@ -22,7 +23,7 @@ function formatTime(seconds: number): string {
  * SVG 放在不允许脚本的 sandbox iframe 中（仅 allow-same-origin，便于本页调用 SMIL 时间轴接口），
  * 其中的脚本和事件属性都不会执行。
  */
-export function SvgAnimationPlayer({ svg }: SvgAnimationPlayerProps) {
+export function SvgAnimationPlayer({ svg, narrationTime = null }: SvgAnimationPlayerProps) {
     const { t } = useLanguage();
     const containerRef = useRef<HTMLDivElement>(null);
     const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -36,6 +37,7 @@ export function SvgAnimationPlayer({ svg }: SvgAnimationPlayerProps) {
     const duration = useMemo(() => getSvgAnimationDuration(svg), [svg]);
     const aspectRatio = useMemo(() => getSvgAspectRatio(svg), [svg]);
     const srcDoc = useMemo(() => buildSvgAnimationDocument(svg), [svg]);
+    const narrated = narrationTime !== null;
 
     /** CSS 动画（若有）跟随 SMIL 时间轴 */
     const cssAnimations = useCallback(() => {
@@ -68,8 +70,16 @@ export function SvgAnimationPlayer({ svg }: SvgAnimationPlayerProps) {
     const handleLoad = () => {
         svgRef.current = iframeRef.current?.contentDocument?.querySelector("svg") ?? null;
         setCurrent(0);
-        setPlaying(!!svgRef.current);
+        if (narrationTime !== null) { svgRef.current?.pauseAnimations(); svgRef.current?.setCurrentTime(narrationTime); }
+        setPlaying(!!svgRef.current && narrationTime === null);
     };
+
+    useEffect(() => {
+        if (narrationTime === null) return;
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- 外部音频时钟驱动 SMIL，必须同步播放器的暂停状态与进度。
+        pause();
+        seek(narrationTime);
+    }, [narrationTime, pause, seek]);
 
     const toggleFullscreen = async () => {
         if (overlayFullscreen) {
@@ -114,7 +124,7 @@ export function SvgAnimationPlayer({ svg }: SvgAnimationPlayerProps) {
 
     // 播放时跟踪进度，到结尾自动暂停在最后一帧
     useEffect(() => {
-        if (!playing) return;
+        if (!playing || narrated) return;
         let frame = 0;
         const tick = () => {
             const time = svgRef.current?.getCurrentTime() ?? 0;
@@ -129,7 +139,7 @@ export function SvgAnimationPlayer({ svg }: SvgAnimationPlayerProps) {
         };
         frame = requestAnimationFrame(tick);
         return () => cancelAnimationFrame(frame);
-    }, [playing, duration, pause]);
+    }, [playing, duration, pause, narrated]);
 
     return (
         <div
@@ -159,6 +169,7 @@ export function SvgAnimationPlayer({ svg }: SvgAnimationPlayerProps) {
                     // 全屏时控制栏文字为白色，播放按钮是白底，图标需保持深色
                     className="h-8 w-8 shrink-0 p-0 text-foreground"
                     onClick={playing ? pause : play}
+                    disabled={narrated}
                     aria-label={playing ? t.svgAnimation.pause : t.svgAnimation.play}
                     title={playing ? t.svgAnimation.pause : t.svgAnimation.play}
                 >
@@ -169,6 +180,7 @@ export function SvgAnimationPlayer({ svg }: SvgAnimationPlayerProps) {
                     size="sm"
                     className={cn("h-8 w-8 shrink-0 p-0", fullscreen && "text-white hover:bg-white/20 hover:text-white")}
                     onClick={() => { seek(0); play(); }}
+                    disabled={narrated}
                     aria-label={t.svgAnimation.replay}
                     title={t.svgAnimation.replay}
                 >
@@ -183,6 +195,7 @@ export function SvgAnimationPlayer({ svg }: SvgAnimationPlayerProps) {
                             step={0.1}
                             value={Math.min(current, duration)}
                             onChange={(e) => seek(Number(e.target.value))}
+                            disabled={narrated}
                             aria-label={t.svgAnimation.progress}
                             className="h-2 min-w-0 flex-1 cursor-pointer accent-primary"
                         />

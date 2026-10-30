@@ -222,6 +222,7 @@ export default function ErrorDetailPage() {
                             svgAnimation={language === 'en' ? item.svgAnimationEn : item.svgAnimation}
                             hasOtherLanguage={!!(language === 'en' ? item.svgAnimation : item.svgAnimationEn)}
                             onChange={handleSvgAnimationChange}
+                            content={{ question: item.questionText, answer: item.answerText, analysis: item.analysis }}
                         />
                     )}
 

@@ -7,6 +7,7 @@ vi.mock('@/lib/prisma', () => ({ prisma: { user: { findUnique: vi.fn(async () =>
 vi.mock('@/lib/lesson-audio', async original => ({ ...(await original<typeof import('@/lib/lesson-audio')>()), synthesizeLessonAudio: mocks.synth, checkAudioQuota: mocks.quota }));
 import { POST } from '@/app/api/lesson-audio/route';
 import { buildLesson } from '@/lib/lesson-content';
+import { buildAnimationNarration } from '@/lib/animation-narration';
 const content = { question: '计算1+1', analysis: '把两部分合起来。', answer: '2' };
 const body = { source: { kind: 'error', id: 'e' }, fingerprint: buildLesson(content).fingerprint, step: 1, chunk: 0 };
 const req = (data: unknown) => new Request('http://localhost/api/lesson-audio', { method: 'POST', body: JSON.stringify(data) });
@@ -28,5 +29,14 @@ describe('讲解音频的来源与有效期', () => {
         mocks.user.accessExpiresAt = new Date(0); expect((await POST(req(body))).status).toBe(403);
         mocks.user.accessExpiresAt = null; mocks.user.isActive = false; expect((await POST(req(body))).status).toBe(403);
         expect(mocks.synth).not.toHaveBeenCalled();
+    });
+    it('动画配音只能读取本人已保存的对应语言讲稿，忽略伪造字幕并检查版本', async () => {
+        const svg = '<svg><desc data-voice-start="0" data-voice-end="5">先减去十二，40-12=28。</desc><rect><animate attributeName="x" dur="5s"/></rect></svg>';
+        mocks.item.mockResolvedValue({ questionText: content.question, answerText: content.answer, analysis: content.analysis, svgAnimation: svg, svgAnimationEn: null });
+        const data = { source: { kind: 'animation', id: 'e', language: 'zh' }, fingerprint: buildAnimationNarration(svg, content, 'zh').fingerprint, step: 0, chunk: 0, text: '伪造讲稿' };
+        expect((await POST(req(data))).status).toBe(200); expect(mocks.synth.mock.calls[0][1]).toBe('先减去十二，四十减去十二，等于二十八。');
+        expect((await POST(req({ ...data, source: { ...data.source, language: 'en' } }))).status).toBe(404);
+        expect((await POST(req({ ...data, fingerprint: 'changed' }))).status).toBe(409);
+        mocks.item.mockResolvedValue(null); expect((await POST(req(data))).status).toBe(404);
     });
 });

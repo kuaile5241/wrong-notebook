@@ -6,10 +6,12 @@ import { parseLearning } from '@/lib/learning/session';
 import { buildLesson, questionLesson, speechChunks, speechText } from '@/lib/lesson-content';
 import type { LessonContent } from '@/lib/lesson-content';
 import { checkAudioQuota, LessonAudioError, synthesizeLessonAudio } from '@/lib/lesson-audio';
+import { buildAnimationNarration } from '@/lib/animation-narration';
 
 const schema = z.object({ source: z.discriminatedUnion('kind', [
     z.object({ kind: z.literal('error'), id: z.string().max(100) }),
     z.object({ kind: z.literal('learning'), id: z.string().max(100), questionId: z.string().max(100) }),
+    z.object({ kind: z.literal('animation'), id: z.string().max(100), language: z.enum(['zh', 'en']) }),
 ]), fingerprint: z.string().max(20), step: z.number().int().min(0).max(1000), chunk: z.number().int().min(0).max(1000), mode: z.enum(['auto', 'natural', 'compatible']).default('auto') });
 
 export async function POST(req: Request) {
@@ -19,9 +21,14 @@ export async function POST(req: Request) {
         if (!parsed.success) return NextResponse.json({ code: 'INVALID_AUDIO_REQUEST' }, { status: 400 });
         const { source, fingerprint, step, chunk } = parsed.data;
         let content: LessonContent | undefined;
-        if (source.kind === 'error') {
-            const item = await prisma.errorItem.findFirst({ where: { id: source.id, userId: user.id }, select: { questionText: true, answerText: true, analysis: true } });
+        let animation = '';
+        if (source.kind === 'error' || source.kind === 'animation') {
+            const item = await prisma.errorItem.findFirst({ where: { id: source.id, userId: user.id }, select: { questionText: true, answerText: true, analysis: true, svgAnimation: true, svgAnimationEn: true } });
             if (item) content = { question: item.questionText, answer: item.answerText, analysis: item.analysis };
+            if (source.kind === 'animation') {
+                animation = (source.language === 'en' ? item?.svgAnimationEn : item?.svgAnimation) || '';
+                if (!animation) return NextResponse.json({ code: 'LESSON_NOT_FOUND' }, { status: 404 });
+            }
         } else {
             const row = await prisma.learningSession.findFirst({ where: { id: source.id, userId: user.id } });
             // 只允许已提交的题目讲解，不能用朗读接口提前提取下一题答案。
@@ -29,7 +36,7 @@ export async function POST(req: Request) {
             if (h) content = questionLesson(h.question);
         }
         if (!content) return NextResponse.json({ code: 'LESSON_NOT_FOUND' }, { status: 404 });
-        const lesson = buildLesson(content);
+        const lesson = source.kind === 'animation' ? buildAnimationNarration(animation, content, source.language) : buildLesson(content);
         if (fingerprint !== lesson.fingerprint) return NextResponse.json({ code: 'LESSON_CHANGED' }, { status: 409 });
         const selected = lesson.steps[step], text = selected && speechChunks(speechText(selected.markdown, lesson.language))[chunk];
         if (!text) return NextResponse.json({ code: 'INVALID_AUDIO_REQUEST' }, { status: 400 });

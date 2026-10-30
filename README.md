@@ -532,3 +532,5 @@ bash scripts/ci.sh          # 完整 CI（Node.js 22+、Python 3，含生产构�
 解析新增设备朗读、App兼容语音和分步公式/配图展示，支持暂停重听与语速；不生成或保存视频。见[分步讲解说明](doc/SPOKEN_LESSONS.md)。
 
 阿里云自然朗读：支持百炼北京地域 CosyVoice，管理员配置与试听见 [接入说明](doc/ALIYUN_VOICE.md)。
+
+新增[公式完整读法与SVG详细语音讲解](doc/ANIMATED_NARRATION.md)，连续朗读支持提前准备下一段。

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Clapperboard, Loader2, RefreshCw, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SvgAnimationPlayer } from "@/components/svg-animation-player";
+import { SvgAnimationNarration } from "@/components/svg-animation-narration";
+import type { LessonContent } from "@/lib/lesson-content";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { apiClient } from "@/lib/api-client";
 import { frontendLogger } from "@/lib/frontend-logger";
@@ -21,23 +23,26 @@ interface SvgAnimationExplainerProps {
     hasOtherLanguage?: boolean;
     /** 生成或删除后回调该语言的新动画（删除后为 null） */
     onChange: (language: Language, svgAnimation: string | null) => void;
+    content?: LessonContent;
 }
 
 /**
  * 题目的 SVG 动画讲解，按界面语言分别生成和显示：中文界面用中文版动画，英文界面用英文版动画。
  * 未生成时显示生成入口；已生成时可播放/暂停、拖动进度、重新生成和删除（删除需二次确认，只删除当前语言的动画）。
  */
-export function SvgAnimationExplainer({ errorItemId, svgAnimation, hasOtherLanguage, onChange }: SvgAnimationExplainerProps) {
+export function SvgAnimationExplainer({ errorItemId, svgAnimation, hasOtherLanguage, onChange, content }: SvgAnimationExplainerProps) {
     const { t, language } = useLanguage();
     const [generating, setGenerating] = useState(false);
     const [deleting, setDeleting] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [narrationTime, setNarrationTime] = useState<number | null>(null);
 
     const handleGenerate = async () => {
         setGenerating(true);
         setError(null);
         try {
             const result = await apiClient.post<{ svgAnimation: string }>(`/api/error-items/${errorItemId}/svg-animation`, { language }, { timeout: GENERATE_TIMEOUT_MS });
+            setNarrationTime(null);
             onChange(language, result.svgAnimation);
         } catch (err) {
             const code = (err as { data?: { message?: string } })?.data?.message || "";
@@ -58,6 +63,7 @@ export function SvgAnimationExplainer({ errorItemId, svgAnimation, hasOtherLangu
         setDeleting(true);
         try {
             await apiClient.delete(`/api/error-items/${errorItemId}/svg-animation?language=${language}`);
+            setNarrationTime(null);
             onChange(language, null);
             setError(null);
         } catch (err) {
@@ -108,7 +114,8 @@ export function SvgAnimationExplainer({ errorItemId, svgAnimation, hasOtherLangu
             </div>
             {error && <p className="px-3 pt-2 text-xs text-destructive">{error}</p>}
             <div className="p-2 sm:p-3">
-                <SvgAnimationPlayer svg={svgAnimation} />
+                <SvgAnimationPlayer svg={svgAnimation} narrationTime={narrationTime} />
+                {content && <SvgAnimationNarration key={svgAnimation} id={errorItemId} svg={svgAnimation} content={content} onTime={setNarrationTime} />}
             </div>
         </div>
     );

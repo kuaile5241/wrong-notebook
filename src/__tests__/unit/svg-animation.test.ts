@@ -48,6 +48,8 @@ describe('generateSvgAnimationPrompt', () => {
         expect(prompt).toContain('（无）');
         expect(prompt).toContain('<svg><rect/></svg>');
         expect(prompt).toContain('<svg_animation>');
+        expect(prompt).toContain('data-voice-start="0"');
+        expect(prompt).toContain('详细语音讲稿');
         expect(prompt).not.toMatch(/\{\{\w+\}\}/);
     });
 
