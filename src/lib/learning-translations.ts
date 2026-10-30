@@ -1,4 +1,5 @@
 export const learningEn = {
+    blindspots: 'My review map', blindspotsHint: 'Saved under your account for this subject and book, including unfinished practice. Two different rule-graded questions must pass before a topic leaves this list; one correct answer or self-assessment still needs confirmation.', blindspotsEmpty: 'No review topics recorded for this book yet. Keep exploring!', recheckChapter: 'Recheck these foundations', reviewBlindspots: 'Practice review topics',
     title: 'Practice & discover', subtitle: 'Small steps, stronger foundations', intro: 'Choose a chapter or topic. Answers and explanations appear after you submit. Mistakes join your notebook.',
     subject: 'Subject', volume: 'Book', chapter: 'Chapter', all: 'All chapters', search: 'Find a topic', practice: 'Practice', diagnose: 'Check foundations', chapterPractice: 'Practice this chapter', chapterDiagnose: 'Check this chapter',
     count: 'Question limit', loading: 'Loading…', failure: 'Unable to load. Please try again.', retry: 'Retry', recent: 'Recent learning', resume: 'Open', active: 'In progress', completed: 'Completed',
@@ -12,6 +13,7 @@ export const learningEn = {
     back: 'Back', pick: 'Choose a topic to begin', currentTopic: 'Current topic', rule: 'Rule-graded', sourceContent: 'Question content is in the source language.', prerequisites: 'Helpful foundations', required: 'Required', suggested: 'Suggested', related: 'Practice related topics',
 };
 export const learningZh: typeof learningEn = {
+    blindspots: '我的知识盲区', blindspotsHint: '按当前学科和册次汇总账号学习记录，未完成练习中的错题也会记住。两道不同题规则判分通过后移出；单次答对或自评仍需确认，原错题不会删除。', blindspotsEmpty: '本册还没有需要补练的记录，继续探索吧！', recheckChapter: '本章盲区再测', reviewBlindspots: '补练这些知识点',
     title: '在线练习', subtitle: '每天进步一点点，知识更牢一点点', intro: '按章节或知识点开始练习，提交后看答案与解析，做错的题会自动进入错题本。',
     subject: '学科', volume: '教材册次', chapter: '章节', all: '全部章节', search: '搜索知识点', practice: '练一练', diagnose: '查查基础', chapterPractice: '本章练习', chapterDiagnose: '本章诊断',
     count: '最多题数', loading: '正在准备…', failure: '加载失败，请稍后重试。', retry: '重试', recent: '最近的学习', resume: '打开', active: '进行中', completed: '已完成',

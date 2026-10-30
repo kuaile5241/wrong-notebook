@@ -1,11 +1,11 @@
 import { z } from 'zod';
 import * as Engine from './vendor/engine';
-import { DATASET_REVISION, getCatalog } from './catalog';
+import { COMPATIBLE_DATASET_REVISIONS, getCatalog } from './catalog';
 import { applyLearningAnswer, nextLearningQuestion } from './session';
 import type { StoredLearning } from './types';
 
 export const learningBackupSchema = z.object({ id: z.string().min(1).max(100), userId: z.string().min(1).max(100),
-    title: z.string().max(300), mode: z.enum(['practice', 'diagnose']), datasetVersion: z.literal(DATASET_REVISION),
+    title: z.string().max(300), mode: z.enum(['practice', 'diagnose']), datasetVersion: z.string().refine(v => COMPATIBLE_DATASET_REVISIONS.includes(v)),
     state: z.string().max(2_000_000), createdAt: z.string().datetime().optional() });
 const stateSchema = z.object({
     engine: z.object({ targets: z.array(z.string()).min(1).max(400), limit: z.number().int().min(3).max(30),

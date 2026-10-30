@@ -1,3 +1,5 @@
+Practice now includes seven subjects, including junior-high history, with an account review map and chapter rechecks. See [online practice](doc/ONLINE_LEARNING.en.md).
+
 Administrators can manage registered users, roles, activation, AI and backup permissions, and access expiry. Expiry blocks existing sessions and new logins; extending access restores use. See [account access](doc/ACCOUNT_ACCESS.en.md).
 
 > This colorful learning edition is maintained at [kuaile5241/wrong-notebook](https://github.com/kuaile5241/wrong-notebook). Upstream MIT notices are preserved. See [Family edition](doc/FAMILY_EDITION.en.md) for the interface and online Android client.

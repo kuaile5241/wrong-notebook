@@ -2,14 +2,19 @@
 import { describe, expect, it } from 'vitest';
 import { getCatalog, publicQuestion, volumeLabel } from '@/lib/learning/catalog';
 import { applyLearningAnswer, createLearningState, nextLearningQuestion } from '@/lib/learning/session';
-import { restoreLearningState } from '@/lib/learning/backup';
+import { learningBackupSchema, restoreLearningState } from '@/lib/learning/backup';
 import * as Engine from '@/lib/learning/vendor/engine';
 import type { BankQuestion } from '@/lib/learning/types';
 
 describe('固定版本题库与规则判题', () => {
+    it('兼容旧快照的学习备份，未知版本仍不接受', () => {
+        const backup = { id: 'old', userId: 'owner', title: '旧进度', mode: 'practice', state: '{}', datasetVersion: '27f7cce7e8c875fd740184c93e99d0777ae8bf06' };
+        expect(learningBackupSchema.safeParse(backup).success).toBe(true);
+        expect(learningBackupSchema.safeParse({ ...backup, datasetVersion: 'unknown' }).success).toBe(false);
+    });
     it('数据引用完整、硬先修无环、输出不泄露诊断答案', () => {
         const c = getCatalog();
-        expect([c.topics.length, c.dependencies.length, c.questions.length]).toEqual([2804, 4239, 11363]);
+        expect([c.topics.length, c.dependencies.length, c.questions.length]).toEqual([2938, 4380, 11899]);
         expect(new Set(c.questions.map(q => q.id)).size).toBe(c.questions.length);
         for (const q of c.questions) { expect(c.byId.has(q.topicId)).toBe(true); expect(q.explanation).toBeTruthy(); }
         for (const t of c.topics) expect(t).not.toHaveProperty('diagnostic_question');

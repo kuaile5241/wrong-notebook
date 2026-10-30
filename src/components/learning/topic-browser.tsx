@@ -9,9 +9,12 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import type { LearningView, Topic } from '@/lib/learning/types';
 import { readLearningFilters, reconcileLearningFilters, useLearningFilters } from '@/lib/learning/preferences';
 import { learningRequest } from './client';
+import type { BlindspotChapter } from '@/lib/learning/blindspots';
+import { LearningBlindspots } from './blindspots';
 import { LearningAttribution } from './attribution';
 
 interface CatalogView {
+    blindspots?: BlindspotChapter[];
     subjects: { key: string; name: string; topics: number }[]; volumes: { key: string; name: string }[];
     volume: string; chapters: string[]; topics: Topic[]; total: number;
     recent: { id: string; title: string; mode: string; status: string; updatedAt: string }[];
@@ -62,6 +65,7 @@ export function TopicBrowser({ initialSearch = '' }: { initialSearch?: string })
             {!query && <div className="flex flex-wrap gap-2">{['', ...(data?.chapters ?? [])].map(c => <Button key={c} size="sm" variant={chapter === c ? 'default' : 'outline'} aria-pressed={chapter === c} className="h-auto min-h-10 max-w-full whitespace-normal text-left" onClick={() => update({ chapter: c, volume: volume || data?.volume || '' })}>{c || l.all}</Button>)}</div>}
             {chapter && !query && <div className="flex flex-wrap gap-2"><Button disabled={busy || !data?.topics.length} onClick={() => start(data!.topics.map(t => t.id), 'practice')}>{l.chapterPractice}</Button><Button variant="outline" disabled={busy || !data?.topics.length} onClick={() => start(data!.topics.map(t => t.id), 'diagnose')}>{l.chapterDiagnose}</Button></div>}
         </section>
+        {data && <LearningBlindspots chapters={data.blindspots ?? []} busy={busy} onStart={start} />}
         {error && <p role="alert" className="text-destructive">{error} <Button variant="outline" onClick={() => setRefresh(n => n + 1)}>{l.retry}</Button></p>}
         {!data ? <p>{l.loading}</p> : <section className="grid gap-3 sm:grid-cols-2">
             {!data.topics.length && <p>{l.empty}</p>}

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getCatalog, DATASET_REVISION } from '@/lib/learning/catalog';
+import { getCatalog, COMPATIBLE_DATASET_REVISIONS } from '@/lib/learning/catalog';
 import { learningAuth, learningFailure, noStore } from '@/lib/learning/auth';
 import { answerLearningSchema, applyLearningAnswer, learningView, nextLearningQuestion, parseLearning } from '@/lib/learning/session';
 import { archiveLearningMistake } from '@/lib/learning/archive';
@@ -22,7 +22,7 @@ export async function POST(req: Request, ctx: Context) {
         const input = parsed.data;
         const row = await prisma.learningSession.findFirst({ where: { id: (await ctx.params).id, userId: user.id } });
         if (!row) return NextResponse.json({ message: 'Not found' }, { status: 404 });
-        if (row.datasetVersion !== DATASET_REVISION) return NextResponse.json({ message: 'Dataset version mismatch' }, { status: 409 });
+        if (!COMPATIBLE_DATASET_REVISIONS.includes(row.datasetVersion)) return NextResponse.json({ message: 'Dataset version mismatch' }, { status: 409 });
         const state = parseLearning(row.state);
         if (state.history.some(h => h.requestId === input.requestId)) return NextResponse.json(learningView(row), noStore);
         const q = nextLearningQuestion(state);

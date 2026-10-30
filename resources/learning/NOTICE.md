@@ -1,6 +1,6 @@
 # 第三方内容声明
 
-数据和诊断引擎来自 [xiaoyang111222/cn-math-taxonomy](https://github.com/xiaoyang111222/cn-math-taxonomy)，通过用户自有 fork kuaile5241/cn-math-taxonomy 获取。固定提交 27f7cce7e8c875fd740184c93e99d0777ae8bf06。
+数据和诊断引擎来自 [xiaoyang111222/cn-math-taxonomy](https://github.com/xiaoyang111222/cn-math-taxonomy)，通过用户自有 fork kuaile5241/cn-math-taxonomy 获取。固定提交 068db3c2550626529269d40939e3c93311a61349。
 
 该第三方内容以 CC BY-NC 4.0 授权，完整许可见同目录 LICENSE；仅按非商业学习用途集成。wrong-notebook 其他原有代码的许可不因此改变。
 

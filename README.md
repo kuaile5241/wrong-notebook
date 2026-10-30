@@ -1,3 +1,5 @@
+在线练习已同步七学科题库（含初中历史），并支持账号知识盲区汇总、本章再测和补练。详见[在线练习](doc/ONLINE_LEARNING.md)。
+
 管理员可在“账号与授权”查看注册用户，设置角色、启停、AI及导入导出权限和使用截止时间。到期后现有会话与新登录均不可继续访问；续期后恢复。详见[账号授权](doc/ACCOUNT_ACCESS.md)。
 
 > 本仓库为孩子使用的彩色学习版本，后续修复统一提交到 [kuaile5241/wrong-notebook](https://github.com/kuaile5241/wrong-notebook)。保留原项目 MIT 许可和作者署名。彩色界面及安卓在线更新说明见 [家庭学习版](doc/FAMILY_EDITION.md)。

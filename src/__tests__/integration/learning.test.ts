@@ -40,6 +40,29 @@ describe('在线题库完整流程（真实 SQLite）', () => {
         expect(JSON.stringify(data)).not.toContain('diagnostic_question');
         const view = await create(); expect(view.question).not.toHaveProperty('answer'); expect(view.history).toEqual([]);
     });
+    it('历史可选可练可归档，盲区按账号隔离', async () => {
+        const catalog = await (await CATALOG(new Request('http://localhost/api/learning?subject=history&volume=7-上'))).json();
+        expect(catalog.subjects.find((s: { key: string }) => s.key === 'history').topics).toBe(134);
+        expect(catalog.topics[0].id).toMatch(/^cnh_/);
+        const response = await CREATE(request({ topicIds: [catalog.topics[0].id], mode: 'practice', count: 3 }));
+        const view = await response.json() as LearningView; expect(response.status).toBe(201);
+        expect(view.question).not.toHaveProperty('answer');
+        expect((await POST(request({ revision: 0, requestId: randomUUID(), questionId: view.question!.id, skip: true }), ctx(view.id))).status).toBe(200);
+        const data = await (await CATALOG(new Request('http://localhost/api/learning?subject=history&volume=7-上'))).json();
+        expect(data.blindspots[0].topicIds).toContain(catalog.topics[0].id);
+        expect((await db.errorItem.findFirstOrThrow()).gradeSemester).toBe('7年级上册');
+        await db.user.create({ data: { id: 'other', email: 'other@example.com', password: 'test-only' } }); mocks.userId = 'other';
+        expect((await (await CATALOG(new Request('http://localhost/api/learning?subject=history&volume=7-上'))).json()).blindspots).toEqual([]);
+    });
+    it('追加题库后旧会话可续答且复用旧题记录，未知版本仍拒绝', async () => {
+        const view = await create();
+        await db.learningSession.update({ where: { id: view.id }, data: { datasetVersion: '27f7cce7e8c875fd740184c93e99d0777ae8bf06' } });
+        const response = await POST(request({ revision: 0, requestId: randomUUID(), questionId: view.question!.id, skip: true }), ctx(view.id));
+        expect(response.status).toBe(200);
+        const next = await response.json() as LearningView;
+        await db.learningSession.update({ where: { id: view.id }, data: { datasetVersion: 'unknown-version' } });
+        expect((await POST(request({ revision: next.revision, requestId: randomUUID(), questionId: next.question!.id, skip: true }), ctx(view.id))).status).toBe(409);
+    });
     it('不会的题归档、安排复习，重复提交只记录一次，陈旧提交被拒绝', async () => {
         const view = await create(), body = { revision: 0, requestId: randomUUID(), questionId: view.question!.id, answer: '', skip: true };
         const first = await POST(request(body), ctx(view.id)); expect(first.status).toBe(200);

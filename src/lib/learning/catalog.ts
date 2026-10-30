@@ -4,8 +4,10 @@ import { sanitizeFigureSvg } from '@/lib/figure-svg';
 import * as Engine from './vendor/engine';
 import type { BankQuestion, Dependency, PublicQuestion, Topic } from './types';
 
-export const DATASET_REVISION = '27f7cce7e8c875fd740184c93e99d0777ae8bf06';
-export const SUBJECT_NAMES: Record<string, string> = { math: '数学', english: '英语', physics: '物理', chinese: '语文', science: '科学', morality: '道德与法治' };
+export const DATASET_REVISION = '068db3c2550626529269d40939e3c93311a61349';
+// 本次快照只追加数据，原题、知识点和先修关系均逐条核实未改，允许旧会话继续。
+export const COMPATIBLE_DATASET_REVISIONS = [DATASET_REVISION, '27f7cce7e8c875fd740184c93e99d0777ae8bf06'];
+export const SUBJECT_NAMES: Record<string, string> = { math: '数学', english: '英语', physics: '物理', chinese: '语文', science: '科学', morality: '道德与法治', history: '历史' };
 export function topicSubject(topic: Topic): string {
     return topic.subject || (topic.id.startsWith('cnm_') ? 'math' : topic.id.startsWith('cne_') ? 'english' : '');
 }
