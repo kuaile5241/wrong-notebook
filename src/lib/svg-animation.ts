@@ -55,6 +55,15 @@ export function getSvgAnimationDuration(svg: string): number {
         const count = repeat && Number.isFinite(Number(repeat)) ? Number(repeat) : 1;
         total = Math.max(total, begin + dur * count);
     }
+    // 最后一个场景常为静态结论：最后一次渐入结束后仍需保留该场景的讲解时间。
+    let sceneEnd = 0, valid = true, scenes = 0;
+    for (const tag of svg.match(/<desc\b[^>]*>/gi) || []) {
+        if (!/data-voice-start/i.test(tag)) continue;
+        const start = parseClockValue(readAttribute(tag, 'data-voice-start')), end = parseClockValue(readAttribute(tag, 'data-voice-end'));
+        if (start === null || end === null || start < sceneEnd || end <= start || end > 120 || ++scenes > 20) { valid = false; break; }
+        sceneEnd = end;
+    }
+    if (valid && sceneEnd <= total + 6) total = Math.max(total, sceneEnd);
     return total;
 }
 

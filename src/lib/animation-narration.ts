@@ -1,6 +1,6 @@
 import { buildLesson, lessonFingerprint } from './lesson-content';
 import type { LessonContent, LessonStep } from './lesson-content';
-import { getSvgAnimationDuration, sanitizeSvgAnimation } from './svg-animation';
+import { getSvgAnimationDuration, parseClockValue, sanitizeSvgAnimation } from './svg-animation';
 
 export interface AnimationCue { start: number; end: number }
 function attribute(tag: string, name: string) { return tag.match(new RegExp(`\\s${name}\\s*=\\s*["']([^"']+)["']`, 'i'))?.[1]; }
@@ -16,9 +16,9 @@ export function buildAnimationNarration(raw: string, content: LessonContent, lan
     let invalid = false;
     for (const match of svg.matchAll(/<desc\b([^>]*)>([\s\S]*?)<\/desc>/gi)) {
         if (!/data-voice-start/i.test(match[1])) continue;
-        const start = Number(attribute(' ' + match[1], 'data-voice-start')), end = Number(attribute(' ' + match[1], 'data-voice-end'));
+        const start = parseClockValue(attribute(' ' + match[1], 'data-voice-start') ?? null), end = parseClockValue(attribute(' ' + match[1], 'data-voice-end') ?? null);
         const markdown = decode(match[2].replace(/<[^>]*>/g, '')).trim();
-        if (!Number.isFinite(start) || !Number.isFinite(end) || start < previousEnd || end <= start || end > duration + 0.1 || !markdown || markdown.length > 2000 || steps.length >= 20) { invalid = true; break; }
+        if (start === null || end === null || start < previousEnd || end <= start || end > duration + 0.1 || !markdown || markdown.length > 2000 || steps.length >= 20) { invalid = true; break; }
         steps.push({ kind: 'analysis', markdown }); cues.push({ start, end }); previousEnd = end;
     }
     const detailed = !invalid && steps.length > 0;

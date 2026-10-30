@@ -13,6 +13,10 @@ describe('SVG 讲稿与动画时间轴', () => {
         const lesson = buildAnimationNarration(svg(), content, 'zh'); expect(lesson.detailed).toBe(false);
         expect(lesson.steps.map(s => s.markdown)).toEqual(['40-12=?', '先减十，再减二。', '28']); expect(lesson.cues[2].end).toBe(10);
     });
+    it('兼容真实生成动画最后渐入后停留的结论场景及带单位时钟', () => {
+        const raw = '<svg><desc data-voice-start="0s" data-voice-end="6s">第一步</desc><desc data-voice-start="6" data-voice-end="12">第二步</desc><desc data-voice-start="12" data-voice-end="18">第三步</desc><desc data-voice-start="18" data-voice-end="24">最后核对</desc><text>结论<animate attributeName="opacity" begin="18.8s" dur="0.8s"/></text></svg>';
+        const lesson = buildAnimationNarration(raw, content, 'zh'); expect(lesson.detailed).toBe(true); expect(lesson.cues[3]).toEqual({ start: 18, end: 24 });
+    });
     it('拒绝重叠、越界和缺失时间，避免只朗读部分损坏讲稿', () => {
         for (const desc of ['<desc data-voice-start="0" data-voice-end="50">错误</desc>', '<desc data-voice-start="0">错误</desc>', '<desc data-voice-start="0" data-voice-end="5">第一步</desc><desc data-voice-start="4" data-voice-end="10">重叠</desc>']) {
             expect(buildAnimationNarration(svg(desc), content, 'zh').detailed).toBe(false);
