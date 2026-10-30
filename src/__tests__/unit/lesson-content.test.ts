@@ -14,6 +14,9 @@ describe('原解析分步与公式朗读', () => {
         expect(speechText('结果 x^20=1')).toContain('x的20次方等于1');
         expect(speechText('结果 x^2-1=0')).toContain('x的平方减1等于0');
         expect(speechText('解为 x=-2')).toContain('x等于负2');
+        expect(speechText('$-2$', 'zh')).toBe('负2');
+        expect(speechText('$x$ -2', 'zh')).toContain('x 减2');
+        expect(speechText('计算 x*2')).toContain('x乘以2');
     });
     it('转换分数根号和百分数，中文上下文中纯公式仍读中文', () => {
         expect(speechText('$\\frac{1}{2}$', 'zh')).toContain('（2）分之（1）');

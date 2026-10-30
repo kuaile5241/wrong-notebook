@@ -42,7 +42,9 @@ export function speechText(markdown: string, language?: 'zh' | 'en'): string {
         .replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
         .replace(/```[^\n]*\n|```|~~~/g, ' ').replace(/^\s*(?:#{1,6}\s*|>\s*|[-*+]\s+|\d+[.)、]\s*)/gm, '')
         .replace(/\\(?:left|right|displaystyle|textstyle)\b/g, '').replace(/\\(?:text|mathrm|mathbf|operatorname)\{([^{}]*)\}/g, '$1');
-    text = text.replace(/\\%/g, '%').replace(/\\(?:qquad|quad)\b/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    text = text.replace(/\\%/g, '%').replace(/\\(?:qquad|quad)\b/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+        .replace(/\$/g, ' ').replace(/\\[()[\]]/g, ' ')
+        .replace(/([a-zA-Z0-9)\]}])\s*\*\s*(?=[a-zA-Z0-9({])/g, chinese ? '$1乘以' : '$1 times ');
     for (let i = 0; i < 8; i++) {
         const before = text;
         text = text.replace(/\\(?:dfrac|tfrac|frac)\{([^{}]+)\}\{([^{}]+)\}/g, (_, a: string, b: string) => chinese ? `（${b}）分之（${a}）` : `(${a}) over (${b})`)
@@ -53,8 +55,10 @@ export function speechText(markdown: string, language?: 'zh' | 'en'): string {
         .replace(/\^\{2\}|\^2(?![\d.])|²/g, chinese ? '的平方' : ' squared').replace(/\^\{3\}|\^3(?![\d.])|³/g, chinese ? '的立方' : ' cubed')
         .replace(/\^\{([^}]+)\}/g, chinese ? '的$1次方' : ' to the power $1').replace(/\^(-?\d+(?:\.\d+)?|[a-zA-Z])/g, chinese ? '的$1次方' : ' to the power $1')
         .replace(/_\{([^}]+)\}|_([a-zA-Z0-9])/g, (_, a: string, b: string) => chinese ? `下标${a || b}` : ` sub ${a || b}`);
-    text = text.replace(/(-?\d+(?:\.\d+)?)\s*%/g, chinese ? '百分之$1' : '$1 percent ')
-        .replace(/(^|[=（(，,:：\s之])[-−－](?=\d|[a-zA-Z])/g, chinese ? '$1负' : '$1negative ');
+    text = text.replace(/(-?\d+(?:\.\d+)?)\s*%/g, chinese ? '百分之$1' : '$1 percent ');
+    const beforeSigns = text;
+    text = text.replace(/[-−－](?=\s*[\da-zA-Z])/g, (sign, offset: number) =>
+        /[0-9a-zA-Z²³π方)\]}）]$/.test(beforeSigns.slice(0, offset).trimEnd()) ? sign : chinese ? '负' : 'negative ');
     const symbols: Record<string, [string, string]> = {
         '\\times': ['乘以', ' times '], '\\cdot': ['乘以', ' times '], '\\div': ['除以', ' divided by '],
         '\\leq': ['小于等于', ' less than or equal to '], '\\geq': ['大于等于', ' greater than or equal to '],
