@@ -1,5 +1,6 @@
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { getAliyunTtsConfig, synthesizeAliyun, ALIYUN_MODEL } from './aliyun-tts';
 
 let running = 0;
 const cache = new Map<string, { data: Buffer; expires: number }>();
@@ -23,15 +24,22 @@ export function normalizeWave(input: Buffer) {
     }
     throw new LessonAudioError('AUDIO_FAILED', 503);
 }
-export async function synthesizeLessonAudio(userId: string, text: string, signal?: AbortSignal, language?: 'zh' | 'en') {
-    const key = createHash('sha256').update(userId + '\0' + language + '\0' + text).digest('hex'), now = Date.now();
+export async function synthesizeLessonAudio(userId: string, text: string, signal?: AbortSignal, language?: 'zh' | 'en', mode: 'auto' | 'natural' | 'compatible' = 'auto') {
+    const config = getAliyunTtsConfig();
+    const natural = mode === 'natural' || (mode === 'auto' && config.enabled);
+    if (natural && (!config.enabled || !config.apiKey || !config.workspaceId)) throw new LessonAudioError('AUDIO_NOT_CONFIGURED', 503);
+    const identity = natural ? JSON.stringify([ALIYUN_MODEL, config.voice, config.workspaceId, config.apiKey]) : 'espeak';
+    const key = createHash('sha256').update(userId + '\0' + language + '\0' + identity + '\0' + text).digest('hex'), now = Date.now();
     for (const [id, entry] of cache) if (entry.expires < now) { cacheBytes -= entry.data.length; cache.delete(id); }
     const hit = cache.get(key); if (hit) return hit.data;
     if (running >= 2) throw new LessonAudioError('AUDIO_BUSY', 429);
     running++;
     try {
         const voice = (language ? language === 'zh' : /[\u3400-\u9fff]/.test(text)) ? 'cmn' : 'en-us';
-        const output = await new Promise<Buffer>((resolve, reject) => {
+        const output = natural ? await synthesizeAliyun(text, config, signal).catch((error: unknown) => {
+            const code = error instanceof Error && ['AUDIO_NOT_CONFIGURED', 'AUDIO_CREDENTIALS', 'AUDIO_BUSY'].includes(error.message) ? error.message : 'AUDIO_PROVIDER_FAILED';
+            throw new LessonAudioError(code, code === 'AUDIO_BUSY' ? 429 : 503);
+        }) : await new Promise<Buffer>((resolve, reject) => {
             // 固定程序、固定参数、正文仅走 stdin，绝不拼接 shell 或写入音频文件。
             const child = execFile('espeak-ng', ['--stdout', '-v', voice, '-s', '145', '--stdin'],
                 { encoding: 'buffer', maxBuffer: 8 * 1024 * 1024, timeout: 15_000, signal },

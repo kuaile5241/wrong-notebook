@@ -1,7 +1,7 @@
 import { speechChunks, speechText } from './lesson-content';
 import type { LessonSource, LessonStep } from './lesson-content';
 
-export type VoiceMode = 'auto' | 'device' | 'compatible';
+export type VoiceMode = 'auto' | 'device' | 'compatible' | 'natural';
 export interface LessonPlayback { index: number; status: 'idle' | 'loading' | 'playing' | 'paused' | 'error'; error: string; rate: number; mode: VoiceMode; continuous: boolean }
 export const INITIAL_PLAYBACK: LessonPlayback = { index: 0, status: 'idle', error: '', rate: 1, mode: 'auto', continuous: false };
 let activePlayer: { owner: object; stop: () => void } | null = null;
@@ -41,7 +41,15 @@ export class LessonPlayer {
         this.generation++; this.abort?.abort(); this.clearNative(); this.audio?.pause(); this.update({ status: 'paused' });
     };
     select = (index: number) => { this.stop(); this.update({ index: Math.max(0, Math.min(this.steps.length - 1, index)) }); };
-    setMode = (mode: VoiceMode) => { this.stop(); this.update({ mode }); };
+    setMode = (mode: VoiceMode) => {
+        this.stop(); this.update({ mode });
+        if (mode === 'device') {
+            try {
+                const synth = typeof window !== 'undefined' ? window.speechSynthesis : undefined;
+                if (typeof synth?.speak !== 'function' || typeof SpeechSynthesisUtterance === 'undefined' || !synth.getVoices().some(v => v.lang.toLowerCase().startsWith(this.language))) this.update({ status: 'error', error: 'DEVICE_VOICE_UNAVAILABLE' });
+            } catch { this.update({ status: 'error', error: 'DEVICE_VOICE_UNAVAILABLE' }); }
+        }
+    };
     setRate = (rate: number) => {
         if (![0.75, 1, 1.25].includes(rate)) return;
         const playing = this.state.status === 'playing'; this.update({ rate });
@@ -65,7 +73,7 @@ export class LessonPlayer {
         let voices: SpeechSynthesisVoice[] = [];
         try { if (typeof synth?.getVoices === 'function') voices = synth.getVoices().filter(v => v.lang.toLowerCase().startsWith(lang)); } catch { /* 部分设备的系统音库暂时不可用，转兼容语音。 */ }
         const voice = voices.find(v => v.localService) ?? (this.state.mode === 'device' ? voices[0] : undefined);
-        if (this.state.mode !== 'compatible' && typeof synth?.speak === 'function' && voice && typeof SpeechSynthesisUtterance !== 'undefined') {
+        if (this.state.mode === 'device' && typeof synth?.speak === 'function' && voice && typeof SpeechSynthesisUtterance !== 'undefined') {
             const utterance = new SpeechSynthesisUtterance(text); this.utterance = utterance;
             utterance.voice = voice; utterance.lang = voice.lang; utterance.rate = this.state.rate;
             utterance.onstart = () => { if (gen === this.generation && this.utterance === utterance) { clearTimeout(this.watchdog); this.update({ status: 'playing' }); } };
@@ -83,7 +91,7 @@ export class LessonPlayer {
             if (!this.objectUrl) {
                 this.abort = new AbortController();
                 const response = await fetch('/api/lesson-audio', { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: this.abort.signal,
-                    body: JSON.stringify({ source: this.source, fingerprint: this.fingerprint, step: this.state.index, chunk: this.chunk }) });
+                    body: JSON.stringify({ source: this.source, fingerprint: this.fingerprint, step: this.state.index, chunk: this.chunk, mode: this.state.mode === 'device' ? 'auto' : this.state.mode }) });
                 if (!response.ok) { const body = await response.json(); throw new Error(typeof body.code === 'string' ? body.code : 'AUDIO_FAILED'); }
                 const blob = await response.blob(); if (gen !== this.generation) return;
                 this.objectUrl = URL.createObjectURL(blob); this.audio.src = this.objectUrl;

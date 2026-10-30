@@ -10,7 +10,7 @@ import { checkAudioQuota, LessonAudioError, synthesizeLessonAudio } from '@/lib/
 const schema = z.object({ source: z.discriminatedUnion('kind', [
     z.object({ kind: z.literal('error'), id: z.string().max(100) }),
     z.object({ kind: z.literal('learning'), id: z.string().max(100), questionId: z.string().max(100) }),
-]), fingerprint: z.string().max(20), step: z.number().int().min(0).max(1000), chunk: z.number().int().min(0).max(1000) });
+]), fingerprint: z.string().max(20), step: z.number().int().min(0).max(1000), chunk: z.number().int().min(0).max(1000), mode: z.enum(['auto', 'natural', 'compatible']).default('auto') });
 
 export async function POST(req: Request) {
     try {
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
         const selected = lesson.steps[step], text = selected && speechChunks(speechText(selected.markdown, lesson.language))[chunk];
         if (!text) return NextResponse.json({ code: 'INVALID_AUDIO_REQUEST' }, { status: 400 });
         checkAudioQuota(user.id);
-        const audio = await synthesizeLessonAudio(user.id, text, req.signal, lesson.language);
+        const audio = await synthesizeLessonAudio(user.id, text, req.signal, lesson.language, parsed.data.mode);
         return new NextResponse(new Uint8Array(audio), { headers: { 'Content-Type': 'audio/wav', 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff' } });
     } catch (error) {
         if (error instanceof LessonAudioError) return NextResponse.json({ code: error.code }, { status: error.status });

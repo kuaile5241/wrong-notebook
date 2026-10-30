@@ -4,9 +4,13 @@ export const lessonEn = {
     play: 'Listen to this step', continuous: 'Continue with narration', pause: 'Pause', resume: 'Continue', replay: 'Listen again', previous: 'Previous', next: 'Next',
     rate: 'Speed', voice: 'Voice', auto: 'Automatic', device: 'Device voice', compatible: 'Compatible voice',
     preparing: 'Preparing voice…', speaking: 'Reading this step', full: 'Show the full explanation', originalFigure: 'Question diagram',
-    deviceUnavailable: 'No suitable device voice. Choose Compatible voice.', failed: 'Voice is unavailable. Try again or choose another voice.',
+    deviceUnavailable: 'No suitable device voice in this app. Choose Aliyun natural voice or Compatible voice.', failed: 'Voice is unavailable. Try again or choose another voice.',
     busy: 'Voice is busy. Please try again shortly.', changed: 'This explanation has changed. Reload before listening.', tap: 'Audio is ready. Tap Continue to play.',
     compatibleHint: 'Compatible voice works in the app; its voice is more mechanical. No videos are stored.',
+    natural: 'Aliyun natural voice', naturalHint: 'Automatic prefers Aliyun when enabled. Natural audio is AI generated; lesson text is sent to Aliyun and billed by usage. Your phone needs no proxy.',
+    notConfigured: 'Ask an administrator to configure Aliyun natural voice in Settings → AI Provider.', credentials: 'Aliyun credentials are invalid or lack permission. Ask an administrator to check.',
+    voiceSettings: 'Aliyun natural narration', configHint: 'Use a Beijing Model Studio API Key and Workspace ID. Keys stay on the server. Saving and previewing incurs a small synthesis charge. Use HTTPS or a secure tunnel to enter credentials.',
+    enableNatural: 'Enable natural voice for all accounts', workspace: 'Beijing Workspace ID', apiKey: 'Model Studio API Key', female: 'Long Xiaochun · warm female voice', male: 'Long Anyang · sunny male voice', saveVoice: 'Save voice settings', previewVoice: 'Save & preview', saved: 'Voice settings saved.', configFailed: 'Check the API Key and Workspace ID, then save again.', tapPreview: 'Audio is ready. Use the player below.',
     long: 'This explanation is long. Read the full text below for the remaining content.',
 };
 export const lessonZh: typeof lessonEn = {
@@ -15,8 +19,12 @@ export const lessonZh: typeof lessonEn = {
     play: '听这一步', continuous: '连贯讲解', pause: '暂停', resume: '继续朗读', replay: '再听一遍', previous: '上一步', next: '下一步',
     rate: '语速', voice: '朗读声音', auto: '自动选择', device: '设备语音', compatible: '兼容语音',
     preparing: '正在准备语音…', speaking: '正在朗读这一步', full: '查看完整解析', originalFigure: '题目原图',
-    deviceUnavailable: '设备暂无合适的声音，请选择“兼容语音”。', failed: '暂时无法朗读，请重试或切换声音。',
+    deviceUnavailable: '当前 App 没有可用的设备声音，请切换“阿里云自然语音”或“兼容语音”。', failed: '暂时无法朗读，请重试或切换声音。',
     busy: '语音正在忙，请稍后重试。', changed: '解析已更新，请刷新后再听。', tap: '语音已准备好，点击“继续朗读”播放。',
     compatibleHint: '兼容语音可在 App 内播放，音色较朴素，不会保存视频。',
+    natural: '阿里云自然语音', naturalHint: '自动选择会优先使用已启用的阿里云语音。声音由 AI 合成，讲解文本会发送到阿里云并按量计费，手机无需代理。',
+    notConfigured: '请管理员在“设置 → AI 渠道”配置阿里云自然语音。', credentials: '阿里云密钥无效或权限不足，请管理员检查。',
+    voiceSettings: '阿里云自然朗读', configHint: '使用百炼北京地域的 API Key 和业务空间 ID，密钥仅保存在服务器。试听会产生少量语音费用。请通过 HTTPS 或安全隧道填写密钥。',
+    enableNatural: '为所有账号启用自然语音', workspace: '北京地域业务空间 ID', apiKey: '百炼 API Key', female: '龙小淳 · 温暖女声', male: '龙安洋 · 阳光男声', saveVoice: '保存语音设置', previewVoice: '保存并试听', saved: '语音设置已保存。', configFailed: '请检查 API Key 和业务空间 ID 后重新保存。', tapPreview: '语音已生成，请使用下方播放器播放。',
     long: '解析较长，剩余内容请在下方完整解析中查看。',
 };

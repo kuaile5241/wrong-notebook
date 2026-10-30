@@ -30,7 +30,7 @@ export async function GET() {
     if (!requireAdmin(session)) {
         return NextResponse.json({ aiProvider: config.aiProvider, timeouts: config.timeouts, timeZone: config.timeZone });
     }
-    return NextResponse.json(config);
+    return NextResponse.json({ ...config, aliyunTts: config.aliyunTts ? { ...config.aliyunTts, apiKey: config.aliyunTts.apiKey ? '********' : '' } : undefined });
 }
 
 export async function POST(req: Request) {
@@ -44,6 +44,8 @@ export async function POST(req: Request) {
 
     try {
         const body = await req.json();
+        // 语音配置仅由独立接口校验、保存，避免通用设置回写脱敏密钥。
+        delete body.aliyunTts;
         if (body.timeZone !== undefined) {
             if (!isValidTimeZone(body.timeZone)) return badRequest('INVALID_TIME_ZONE');
             body.timeZone = body.timeZone.trim();
@@ -97,7 +99,7 @@ export async function POST(req: Request) {
         }
 
         const updatedConfig = updateAppConfig(body);
-        return NextResponse.json(updatedConfig);
+        return NextResponse.json({ ...updatedConfig, aliyunTts: updatedConfig.aliyunTts ? { ...updatedConfig.aliyunTts, apiKey: updatedConfig.aliyunTts.apiKey ? '********' : '' } : undefined });
     } catch (error) {
         logger.error({ error }, 'Failed to update settings');
         return internalError("Failed to update settings");
