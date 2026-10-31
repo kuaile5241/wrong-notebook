@@ -1,3 +1,4 @@
+import { wordLessonJsonSchema } from './lesson';
 import { createHash } from 'node:crypto';
 import { z } from 'zod';
 
@@ -15,7 +16,7 @@ export const bookSchema = z.object({
 export const unitSchema = z.object({ id: z.string().max(100).optional(), code: z.string().trim().min(1).max(50), title: z.string().trim().min(1).max(150),
     moduleTitle: z.string().max(150).default(''), position: z.number().int().min(0).max(10000).default(0), pageReference: z.string().max(80).default(''),
     notes: z.string().max(2000).default(''), courseUrl: sourceUrlSchema.default(''), archived: z.boolean().default(false) });
-export const termSchema = z.object({ id: z.string().max(100).optional(), unitId: z.string().max(100), word: z.string().trim().min(1).max(120), meaning: z.string().trim().min(1).max(300),
+export const termSchema = z.object({ lesson: wordLessonJsonSchema.optional(), id: z.string().max(100).optional(), unitId: z.string().max(100), word: z.string().trim().min(1).max(120), meaning: z.string().trim().min(1).max(300),
     example: z.string().max(1000).default(''), translation: z.string().max(1000).default(''), atlasId: z.string().max(100).default(''),
     useAtlasImage: z.boolean().default(false), position: z.number().int().min(0).max(10000).default(0), notes: z.string().max(1000).default(''), verified: z.boolean().default(false), archived: z.boolean().default(false) });
 export const importRowSchema = z.object({

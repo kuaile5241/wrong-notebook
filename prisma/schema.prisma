@@ -345,6 +345,7 @@ model TextbookTerm {
   unit TextbookUnit @relation(fields: [unitId], references: [id], onDelete: Cascade)
   key String
   word String
+  lesson String @default("")
   meaning String
   example String @default("")
   translation String @default("")

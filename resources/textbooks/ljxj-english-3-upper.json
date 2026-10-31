@@ -40,7 +40,8 @@
             "position": 0,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习hello，意思是“你好”。hello是见面打招呼的词，熟悉或不熟悉的人都能用。\",\"usage\":[\"hello是见面打招呼的词，熟悉或不熟悉的人都能用。后面加逗号和对方名字，叫出对方会更亲切。\"],\"examples\":[{\"en\":\"Hello, Amy!\",\"zh\":\"你好，埃米！\",\"analysis\":\"Hello用来问好，Amy是被打招呼的人。逗号把问候和名字分开，感叹号表达友好语气。\"},{\"en\":\"Hello, Mr Li!\",\"zh\":\"您好，李先生！\",\"analysis\":\"Mr Li是对李先生的称呼。hello后面既可以接名字，也可以接称呼和姓氏。\"}],\"pitfalls\":[\"hello用于见面问好，不是告别；告别要用goodbye或bye。\"],\"memory\":\"见面挥挥手，想起hello。\"}"
           },
           {
             "id": "ljxj-3u-u1-w2",
@@ -54,7 +55,8 @@
             "position": 1,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习I，意思是“我”。I是人称代词“我”，说话的人用它称呼自己。\",\"usage\":[\"I是人称代词“我”，说话的人用它称呼自己。无论在句首还是句中，都必须大写。表示“我是”时用I am。\"],\"examples\":[{\"en\":\"I am Amy.\",\"zh\":\"我是埃米。\",\"analysis\":\"I是我，am在这里表示是，Amy是名字。I和am配对，不说I is。\"},{\"en\":\"I have a pet.\",\"zh\":\"我有一只宠物。\",\"analysis\":\"I作主语，have表示有，a pet表示一只宠物。这里have已经作谓语，不再加am。\"}],\"pitfalls\":[\"I必须大写，不写小写i；I have中不要多加am。\"],\"memory\":\"每次说到自己，都用大写I。\"}"
           },
           {
             "id": "ljxj-3u-u1-w3",
@@ -68,7 +70,8 @@
             "position": 2,
             "notes": "本单元同时认识 am、is、are 等形式。",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"be. am. is. are.\",\"overview\":\"本课学习be. am. is. are.，意思是“是”。be是一个动词的原形，本课认识它在句子中的形式am、is、are。\",\"usage\":[\"be是一个动词的原形，本课认识它在句子中的形式am、is、are。介绍身份时，I配am，he、she、it配is，you、we、they配are。\"],\"examples\":[{\"en\":\"I am a girl.\",\"zh\":\"我是一个女孩。\",\"analysis\":\"I表示我，所以be在这里变成am；a girl说明身份。不要直接写I be a girl。\"},{\"en\":\"They are my friends.\",\"zh\":\"他们是我的朋友。\",\"analysis\":\"They表示他们，是复数主语，所以用are；friends也用复数，my放在friends前。\"}],\"pitfalls\":[\"be不能在所有句子里原样照搬，要随主语换成am、is或are。\"],\"memory\":\"先找句子里的“谁”，再选am、is或are。\"}"
           },
           {
             "id": "ljxj-3u-u1-w4",
@@ -82,7 +85,8 @@
             "position": 3,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习Miss，意思是“小姐”。Miss是对女性的称呼，本课常用于称呼女老师。\",\"usage\":[\"Miss是对女性的称呼，本课常用于称呼女老师。后面接姓氏，例如Miss Li，不把称呼和姓分开。\"],\"examples\":[{\"en\":\"Good morning, Miss Li.\",\"zh\":\"早上好，李老师。\",\"analysis\":\"Good morning是早晨问候，Miss Li是对李老师的称呼。Miss和Li的首字母都要大写。\"},{\"en\":\"This is Miss Wang.\",\"zh\":\"这是王老师。\",\"analysis\":\"This is介绍一个人，Miss Wang是这个人的称呼。Miss后接姓，不需要再加a。\"}],\"pitfalls\":[\"不要把Miss当作女老师的名字，也不要把女性是否结婚当作随意称呼别人的依据。按老师介绍的称呼使用。\"],\"memory\":\"Miss加老师的姓，就是课堂里常见的称呼。\"}"
           },
           {
             "id": "ljxj-3u-u1-w5",
@@ -96,7 +100,8 @@
             "position": 4,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习hi，意思是“你好”。hi是比较轻松、亲切的问好，常用于朋友、同学之间。\",\"usage\":[\"hi是比较轻松、亲切的问好，常用于朋友、同学之间。意思和hello接近，但语气更随意。\"],\"examples\":[{\"en\":\"Hi, Ben!\",\"zh\":\"嗨，本！\",\"analysis\":\"Hi是打招呼，Ben是对方的名字。叫名字时前面加逗号。\"},{\"en\":\"Hi! I am Amy.\",\"zh\":\"你好！我是埃米。\",\"analysis\":\"先用Hi问好，再用I am介绍自己。I必须大写，am与I搭配。\"}],\"pitfalls\":[\"hi是问候，不用它来代替感谢或再见。\"],\"memory\":\"遇到同学轻轻挥手，说hi。\"}"
           },
           {
             "id": "ljxj-3u-u1-w6",
@@ -110,7 +115,8 @@
             "position": 5,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习what，意思是“什么”。what用来询问“什么”。\",\"usage\":[\"what用来询问“什么”。询问名字时，What is开头，后面接要问的内容；句尾用问号。\"],\"examples\":[{\"en\":\"What is your name?\",\"zh\":\"你叫什么名字？\",\"analysis\":\"What询问什么，is在这里连接问句，your name表示你的名字。整个句子自然理解为你叫什么名字。\"},{\"en\":\"What is this?\",\"zh\":\"这是什么？\",\"analysis\":\"What问事物是什么，this指近处的一个东西，is用于单数。不要逐字硬译成什么是这个。\"}],\"pitfalls\":[\"疑问句要有问号；what问事物或内容，问人是谁常用who。\"],\"memory\":\"想问是什么，就想到what。\"}"
           },
           {
             "id": "ljxj-3u-u1-w7",
@@ -124,7 +130,8 @@
             "position": 6,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习your，意思是“你的；你们的”。your表示“你的”或“你们的”，说明后面的东西属于对方。\",\"usage\":[\"your表示“你的”或“你们的”，说明后面的东西属于对方。your后面一般还要有名词，不能把它当作“你”。\"],\"examples\":[{\"en\":\"What is your name?\",\"zh\":\"你叫什么名字？\",\"analysis\":\"your name是你的名字，your说明name属于谁。what询问名字是什么。\"},{\"en\":\"This is your bag.\",\"zh\":\"这是你的包。\",\"analysis\":\"This is表示这是，your bag表示你的包。your修饰bag，不需要再加a。\"}],\"pitfalls\":[\"you是你，your是你的；不能把your单独放在I like后面表示我喜欢你。\"],\"memory\":\"your后面牵着一个东西：your name、your bag。\"}"
           },
           {
             "id": "ljxj-3u-u1-w8",
@@ -138,7 +145,8 @@
             "position": 7,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习name，意思是“名字”。name在本课是名词“名字”。\",\"usage\":[\"name在本课是名词“名字”。问名字用What is your name，回答可以用My name is加自己的名字。\"],\"examples\":[{\"en\":\"My name is Amy.\",\"zh\":\"我的名字叫埃米。\",\"analysis\":\"My name是我的名字，is连接名字的具体内容，Amy是姓名。My name作单数，所以用is。\"},{\"en\":\"What is his name?\",\"zh\":\"他叫什么名字？\",\"analysis\":\"his name是他的名字，what询问具体姓名。his说明名字的主人是他。\"}],\"pitfalls\":[\"name作为一个名字时用单数；不要漏掉My name is里的is。\"],\"memory\":\"介绍自己时，把name和自己的名字连起来说。\"}"
           },
           {
             "id": "ljxj-3u-u1-w9",
@@ -152,7 +160,8 @@
             "position": 8,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习my，意思是“我的”。my表示“我的”，后面接名词说明什么东西或什么人和我有关。\",\"usage\":[\"my表示“我的”，后面接名词说明什么东西或什么人和我有关。它和I不同：I是我，my是我的。\"],\"examples\":[{\"en\":\"My name is Ben.\",\"zh\":\"我的名字叫本。\",\"analysis\":\"my修饰name，组成我的名字；is后面接姓名Ben。句首My的M大写。\"},{\"en\":\"This is my friend.\",\"zh\":\"这是我的朋友。\",\"analysis\":\"my friend表示我的朋友，是要介绍的人。my后直接接friend，不再加a。\"}],\"pitfalls\":[\"不要把my写成I；不能写This is I friend，也不说my a friend。\"],\"memory\":\"my加名词：my name、my friend、my book。\"}"
           },
           {
             "id": "ljxj-3u-u1-w10",
@@ -166,7 +175,8 @@
             "position": 9,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"Mister\",\"overview\":\"本课学习Mister，意思是“先生”。Mr是对男性的礼貌称呼，通常后面接姓氏。\",\"usage\":[\"Mr是对男性的礼貌称呼，通常后面接姓氏。英式常写Mr，美式也会写Mr.，读音相同。\"],\"examples\":[{\"en\":\"Good afternoon, Mr Li.\",\"zh\":\"下午好，李先生。\",\"analysis\":\"Good afternoon是下午问好，Mr Li是对方的称呼。称呼与姓氏的开头都大写。\"},{\"en\":\"This is Mr Wang.\",\"zh\":\"这是王先生。\",\"analysis\":\"This is用于介绍一个人，Mr Wang表示王先生。Mr后不加a。\"}],\"pitfalls\":[\"Mr不是这个人的名字，后面通常接姓；不要写成mr li。\"],\"memory\":\"Mr牵着姓氏一起读，不按M、R两个字母拼读。\"}"
           }
         ]
       },
@@ -193,7 +203,8 @@
             "position": 0,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习Good morning.，意思是“早上/上午好。”。Good morning是早晨见面时的问候，作为一个完整表达理解为“早上好”。\",\"usage\":[\"Good morning是早晨见面时的问候，作为一个完整表达理解为“早上好”。对方通常也可以回答Good morning。\"],\"examples\":[{\"en\":\"Good morning, Amy!\",\"zh\":\"早上好，埃米！\",\"analysis\":\"Good morning是完整的问候语，后面加名字Amy表示向谁问好。不要把good单独当作答案。\"},{\"en\":\"Good morning, boys and girls!\",\"zh\":\"早上好，孩子们！\",\"analysis\":\"boys and girls指男孩们和女孩们，是老师对全班的称呼；and把两类人连接起来。\"}],\"pitfalls\":[\"只在合适的早晨场景用morning；下午和晚上分别使用afternoon、evening。\"],\"memory\":\"看见早晨的太阳，想到Good morning。\"}"
           },
           {
             "id": "ljxj-3u-u2-w2",
@@ -207,7 +218,8 @@
             "position": 1,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习boy，意思是“男孩”。boy是名词“男孩”，一个男孩用a boy，多个男孩用boys。\",\"usage\":[\"boy是名词“男孩”，一个男孩用a boy，多个男孩用boys。它不等于成年男性man。\"],\"examples\":[{\"en\":\"He is a boy.\",\"zh\":\"他是一个男孩。\",\"analysis\":\"He表示他，is表示是，a boy表示一个男孩。a和单数boy一起出现。\"},{\"en\":\"The boys are my friends.\",\"zh\":\"这些男孩是我的朋友。\",\"analysis\":\"boys是复数，所以句子用are；my friends也用复数，说明不止一位朋友。\"}],\"pitfalls\":[\"a boy中boy不加s；多个男孩boys要和are等复数形式搭配。\"],\"memory\":\"one boy和two boys对照着读。\"}"
           },
           {
             "id": "ljxj-3u-u2-w3",
@@ -221,7 +233,8 @@
             "position": 2,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习girl，意思是“女孩”。girl是名词“女孩”，一个女孩用a girl，多个女孩用girls。\",\"usage\":[\"girl是名词“女孩”，一个女孩用a girl，多个女孩用girls。介绍身份时常用She is a girl。\"],\"examples\":[{\"en\":\"She is a girl.\",\"zh\":\"她是一个女孩。\",\"analysis\":\"She表示她，is表示是，a girl说明她的身份。这里介绍一个人，所以girl不加s。\"},{\"en\":\"The girls are here.\",\"zh\":\"这些女孩在这里。\",\"analysis\":\"girls表示不止一个女孩，因此用are；here表示在这里。这句说明这些人在哪里。\"}],\"pitfalls\":[\"不要因为主语是she就给girl加s；名词是否变复数要看实际数量。\"],\"memory\":\"一位是girl，多位是girls。\"}"
           },
           {
             "id": "ljxj-3u-u2-w4",
@@ -235,7 +248,8 @@
             "position": 3,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习this，意思是“这个”。this指离说话人较近的一个人或东西，意思是“这、这个”。\",\"usage\":[\"this指离说话人较近的一个人或东西，意思是“这、这个”。介绍人或物时常用This is。\"],\"examples\":[{\"en\":\"This is my friend.\",\"zh\":\"这是我的朋友。\",\"analysis\":\"This指近处的一个人，is后接my friend介绍身份。my friend是我的朋友。\"},{\"en\":\"What is this?\",\"zh\":\"这是什么？\",\"analysis\":\"what询问是什么，this指眼前的一个东西。句尾问号告诉我们这是提问。\"}],\"pitfalls\":[\"this用于一个；这些要用these，不能用this books表示这些书。\"],\"memory\":\"拿近处的一件东西，练习This is。\"}"
           },
           {
             "id": "ljxj-3u-u2-w5",
@@ -249,7 +263,8 @@
             "position": 4,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习our，意思是“我们的”。our表示“我们的”，包括说话人在内的一群人。\",\"usage\":[\"our表示“我们的”，包括说话人在内的一群人。our后面一般接名词，例如our teacher、our school。\"],\"examples\":[{\"en\":\"This is our teacher.\",\"zh\":\"这是我们的老师。\",\"analysis\":\"our teacher表示我们的老师，our说明老师与我们这一群人的关系；This is用来介绍。\"},{\"en\":\"Our school is big.\",\"zh\":\"我们的学校很大。\",\"analysis\":\"Our school作主语，是一所学校，后面用is；big说明学校的大小。\"}],\"pitfalls\":[\"our是我们的，we是我们；不能写We school is big。\"],\"memory\":\"把自己和同学画在一起，指向共同的学校，说our school。\"}"
           },
           {
             "id": "ljxj-3u-u2-w6",
@@ -263,7 +278,8 @@
             "position": 5,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习new，意思是“新的”。new用来描述人或事物，表示“新的”。\",\"usage\":[\"new用来描述人或事物，表示“新的”。它可以跟在is后面说事物是什么样，也可以放在名词前，构成“new＋物品”的短语。\"],\"examples\":[{\"en\":\"The book is new.\",\"zh\":\"这本书是新的。\",\"analysis\":\"The book指“这个书”，is后面的new说明它的特点。book是单数，所以用is。\"},{\"en\":\"This is a new book.\",\"zh\":\"这是一本新书。\",\"analysis\":\"This is表示“这是”，a new book表示“一个新的书”。先说特点，再说物品，new放在book前。\"}],\"pitfalls\":[\"描述词放在名词前时，不要因后面物品数量变化给它加s。一个完整句子还需要is等谓语，不能只说The book new。\"],\"memory\":\"看一件身边的东西，用“物品＋is＋特点”说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u2-w7",
@@ -277,7 +293,8 @@
             "position": 6,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习friend，意思是“朋友”。friend是名词“朋友”。\",\"usage\":[\"friend是名词“朋友”。一个朋友可以说a friend；我的朋友说my friend；多个朋友写friends。\"],\"examples\":[{\"en\":\"This is my friend.\",\"zh\":\"这是我的朋友。\",\"analysis\":\"This is介绍一个人，my friend表示我的朋友。my已经说明是谁的朋友，不再加a。\"},{\"en\":\"We are friends.\",\"zh\":\"我们是朋友。\",\"analysis\":\"We表示我们，是复数，所以用are；friends也用复数，表示彼此是朋友。\"}],\"pitfalls\":[\"不要漏写friend中间的字母i；my friend和a friend都可以，但不能合成my a friend。\"],\"memory\":\"把朋友的名字放进This is my friend后面练习介绍。\"}"
           },
           {
             "id": "ljxj-3u-u2-w8",
@@ -291,7 +308,8 @@
             "position": 7,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习Nice to meet you.，意思是“很高兴见到你。”。Nice to meet you常用于初次见面，完整意思是“很高兴认识你”。\",\"usage\":[\"Nice to meet you常用于初次见面，完整意思是“很高兴认识你”。回答时可以在同一句后面加too，表示我也很高兴。\"],\"examples\":[{\"en\":\"Nice to meet you, Amy.\",\"zh\":\"很高兴认识你，埃米。\",\"analysis\":\"Nice表示愉快，to meet you表示见到你。合在一起是初次认识时的礼貌问候，不要逐字生硬翻译。\"},{\"en\":\"Nice to meet you, too.\",\"zh\":\"我也很高兴认识你。\",\"analysis\":\"too放在末尾表示也，回应对方刚才的问候。读的时候too前可以稍停一下。\"}],\"pitfalls\":[\"熟人每天见面通常不必重复“初次认识”的表达；注意meet和me不是同一个词。\"],\"memory\":\"初次握手或介绍姓名后，说Nice to meet you。\"}"
           },
           {
             "id": "ljxj-3u-u2-w9",
@@ -305,7 +323,8 @@
             "position": 8,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习too，意思是“也”。too在本课表示“也”，常放在句末，说明自己的情况和前面的人一样。\",\"usage\":[\"too在本课表示“也”，常放在句末，说明自己的情况和前面的人一样。书写时前面常有逗号。\"],\"examples\":[{\"en\":\"I am fine, too.\",\"zh\":\"我也很好。\",\"analysis\":\"I am fine说明我很好；末尾too补充也，表示别人很好，我同样很好。\"},{\"en\":\"Nice to meet you, too.\",\"zh\":\"我也很高兴认识你。\",\"analysis\":\"前面的问候语保持完整，too放到最后回应对方。不要把too放在meet和you之间。\"}],\"pitfalls\":[\"too和two读音相同，但too表示也，two表示数字二，写句子时不能混用。\"],\"memory\":\"too在句尾轻轻跟上，表示我也一样。\"}"
           },
           {
             "id": "ljxj-3u-u2-w10",
@@ -319,7 +338,8 @@
             "position": 9,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习Good afternoon.，意思是“下午好。”。Good afternoon用于下午见面问好，意思是“下午好”。\",\"usage\":[\"Good afternoon用于下午见面问好，意思是“下午好”。morning是上午，afternoon是下午，要按时间选择。\"],\"examples\":[{\"en\":\"Good afternoon, Miss Li.\",\"zh\":\"下午好，李老师。\",\"analysis\":\"问候语Good afternoon后接称呼Miss Li，表示向李老师问好。称呼前有逗号。\"},{\"en\":\"Good afternoon, my friend.\",\"zh\":\"下午好，我的朋友。\",\"analysis\":\"my friend是被问候的人；整个表达先说问候，再说向谁问候。\"}],\"pitfalls\":[\"afternoon不要和morning混用；afternoon是一个词，书写时不要拆开。\"],\"memory\":\"把afternoon和下午放学前的时间联系起来。\"}"
           },
           {
             "id": "ljxj-3u-u2-w11",
@@ -333,7 +353,8 @@
             "position": 10,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习goodbye，意思是“再见”。goodbye是告别时说的“再见”。\",\"usage\":[\"goodbye是告别时说的“再见”。它可以单独使用，也可以后面加对方名字或称呼。\"],\"examples\":[{\"en\":\"Goodbye, Ben!\",\"zh\":\"再见，本！\",\"analysis\":\"Goodbye是告别，Ben是对方的名字；叫名字前用逗号。\"},{\"en\":\"Goodbye, Miss Wang!\",\"zh\":\"王老师，再见！\",\"analysis\":\"Miss Wang是对老师的称呼。这里用goodbye表示离开时告别，不是刚见面问好。\"}],\"pitfalls\":[\"goodbye用于分别；不要和打招呼的hello互换。\"],\"memory\":\"离开时挥挥手，想到goodbye。\"}"
           },
           {
             "id": "ljxj-3u-u2-w12",
@@ -347,7 +368,8 @@
             "position": 11,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习bye，意思是“再见”。bye是比较简短、随意的“再见”，与goodbye意思相近，常用于朋友、家人之间告别。\",\"usage\":[\"bye是比较简短、随意的“再见”，与goodbye意思相近，常用于朋友、家人之间告别。\"],\"examples\":[{\"en\":\"Bye, Amy!\",\"zh\":\"再见，埃米！\",\"analysis\":\"Bye表示告别，Amy说明向谁告别。整个表达很简短，语气轻松友好。\"},{\"en\":\"Bye, Mum!\",\"zh\":\"妈妈，再见！\",\"analysis\":\"Mum在这里是对妈妈的直接称呼，用大写开头；Bye表示自己要离开了。\"}],\"pitfalls\":[\"bye和buy读音相同，但buy表示买，不能用buy来写再见。\"],\"memory\":\"走出家门前，练习Bye, Mum。\"}"
           },
           {
             "id": "ljxj-3u-u2-w13",
@@ -361,7 +383,8 @@
             "position": 12,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习Good evening.，意思是“晚上好。”。Good evening用于傍晚或晚上见面问好。\",\"usage\":[\"Good evening用于傍晚或晚上见面问好。Good night常用于晚间告别或睡前道晚安，两者使用时机不同。\"],\"examples\":[{\"en\":\"Good evening, Dad!\",\"zh\":\"晚上好，爸爸！\",\"analysis\":\"Good evening是晚上见面时的问候，Dad是向爸爸直接打招呼的称呼。\"},{\"en\":\"Good evening, Mr Li.\",\"zh\":\"晚上好，李先生。\",\"analysis\":\"Mr Li是称呼和姓氏。先说晚间问候，再说明向谁问候。\"}],\"pitfalls\":[\"Good evening不是睡前说晚安的固定表达；睡前通常说Good night。\"],\"memory\":\"晚上刚见面说evening，准备睡觉说night。\"}"
           },
           {
             "id": "ljxj-3u-u2-w14",
@@ -375,7 +398,8 @@
             "position": 13,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习mum，意思是“（口语）妈妈”。mum是比较亲切、口语化的“妈妈”，常见于英式英语。\",\"usage\":[\"mum是比较亲切、口语化的“妈妈”，常见于英式英语。mother也表示妈妈，语气更中性。\"],\"examples\":[{\"en\":\"This is my mum.\",\"zh\":\"这是我妈妈。\",\"analysis\":\"my mum表示我的妈妈；This is用于把她介绍给别人。my后面的mum通常小写。\"},{\"en\":\"Good morning, Mum!\",\"zh\":\"早上好，妈妈！\",\"analysis\":\"Mum在这里直接当作称呼，像叫名字一样，所以开头大写。\"}],\"pitfalls\":[\"介绍“我的妈妈”用my mum；直接叫“妈妈”常写Mum，注意使用场景和大小写。\"],\"memory\":\"叫妈妈时说Mum，向朋友介绍时说my mum。\"}"
           },
           {
             "id": "ljxj-3u-u2-w15",
@@ -389,7 +413,8 @@
             "position": 14,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习dad，意思是“（口语）爸爸”。dad是亲切、口语化的“爸爸”，father也表示爸爸。\",\"usage\":[\"dad是亲切、口语化的“爸爸”，father也表示爸爸。直接称呼爸爸和介绍“我的爸爸”时，大小写会不同。\"],\"examples\":[{\"en\":\"This is my dad.\",\"zh\":\"这是我爸爸。\",\"analysis\":\"This is是介绍，my dad是我的爸爸。my已经说明所属，不需要a。\"},{\"en\":\"Hello, Dad!\",\"zh\":\"你好，爸爸！\",\"analysis\":\"这里Dad直接用作称呼，开头大写；Hello后加逗号再接称呼。\"}],\"pitfalls\":[\"介绍身份时写my dad，直接呼唤时常写Dad；不要把dad和daughter混淆。\"],\"memory\":\"指着爸爸的照片练my dad，见面叫Dad。\"}"
           }
         ]
       },
@@ -416,7 +441,8 @@
             "position": 0,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习How are you today?，意思是“你今天怎么样？”。这是一句关心对方今天状态的问候。\",\"usage\":[\"这是一句关心对方今天状态的问候。how在这里询问怎么样，today表示今天；回答可以根据实际情况说fine、very well或not so good。\"],\"examples\":[{\"en\":\"How are you today?\",\"zh\":\"你今天怎么样？\",\"analysis\":\"How询问状态，are与you搭配，today把时间限定在今天。整个句子不是询问姓名。\"},{\"en\":\"I am fine, thanks.\",\"zh\":\"我很好，谢谢。\",\"analysis\":\"I am fine回答自己的状态；thanks感谢对方的关心。I与am搭配，不照搬问句中的are。\"}],\"pitfalls\":[\"回答自己的状态用I am，不说I are；不舒服时也可以如实说Not so good。\"],\"memory\":\"问别人用How are you，答自己用I am。\"}"
           },
           {
             "id": "ljxj-3u-u3-w2",
@@ -430,7 +456,8 @@
             "position": 1,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习fine，意思是“很好”。fine在本课表示身体或心情状态很好，常用于回答How are you。\",\"usage\":[\"fine在本课表示身体或心情状态很好，常用于回答How are you。它还有别的词义，但本课先抓住问候中的用法。\"],\"examples\":[{\"en\":\"I am fine, thanks.\",\"zh\":\"我很好，谢谢。\",\"analysis\":\"I am说明我处于某种状态，fine说状态很好；thanks是礼貌感谢。\"},{\"en\":\"I am fine, too.\",\"zh\":\"我也很好。\",\"analysis\":\"fine保持不变，too放在句末表示也。句子里的am由I决定。\"}],\"pitfalls\":[\"fine不是数字five，书写时中间字母不同。问候中fine不要翻译成罚款。\"],\"memory\":\"fine回答状态，five用来数数，分开记。\"}"
           },
           {
             "id": "ljxj-3u-u3-w3",
@@ -444,7 +471,8 @@
             "position": 2,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习Thanks.，意思是“谢谢。”。Thanks是简短自然的感谢，和Thank you意思接近。\",\"usage\":[\"Thanks是简短自然的感谢，和Thank you意思接近。别人帮助你、递东西给你时都可以使用。\"],\"examples\":[{\"en\":\"Thanks, Amy!\",\"zh\":\"谢谢，埃米！\",\"analysis\":\"Thanks表达感谢，Amy是被感谢的人。名字前用逗号。\"},{\"en\":\"I am fine, thanks.\",\"zh\":\"我很好，谢谢。\",\"analysis\":\"先回答自己的状态，再感谢对方关心。Thanks在这里是完整的感谢表达。\"}],\"pitfalls\":[\"单独表达感谢常用Thanks或Thank you，不把Thanks you拼在一起。\"],\"memory\":\"接受帮助后，记得说Thanks。\"}"
           },
           {
             "id": "ljxj-3u-u3-w4",
@@ -458,7 +486,8 @@
             "position": 3,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习and，意思是“和，与”。and用来连接并列的人、东西或意思，常表示“和、并且”。\",\"usage\":[\"and用来连接并列的人、东西或意思，常表示“和、并且”。前后通常是同一类表达。\"],\"examples\":[{\"en\":\"Tom and Amy are friends.\",\"zh\":\"汤姆和埃米是朋友。\",\"analysis\":\"Tom和Amy是两个人，and把他们连接起来，所以后面用are；friends用复数。\"},{\"en\":\"I have a cat and a dog.\",\"zh\":\"我有一只猫和一只狗。\",\"analysis\":\"and连接a cat和a dog两个拥有的对象。两边的a分别说明各有一只。\"}],\"pitfalls\":[\"and表示并列，不表示选择；两个并列主语通常当作复数，不用is。\"],\"memory\":\"把两样东西用and牵起来。\"}"
           },
           {
             "id": "ljxj-3u-u3-w5",
@@ -472,7 +501,8 @@
             "position": 4,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习you，意思是“你；你们”。you可以表示一个“你”，也可以表示多个“你们”，数量要看场景。\",\"usage\":[\"you可以表示一个“你”，也可以表示多个“你们”，数量要看场景。与be搭配时都用are。\"],\"examples\":[{\"en\":\"You are my friend.\",\"zh\":\"你是我的朋友。\",\"analysis\":\"You指对方，are表示是，my friend说明关系。即使只对一个人说，也用are。\"},{\"en\":\"Thank you!\",\"zh\":\"谢谢你！\",\"analysis\":\"you在Thank后表示被感谢的人。这个固定表达自然理解为谢谢你。\"}],\"pitfalls\":[\"you和your不同：you是你，your是你的。不要说You is。\"],\"memory\":\"对着别人说you，和are一起记。\"}"
           },
           {
             "id": "ljxj-3u-u3-w6",
@@ -486,7 +516,8 @@
             "position": 5,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习very well，意思是“非常好”。very well在问候中表示状态“非常好”。\",\"usage\":[\"very well在问候中表示状态“非常好”。very加强程度，well在这里说身体或整体状态好。\"],\"examples\":[{\"en\":\"I am very well.\",\"zh\":\"我非常好。\",\"analysis\":\"I am表明自己的状态，very well说明很好；very修饰well，加强程度。\"},{\"en\":\"I am very well, thank you.\",\"zh\":\"我很好，谢谢你。\",\"analysis\":\"先回答近况，再用thank you感谢关心。两个意思用逗号连接，读时可以稍停。\"}],\"pitfalls\":[\"well在这里不是“水井”；不要把very和well拆成两个互不相关的意思。\"],\"memory\":\"very让well更强一点：不是还好，是非常好。\"}"
           },
           {
             "id": "ljxj-3u-u3-w7",
@@ -500,7 +531,8 @@
             "position": 6,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习not so good，意思是“不太好”。not so good是委婉表达状态“不太好”。\",\"usage\":[\"not so good是委婉表达状态“不太好”。别人问候时，可以用它如实表达不舒服或心情一般。\"],\"examples\":[{\"en\":\"Not so good, thanks.\",\"zh\":\"不太好，谢谢。\",\"analysis\":\"Not把好的状态否定，so在这里表示那么，合起来是没有那么好；thanks感谢关心。\"},{\"en\":\"I am not so good today.\",\"zh\":\"我今天不太好。\",\"analysis\":\"I am说明自己，not so good描述状态，today说明是今天；not放在am后。\"}],\"pitfalls\":[\"not不能漏掉，否则变成肯定意思。如果身体不舒服，应及时告诉家长或老师。\"],\"memory\":\"先听清not，再判断是好还是不太好。\"}"
           },
           {
             "id": "ljxj-3u-u3-w8",
@@ -514,7 +546,8 @@
             "position": 7,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习Here you are.，意思是“给你。”。Here you are常在把东西递给别人时使用，意思是“给你”。\",\"usage\":[\"Here you are常在把东西递给别人时使用，意思是“给你”。应结合递东西的动作整体理解。\"],\"examples\":[{\"en\":\"Here you are, Amy.\",\"zh\":\"给你，埃米。\",\"analysis\":\"这是递物时的固定表达，Amy是接东西的人；不要逐字翻译成你在这里。\"},{\"en\":\"Here you are. Thank you!\",\"zh\":\"给你。谢谢你！\",\"analysis\":\"前一句是递东西的人说，后一句是接东西的人感谢。两句话可由两个人轮流说。\"}],\"pitfalls\":[\"它常用于递交物品；不能把这里的are随意改成is。\"],\"memory\":\"递一支笔时说Here you are，接到笔时说Thank you。\"}"
           },
           {
             "id": "ljxj-3u-u3-w9",
@@ -528,7 +561,8 @@
             "position": 8,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习Thank you.，意思是“谢谢你。”。Thank you是一句完整的感谢表达。\",\"usage\":[\"Thank you是一句完整的感谢表达。thank是感谢，you是被感谢的人；可以感谢帮助、礼物或关心。\"],\"examples\":[{\"en\":\"Thank you, Dad.\",\"zh\":\"谢谢你，爸爸。\",\"analysis\":\"Thank you先表达感谢，Dad点明被感谢的人，直接称呼时开头大写。\"},{\"en\":\"Thank you very much.\",\"zh\":\"非常感谢你。\",\"analysis\":\"very much加强感谢的程度。Thank you保持完整，very much放在后面。\"}],\"pitfalls\":[\"不要把Thank you写成Thanks you；Thanks和Thank you是两种常用形式。\"],\"memory\":\"看到别人的帮助，就用Thank you回应。\"}"
           },
           {
             "id": "ljxj-3u-u3-w10",
@@ -542,7 +576,8 @@
             "position": 9,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习Let's draw.，意思是“我们一起画画吧！”。Let’s是Let us的缩写，表示让我们一起做某事。\",\"usage\":[\"Let’s是Let us的缩写，表示让我们一起做某事。后面接动词原形，draw表示画画，语气是在提出一起活动的建议。\"],\"examples\":[{\"en\":\"Let's draw a cat.\",\"zh\":\"我们一起画一只猫吧。\",\"analysis\":\"Let’s提出一起做，draw是画，a cat是要画的对象。动词draw不加s。\"},{\"en\":\"Let's draw a tree.\",\"zh\":\"我们一起画一棵树吧。\",\"analysis\":\"句型前半段不变，把画的对象换成a tree，意思就变成一起画树。\"}],\"pitfalls\":[\"Let’s里的撇号不能漏；后面用draw，不用drawing或draws。\"],\"memory\":\"Let’s加动作，就是邀请大家一起做。\"}"
           },
           {
             "id": "ljxj-3u-u3-w11",
@@ -556,7 +591,8 @@
             "position": 10,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习great，意思是“很好，很棒”。great在本课可用来赞同或称赞，表示“太好了、很棒”。\",\"usage\":[\"great在本课可用来赞同或称赞，表示“太好了、很棒”。也可放在is后评价一件事物。\"],\"examples\":[{\"en\":\"Great! Let us draw.\",\"zh\":\"太好了！我们画画吧。\",\"analysis\":\"Great单独使用表达开心和赞同；Let us提出一起画画。\"},{\"en\":\"Your picture is great.\",\"zh\":\"你的画很棒。\",\"analysis\":\"Your picture是你的画，作单数主语用is；great评价这幅画。\"}],\"pitfalls\":[\"great和green不是同一个词；great在称赞语境里不必理解成体积很大。\"],\"memory\":\"听到好主意，点头说Great。\"}"
           }
         ]
       },
@@ -583,7 +619,8 @@
             "position": 0,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习who，意思是“谁，什么人”。who用来问人是谁。\",\"usage\":[\"who用来问人是谁。看照片想知道某个人的身份，可以问Who is he或Who is she。\"],\"examples\":[{\"en\":\"Who is she?\",\"zh\":\"她是谁？\",\"analysis\":\"Who问人的身份，she指一位女性，is与she搭配。回答可以用She is my mother。\"},{\"en\":\"Who is he?\",\"zh\":\"他是谁？\",\"analysis\":\"he指一位男性，who仍然询问身份。问句中的词序是Who加is加he。\"}],\"pitfalls\":[\"who询问人，what通常询问事物或内容；不要交换he和she的意思。\"],\"memory\":\"看到人想问是谁，就用who。\"}"
           },
           {
             "id": "ljxj-3u-u4-w2",
@@ -597,7 +634,8 @@
             "position": 1,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习she，意思是“她”。she是人称代词“她”，通常用于指前面已经知道的一位女性。\",\"usage\":[\"she是人称代词“她”，通常用于指前面已经知道的一位女性。放在句首时写She，与be搭配用is。\"],\"examples\":[{\"en\":\"She is my mother.\",\"zh\":\"她是我的妈妈。\",\"analysis\":\"She是主语，is说明身份，my mother表示我的妈妈。\"},{\"en\":\"She has a cat.\",\"zh\":\"她有一只猫。\",\"analysis\":\"She指一个人，一般现在时里have变成has；a cat表示一只猫。\"}],\"pitfalls\":[\"she配is，不用are；she和her不同，her可以表示她的或作宾语。\"],\"memory\":\"指一位女性说she，先练She is。\"}"
           },
           {
             "id": "ljxj-3u-u4-w3",
@@ -611,7 +649,8 @@
             "position": 2,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习grandmother，意思是“（外）祖母；奶奶；外婆”。grandmother是家人的称呼。\",\"usage\":[\"grandmother是家人的称呼。介绍照片时可以用This is my加家人称呼，表示“这是我的……”；my表示“我的”，后面直接接家人称呼。英语的祖父母、兄弟姐妹称呼通常不单独区分父系母系或年龄大小。\"],\"examples\":[{\"en\":\"This is my grandmother.\",\"zh\":\"这是我的奶奶。\",\"analysis\":\"This is表示这是，my表示我的，grandmother说出家人身份。在这个情境里译为奶奶；英语这个称呼也可以指外婆，需要结合家庭关系判断。\"},{\"en\":\"I love my grandmother.\",\"zh\":\"我爱我的外婆。\",\"analysis\":\"I是我，love是爱，my grandmother是动作的对象。本例按家庭情境理解成我的外婆；具体是哪位家人，要看照片或上下文。\"}],\"pitfalls\":[\"不要只凭这个英语词判断是爷爷还是外公、姐姐还是妹妹，要结合家庭关系和上下文。my后不要再加a。\"],\"memory\":\"拿一张家庭照片，一边指人一边说This is my grandmother。\"}"
           },
           {
             "id": "ljxj-3u-u4-w4",
@@ -625,7 +664,8 @@
             "position": 3,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习he，意思是“他”。he是人称代词“他”，通常指已知的一位男性。\",\"usage\":[\"he是人称代词“他”，通常指已知的一位男性。与be搭配用is，不随意换成are。\"],\"examples\":[{\"en\":\"He is my father.\",\"zh\":\"他是我的爸爸。\",\"analysis\":\"He作主语，is表示是，my father介绍他的身份。\"},{\"en\":\"He has a dog.\",\"zh\":\"他有一只狗。\",\"analysis\":\"He指一人，所以这里have用has；a dog表示一只狗。\"}],\"pitfalls\":[\"he不是his：he是他，his是他的。不要说He are。\"],\"memory\":\"指一位男性说he，和is配对。\"}"
           },
           {
             "id": "ljxj-3u-u4-w5",
@@ -639,7 +679,8 @@
             "position": 4,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习grandfather，意思是“（外）祖父；爷爷；外公”。grandfather是家人的称呼。\",\"usage\":[\"grandfather是家人的称呼。介绍照片时可以用This is my加家人称呼，表示“这是我的……”；my表示“我的”，后面直接接家人称呼。英语的祖父母、兄弟姐妹称呼通常不单独区分父系母系或年龄大小。\"],\"examples\":[{\"en\":\"This is my grandfather.\",\"zh\":\"这是我的爷爷。\",\"analysis\":\"This is表示这是，my表示我的，grandfather说出家人身份。在这个情境里译为爷爷；英语这个称呼也可以指外公，需要结合家庭关系判断。\"},{\"en\":\"I love my grandfather.\",\"zh\":\"我爱我的外公。\",\"analysis\":\"I是我，love是爱，my grandfather是动作的对象。本例按家庭情境理解成我的外公；具体是哪位家人，要看照片或上下文。\"}],\"pitfalls\":[\"不要只凭这个英语词判断是爷爷还是外公、姐姐还是妹妹，要结合家庭关系和上下文。my后不要再加a。\"],\"memory\":\"拿一张家庭照片，一边指人一边说This is my grandfather。\"}"
           },
           {
             "id": "ljxj-3u-u4-w6",
@@ -653,7 +694,8 @@
             "position": 5,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习look，意思是“看，瞧”。look是“看”的动作。\",\"usage\":[\"look是“看”的动作。单独说Look常用于提醒别人注意；要说看某个人或东西时，常用look at。\"],\"examples\":[{\"en\":\"Look at my family.\",\"zh\":\"看看我的家人。\",\"analysis\":\"Look at表示看，my family是看的对象。at帮助把看这个动作和对象连接起来。\"},{\"en\":\"Look! A bird!\",\"zh\":\"看！一只鸟！\",\"analysis\":\"Look单独提醒注意；后面的A bird是省略式的发现表达，指出看到了一只鸟。\"}],\"pitfalls\":[\"不要在带对象时漏掉常用搭配里的at；look和看到结果的see用法并不完全一样。\"],\"memory\":\"想提醒别人看，先说Look。\"}"
           },
           {
             "id": "ljxj-3u-u4-w7",
@@ -667,7 +709,8 @@
             "position": 6,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习family，意思是“家；家庭”。family表示家庭或家人。\",\"usage\":[\"family表示家庭或家人。介绍自己的家庭时常说my family。说某个家庭作为整体时，可以把它看作一个单位。\"],\"examples\":[{\"en\":\"This is my family.\",\"zh\":\"这是我的家人。\",\"analysis\":\"This is可用于介绍照片中的一家人，my family表示我的家庭或家人。\"},{\"en\":\"My family is big.\",\"zh\":\"我家人口很多。\",\"analysis\":\"My family把家庭看作一个整体，用is；big在这个场景里表示家庭成员多。\"}],\"pitfalls\":[\"family的意思不只是一栋房子；房屋和家庭不是同一个概念。\"],\"memory\":\"看全家福，把每个人连成my family。\"}"
           },
           {
             "id": "ljxj-3u-u4-w8",
@@ -681,7 +724,8 @@
             "position": 7,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习they，意思是“他们；她们；它们”。they表示“他们、她们、它们”，可以指多个人或多个东西。\",\"usage\":[\"they表示“他们、她们、它们”，可以指多个人或多个东西。与be搭配通常用are。\"],\"examples\":[{\"en\":\"They are my friends.\",\"zh\":\"他们是我的朋友。\",\"analysis\":\"They指多个人，用are；friends也用复数，my修饰朋友这个名词。\"},{\"en\":\"They are white rabbits.\",\"zh\":\"它们是白兔。\",\"analysis\":\"They也可以指动物；white放在rabbits前描述颜色，rabbits是复数。\"}],\"pitfalls\":[\"they不能只翻译成男性的他们；指多个动物或东西也可用they。\"],\"memory\":\"不止一个人或物，试着用they are。\"}"
           },
           {
             "id": "ljxj-3u-u4-w9",
@@ -695,7 +739,8 @@
             "position": 8,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习father，意思是“爸爸”。father是家人的称呼。\",\"usage\":[\"father是家人的称呼。介绍照片时可以用This is my加家人称呼，表示“这是我的……”；my表示“我的”，后面直接接家人称呼。英语的祖父母、兄弟姐妹称呼通常不单独区分父系母系或年龄大小。\"],\"examples\":[{\"en\":\"This is my father.\",\"zh\":\"这是我的爸爸。\",\"analysis\":\"This is表示“这是”，my表示“我的”，father说出家人身份。说到一位家人用is；my和家人称呼放在一起，不要拆开。\"},{\"en\":\"I love my father.\",\"zh\":\"我爱我的爸爸。\",\"analysis\":\"I是“我”，love是“爱”，my father是“我的爸爸”，是爱的对象。句子按“谁＋做什么＋对谁”的顺序表达。\"}],\"pitfalls\":[\"不要只凭这个英语词判断是爷爷还是外公、姐姐还是妹妹，要结合家庭关系和上下文。my后不要再加a。\"],\"memory\":\"拿一张家庭照片，一边指人一边说This is my father。\"}"
           },
           {
             "id": "ljxj-3u-u4-w10",
@@ -709,7 +754,8 @@
             "position": 9,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习mother，意思是“妈妈”。mother是家人的称呼。\",\"usage\":[\"mother是家人的称呼。介绍照片时可以用This is my加家人称呼，表示“这是我的……”；my表示“我的”，后面直接接家人称呼。英语的祖父母、兄弟姐妹称呼通常不单独区分父系母系或年龄大小。\"],\"examples\":[{\"en\":\"This is my mother.\",\"zh\":\"这是我的妈妈。\",\"analysis\":\"This is表示“这是”，my表示“我的”，mother说出家人身份。说到一位家人用is；my和家人称呼放在一起，不要拆开。\"},{\"en\":\"I love my mother.\",\"zh\":\"我爱我的妈妈。\",\"analysis\":\"I是“我”，love是“爱”，my mother是“我的妈妈”，是爱的对象。句子按“谁＋做什么＋对谁”的顺序表达。\"}],\"pitfalls\":[\"不要只凭这个英语词判断是爷爷还是外公、姐姐还是妹妹，要结合家庭关系和上下文。my后不要再加a。\"],\"memory\":\"拿一张家庭照片，一边指人一边说This is my mother。\"}"
           },
           {
             "id": "ljxj-3u-u4-w11",
@@ -723,7 +769,8 @@
             "position": 10,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习sister，意思是“姐姐；妹妹”。sister是家人的称呼。\",\"usage\":[\"sister是家人的称呼。介绍照片时可以用This is my加家人称呼，表示“这是我的……”；my表示“我的”，后面直接接家人称呼。英语的祖父母、兄弟姐妹称呼通常不单独区分父系母系或年龄大小。\"],\"examples\":[{\"en\":\"This is my sister.\",\"zh\":\"这是我的姐姐。\",\"analysis\":\"This is表示这是，my表示我的，sister说出家人身份。在这个情境里译为姐姐；英语这个称呼也可以指妹妹，需要结合家庭关系判断。\"},{\"en\":\"I love my sister.\",\"zh\":\"我爱我的妹妹。\",\"analysis\":\"I是我，love是爱，my sister是动作的对象。本例按家庭情境理解成我的妹妹；具体是哪位家人，要看照片或上下文。\"}],\"pitfalls\":[\"不要只凭这个英语词判断是爷爷还是外公、姐姐还是妹妹，要结合家庭关系和上下文。my后不要再加a。\"],\"memory\":\"拿一张家庭照片，一边指人一边说This is my sister。\"}"
           },
           {
             "id": "ljxj-3u-u4-w12",
@@ -737,7 +784,8 @@
             "position": 11,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习me，意思是“我”。me是“我”的宾格，常在动作后表示动作作用到我，或者在某些固定表达中使用。\",\"usage\":[\"me是“我”的宾格，常在动作后表示动作作用到我，或者在某些固定表达中使用。它和作主语的I分工不同。\"],\"examples\":[{\"en\":\"Please help me.\",\"zh\":\"请帮助我。\",\"analysis\":\"Please表示请，help表示帮助，me是被帮助的人。动作help后用me，不用I。\"},{\"en\":\"Look at me.\",\"zh\":\"看着我。\",\"analysis\":\"Look at表示看，at后面的我用me。整个句子是请别人把目光放到我身上。\"}],\"pitfalls\":[\"作句子主语说I；在help或at后作对象时用me，不说Help I。\"],\"memory\":\"动作落到我身上，就留意me。\"}"
           },
           {
             "id": "ljxj-3u-u4-w13",
@@ -751,7 +799,8 @@
             "position": 12,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习wow，意思是“呀，哇”。wow是感叹词，看到令人惊喜的事物时表示“哇”。\",\"usage\":[\"wow是感叹词，看到令人惊喜的事物时表示“哇”。常与感叹号一起使用。\"],\"examples\":[{\"en\":\"Wow! A big dog!\",\"zh\":\"哇！一只大狗！\",\"analysis\":\"Wow表达惊讶，A big dog指出看到的事物。big放在dog前，a表示一只。\"},{\"en\":\"Wow! Your picture is beautiful.\",\"zh\":\"哇！你的画真漂亮。\",\"analysis\":\"Your picture是你的画，is后面beautiful表示漂亮；Wow补充惊喜语气。\"}],\"pitfalls\":[\"wow表达语气，不是某种物品的名字；场景不惊喜时不用每句都加wow。\"],\"memory\":\"看到惊喜，张开嘴说Wow。\"}"
           },
           {
             "id": "ljxj-3u-u4-w14",
@@ -765,7 +814,8 @@
             "position": 13,
             "notes": "与 an 一起学习，表示一个。",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"a. an.\",\"overview\":\"本课学习a. an.，意思是“一（个，本……）”。a和an都常表示一个，用在单数可数名词前。\",\"usage\":[\"a和an都常表示一个，用在单数可数名词前。选择a还是an，主要看后面紧接的读音是不是元音音素，不只看字母。\"],\"examples\":[{\"en\":\"This is a dog.\",\"zh\":\"这是一只狗。\",\"analysis\":\"a dog表示一只狗，dog以辅音音素开头，前面用a；This is介绍一个东西。\"},{\"en\":\"I have an orange bag.\",\"zh\":\"我有一个橙色的包。\",\"analysis\":\"an后面紧接orange，以元音音素开头，所以用an；虽然bag以辅音开头，也要看紧接an的orange。\"}],\"pitfalls\":[\"a和an不能放在复数名词前；不要只看字母机械选择，也不和my等放在同一个名词前。\"],\"memory\":\"先听后面紧接的声音，再选a或an。\"}"
           },
           {
             "id": "ljxj-3u-u4-w15",
@@ -779,7 +829,8 @@
             "position": 14,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习big，意思是“大的”。big用来描述人或事物，表示“大的”。\",\"usage\":[\"big用来描述人或事物，表示“大的”。它可以跟在is后面说事物是什么样，也可以放在名词前，构成“big＋物品”的短语。\"],\"examples\":[{\"en\":\"The ball is big.\",\"zh\":\"这个球很大。\",\"analysis\":\"The ball指“这个球”，is后面的big说明它的特点。ball是单数，所以用is。\"},{\"en\":\"This is a big ball.\",\"zh\":\"这是一个大球。\",\"analysis\":\"This is表示“这是”，a big ball表示“一个大的球”。先说特点，再说物品，big放在ball前。\"}],\"pitfalls\":[\"描述词放在名词前时，不要因后面物品数量变化给它加s。一个完整句子还需要is等谓语，不能只说The ball big。\"],\"memory\":\"看一件身边的东西，用“物品＋is＋特点”说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u4-w16",
@@ -793,7 +844,8 @@
             "position": 15,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习brother，意思是“哥哥；弟弟”。brother是家人的称呼。\",\"usage\":[\"brother是家人的称呼。介绍照片时可以用This is my加家人称呼，表示“这是我的……”；my表示“我的”，后面直接接家人称呼。英语的祖父母、兄弟姐妹称呼通常不单独区分父系母系或年龄大小。\"],\"examples\":[{\"en\":\"This is my brother.\",\"zh\":\"这是我的哥哥。\",\"analysis\":\"This is表示这是，my表示我的，brother说出家人身份。在这个情境里译为哥哥；英语这个称呼也可以指弟弟，需要结合家庭关系判断。\"},{\"en\":\"I love my brother.\",\"zh\":\"我爱我的弟弟。\",\"analysis\":\"I是我，love是爱，my brother是动作的对象。本例按家庭情境理解成我的弟弟；具体是哪位家人，要看照片或上下文。\"}],\"pitfalls\":[\"不要只凭这个英语词判断是爷爷还是外公、姐姐还是妹妹，要结合家庭关系和上下文。my后不要再加a。\"],\"memory\":\"拿一张家庭照片，一边指人一边说This is my brother。\"}"
           },
           {
             "id": "ljxj-3u-u4-w17",
@@ -807,7 +859,8 @@
             "position": 16,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习tree，意思是“树”。tree是名词“树”。\",\"usage\":[\"tree是名词“树”。一棵用a tree，多棵用trees。family tree是家谱这个固定搭配，用树枝一样的图形表示家人之间的关系。\"],\"examples\":[{\"en\":\"This is a big tree.\",\"zh\":\"这是一棵大树。\",\"analysis\":\"This is表示这是，a big tree表示一棵大树。big放在tree前，说明树很大。\"},{\"en\":\"Look at my family tree.\",\"zh\":\"看看我的家谱。\",\"analysis\":\"Look at表示看，my family tree是我的家谱。family tree作为一个短语整体理解，不是普通的家庭里的树。\"}],\"pitfalls\":[\"a tree里的tree不加s；family tree要结合家庭关系图理解，不要只逐字翻译。\"],\"memory\":\"树有树枝，家谱有家庭分支，把两种图形联系起来。\"}"
           }
         ]
       },
@@ -834,7 +887,8 @@
             "position": 0,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"Missus\",\"overview\":\"本课学习Missus，意思是“太太，夫人”。Mrs是传统上对已婚女性的称呼，通常接姓氏，不能用它直接判断别人希望怎样被称呼。\",\"usage\":[\"Mrs是传统上对已婚女性的称呼，通常接姓氏，不能用它直接判断别人希望怎样被称呼。本课按人物介绍使用Mrs加姓氏。\"],\"examples\":[{\"en\":\"This is Mrs Li.\",\"zh\":\"这是李太太。\",\"analysis\":\"This is用于介绍人物；Mrs Li是称呼加姓氏，两个开头都大写。\"},{\"en\":\"Good evening, Mrs Wang.\",\"zh\":\"晚上好，王太太。\",\"analysis\":\"Good evening是晚上见面问候，Mrs Wang说明向谁打招呼，称呼前用逗号。\"}],\"pitfalls\":[\"Mr、Miss、Mrs含义不同，不要互换；不知道对方偏好时，应使用对方介绍的称呼。\"],\"memory\":\"把Mrs和完整姓氏一起读，不按三个字母逐个读。\"}"
           },
           {
             "id": "ljxj-3u-u5-w2",
@@ -848,7 +902,8 @@
             "position": 1,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"What does she do? What does he do?\",\"overview\":\"本课学习What does she do? What does he do?，意思是“她/他是做什么的？”。这个句型询问某人的职业。\",\"usage\":[\"这个句型询问某人的职业。主语是she或he时，问句使用does；回答常用She或He加is a加职业。\"],\"examples\":[{\"en\":\"What does she do?\",\"zh\":\"她是做什么工作的？\",\"analysis\":\"What询问什么，does帮助构成问句，she是她，末尾do在这里与整个句型一起询问职业。不要把它硬译成她做什么动作。\"},{\"en\":\"He is a cook.\",\"zh\":\"他是一名厨师。\",\"analysis\":\"He作主语，is a cook说明他的职业。回答职业时不必重复does。\"}],\"pitfalls\":[\"问she或he的职业用does，句末do保持原形；不要写成What does she does。\"],\"memory\":\"问工作用What does，答职业用is a。\"}"
           },
           {
             "id": "ljxj-3u-u5-w3",
@@ -862,7 +917,8 @@
             "position": 2,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习teacher，意思是“老师”。本课把teacher当作职业名词，表示“老师”。\",\"usage\":[\"本课把teacher当作职业名词，表示“老师”。回答某人做什么工作，常用“人＋is＋a＋职业”。这里说一个人，所以用is；职业前通常需要a。\"],\"examples\":[{\"en\":\"She is a teacher.\",\"zh\":\"她是一名老师。\",\"analysis\":\"She是“她”，is表示“是”，a表示“一名”，teacher是职业。不要把a省掉；整个句子是在说明一个人的工作。\"},{\"en\":\"My friend is a teacher.\",\"zh\":\"我的朋友是一名老师。\",\"analysis\":\"My friend是“我的朋友”，作句子的主语；is a teacher说明朋友的职业。friend在这里只有一位，所以用is，不用are。\"}],\"pitfalls\":[\"职业不决定性别，teacher、doctor、nurse等词本身都不能据此判断是男是女。 介绍一名从事这种职业的人时，职业前不要漏掉a。\"],\"memory\":\"用“是谁＋是＋一名＋职业”的顺序说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u5-w4",
@@ -876,7 +932,8 @@
             "position": 3,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习cook，意思是“厨师”。本课把cook当作职业名词，表示“厨师”。\",\"usage\":[\"本课把cook当作职业名词，表示“厨师”。回答某人做什么工作，常用“人＋is＋a＋职业”。这里说一个人，所以用is；职业前通常需要a。\"],\"examples\":[{\"en\":\"He is a cook.\",\"zh\":\"他是一名厨师。\",\"analysis\":\"He是“他”，is表示“是”，a表示“一名”，cook是职业。不要把a省掉；整个句子是在说明一个人的工作。\"},{\"en\":\"My friend is a cook.\",\"zh\":\"我的朋友是一名厨师。\",\"analysis\":\"My friend是“我的朋友”，作句子的主语；is a cook说明朋友的职业。friend在这里只有一位，所以用is，不用are。\"}],\"pitfalls\":[\"职业不决定性别，teacher、doctor、nurse等词本身都不能据此判断是男是女。 cook还可以表示“做饭”，但本课职业语境是“厨师”。 介绍一名从事这种职业的人时，职业前不要漏掉a。\"],\"memory\":\"用“是谁＋是＋一名＋职业”的顺序说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u5-w5",
@@ -890,7 +947,8 @@
             "position": 4,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习children，意思是“（child的复数）孩子们”。children是child的不规则复数，意思是孩子们。\",\"usage\":[\"children是child的不规则复数，意思是孩子们。一个孩子是a child，多个孩子是children，词尾不再加s。\"],\"examples\":[{\"en\":\"The children are happy.\",\"zh\":\"孩子们很开心。\",\"analysis\":\"children已经是复数，后面用are；happy描述孩子们的状态。The表示场景中说到的这些孩子。\"},{\"en\":\"I can see three children.\",\"zh\":\"我能看见三个孩子。\",\"analysis\":\"I can see表示我能看见，three给出数量，children是不规则复数，跟在three后面。\"}],\"pitfalls\":[\"不能写childs或childrens；children本身就表示多个孩子。\"],\"memory\":\"一个child，多个children，成对记住特殊变化。\"}"
           },
           {
             "id": "ljxj-3u-u5-w6",
@@ -904,7 +962,8 @@
             "position": 5,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习doctor，意思是“医生”。本课把doctor当作职业名词，表示“医生”。\",\"usage\":[\"本课把doctor当作职业名词，表示“医生”。回答某人做什么工作，常用“人＋is＋a＋职业”。这里说一个人，所以用is；职业前通常需要a。\"],\"examples\":[{\"en\":\"She is a doctor.\",\"zh\":\"她是一名医生。\",\"analysis\":\"She是“她”，is表示“是”，a表示“一名”，doctor是职业。不要把a省掉；整个句子是在说明一个人的工作。\"},{\"en\":\"My friend is a doctor.\",\"zh\":\"我的朋友是一名医生。\",\"analysis\":\"My friend是“我的朋友”，作句子的主语；is a doctor说明朋友的职业。friend在这里只有一位，所以用is，不用are。\"}],\"pitfalls\":[\"职业不决定性别，teacher、doctor、nurse等词本身都不能据此判断是男是女。 介绍一名从事这种职业的人时，职业前不要漏掉a。\"],\"memory\":\"用“是谁＋是＋一名＋职业”的顺序说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u5-w7",
@@ -918,7 +977,8 @@
             "position": 6,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习nurse，意思是“护士”。本课把nurse当作职业名词，表示“护士”。\",\"usage\":[\"本课把nurse当作职业名词，表示“护士”。回答某人做什么工作，常用“人＋is＋a＋职业”。这里说一个人，所以用is；职业前通常需要a。\"],\"examples\":[{\"en\":\"He is a nurse.\",\"zh\":\"他是一名护士。\",\"analysis\":\"He是“他”，is表示“是”，a表示“一名”，nurse是职业。不要把a省掉；整个句子是在说明一个人的工作。\"},{\"en\":\"My friend is a nurse.\",\"zh\":\"我的朋友是一名护士。\",\"analysis\":\"My friend是“我的朋友”，作句子的主语；is a nurse说明朋友的职业。friend在这里只有一位，所以用is，不用are。\"}],\"pitfalls\":[\"职业不决定性别，teacher、doctor、nurse等词本身都不能据此判断是男是女。 介绍一名从事这种职业的人时，职业前不要漏掉a。\"],\"memory\":\"用“是谁＋是＋一名＋职业”的顺序说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u5-w8",
@@ -932,7 +992,8 @@
             "position": 7,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习driver，意思是“司机”。本课把driver当作职业名词，表示“司机”。\",\"usage\":[\"本课把driver当作职业名词，表示“司机”。回答某人做什么工作，常用“人＋is＋a＋职业”。这里说一个人，所以用is；职业前通常需要a。\"],\"examples\":[{\"en\":\"She is a driver.\",\"zh\":\"她是一名司机。\",\"analysis\":\"She是“她”，is表示“是”，a表示“一名”，driver是职业。不要把a省掉；整个句子是在说明一个人的工作。\"},{\"en\":\"My friend is a driver.\",\"zh\":\"我的朋友是一名司机。\",\"analysis\":\"My friend是“我的朋友”，作句子的主语；is a driver说明朋友的职业。friend在这里只有一位，所以用is，不用are。\"}],\"pitfalls\":[\"职业不决定性别，teacher、doctor、nurse等词本身都不能据此判断是男是女。 介绍一名从事这种职业的人时，职业前不要漏掉a。\"],\"memory\":\"用“是谁＋是＋一名＋职业”的顺序说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u5-w9",
@@ -946,7 +1007,8 @@
             "position": 8,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习policewoman，意思是“女警察”。本课把policewoman当作职业名词，表示“女警察”。\",\"usage\":[\"本课把policewoman当作职业名词，表示“女警察”。回答某人做什么工作，常用“人＋is＋a＋职业”。这里说一个人，所以用is；职业前通常需要a。\"],\"examples\":[{\"en\":\"She is a policewoman.\",\"zh\":\"她是一名女警察。\",\"analysis\":\"She是“她”，is表示“是”，a表示“一名”，policewoman是职业。不要把a省掉；整个句子是在说明一个人的工作。\"},{\"en\":\"My friend is a policewoman.\",\"zh\":\"我的朋友是一名女警察。\",\"analysis\":\"My friend是“我的朋友”，作句子的主语；is a policewoman说明朋友的职业。friend在这里只有一位，所以用is，不用are。\"}],\"pitfalls\":[\"policeman指男警察，policewoman指女警察；注意两词的后半部分不同。 介绍一名从事这种职业的人时，职业前不要漏掉a。\"],\"memory\":\"用“是谁＋是＋一名＋职业”的顺序说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u5-w10",
@@ -960,7 +1022,8 @@
             "position": 9,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习fireman，意思是“消防队员”。本课把fireman当作职业名词，表示“消防员”。\",\"usage\":[\"本课把fireman当作职业名词，表示“消防员”。回答某人做什么工作，常用“人＋is＋a＋职业”。这里说一个人，所以用is；职业前通常需要a。\"],\"examples\":[{\"en\":\"He is a fireman.\",\"zh\":\"他是一名消防员。\",\"analysis\":\"He是“他”，is表示“是”，a表示“一名”，fireman是职业。不要把a省掉；整个句子是在说明一个人的工作。\"},{\"en\":\"My friend is a fireman.\",\"zh\":\"我的朋友是一名消防员。\",\"analysis\":\"My friend是“我的朋友”，作句子的主语；is a fireman说明朋友的职业。friend在这里只有一位，所以用is，不用are。\"}],\"pitfalls\":[\"本课学习fireman。日常也常用firefighter泛指消防员，不应据职业推断一个人的性别。 介绍一名从事这种职业的人时，职业前不要漏掉a。\"],\"memory\":\"用“是谁＋是＋一名＋职业”的顺序说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u5-w11",
@@ -974,7 +1037,8 @@
             "position": 10,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习policeman，意思是“男警察”。本课把policeman当作职业名词，表示“男警察”。\",\"usage\":[\"本课把policeman当作职业名词，表示“男警察”。回答某人做什么工作，常用“人＋is＋a＋职业”。这里说一个人，所以用is；职业前通常需要a。\"],\"examples\":[{\"en\":\"He is a policeman.\",\"zh\":\"他是一名男警察。\",\"analysis\":\"He是“他”，is表示“是”，a表示“一名”，policeman是职业。不要把a省掉；整个句子是在说明一个人的工作。\"},{\"en\":\"My friend is a policeman.\",\"zh\":\"我的朋友是一名男警察。\",\"analysis\":\"My friend是“我的朋友”，作句子的主语；is a policeman说明朋友的职业。friend在这里只有一位，所以用is，不用are。\"}],\"pitfalls\":[\"policeman指男警察，policewoman指女警察；注意两词的后半部分不同。 介绍一名从事这种职业的人时，职业前不要漏掉a。\"],\"memory\":\"用“是谁＋是＋一名＋职业”的顺序说完整句子。\"}"
           }
         ]
       },
@@ -1001,7 +1065,8 @@
             "position": 0,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习his，意思是“他的”。his在本课表示“他的”，放在名词前，说明某个人或物与他有关。\",\"usage\":[\"his在本课表示“他的”，放在名词前，说明某个人或物与他有关。与作主语的he不同。\"],\"examples\":[{\"en\":\"His hair is short.\",\"zh\":\"他的头发很短。\",\"analysis\":\"His hair是他的头发，hair在这个意思里一般作不可数整体，后面用is；short表示长度短。\"},{\"en\":\"This is his dog.\",\"zh\":\"这是他的狗。\",\"analysis\":\"his dog是他的狗，his修饰dog。This is用于介绍眼前的动物。\"}],\"pitfalls\":[\"he是他，his是他的；不能写He hair is short。\"],\"memory\":\"看“谁的”，如果是他的就想起his。\"}"
           },
           {
             "id": "ljxj-3u-u6-w2",
@@ -1015,7 +1080,8 @@
             "position": 1,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习hair，意思是“头发”。hair在描述一个人整体头发时通常看作不可数名词，用is，形容短发用short hair，长发用long hair。\",\"usage\":[\"hair在描述一个人整体头发时通常看作不可数名词，用is，形容短发用short hair，长发用long hair。\"],\"examples\":[{\"en\":\"Her hair is long.\",\"zh\":\"她的头发很长。\",\"analysis\":\"Her hair是她的头发，整体头发用单数谓语is；long表示长度长。\"},{\"en\":\"His hair is black.\",\"zh\":\"他的头发是黑色的。\",\"analysis\":\"His指出头发的主人是他，black说明颜色；hair在这里仍作为整体，所以用is。\"}],\"pitfalls\":[\"本课说一头头发一般不用hairs，也不说hair are。谈单根头发时可数，但不是这里的重点。\"],\"memory\":\"一头头发看成一个整体，记住hair is。\"}"
           },
           {
             "id": "ljxj-3u-u6-w3",
@@ -1029,7 +1095,8 @@
             "position": 2,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习short，意思是“短的”。short用来描述人或事物，表示“短的”。\",\"usage\":[\"short用来描述人或事物，表示“短的”。它可以跟在is后面说事物是什么样，也可以放在名词前，构成“short＋物品”的短语。\"],\"examples\":[{\"en\":\"The pencil is short.\",\"zh\":\"这支铅笔很短。\",\"analysis\":\"The pencil指“这个铅笔”，is后面的short说明它的特点。pencil是单数，所以用is。\"},{\"en\":\"This is a short pencil.\",\"zh\":\"这是一支短铅笔。\",\"analysis\":\"This is表示“这是”，a short pencil表示“一个短的铅笔”。先说特点，再说物品，short放在pencil前。\"}],\"pitfalls\":[\"short也能形容人矮，但本单元谈头发和物品时主要表示长度短，不要把短头发翻译成矮头发。\"],\"memory\":\"看一件身边的东西，用“物品＋is＋特点”说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u6-w4",
@@ -1043,7 +1110,8 @@
             "position": 3,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习ear，意思是“耳朵”。ear是身体部位，意思是“耳朵”。\",\"usage\":[\"ear是身体部位，意思是“耳朵”。一处可以说an ear；两处或多处通常用复数ears。介绍自己的身体部位，常把my放在名词前。\"],\"examples\":[{\"en\":\"This is my ear.\",\"zh\":\"这是我的耳朵。\",\"analysis\":\"This is表示“这是”，my ear表示“我的耳朵”。这里介绍一个部位，所以用is和单数ear。\"},{\"en\":\"My ears are small.\",\"zh\":\"我的耳朵很小。\",\"analysis\":\"My表示我的，ears是身体部位。这里谈两处，用复数，所以配are。small说明大小；my不决定用is还是are，要看后面名词的数量。\"}],\"pitfalls\":[\"说一个用ear，说多个用ears。my和an不能同时放在同一个名词前，不能写成my an ear。\"],\"memory\":\"指着自己的耳朵读这个词，再练习my ear。\"}"
           },
           {
             "id": "ljxj-3u-u6-w5",
@@ -1057,7 +1125,8 @@
             "position": 4,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习big，意思是“大的”。big用来描述人或事物，表示“大的”。\",\"usage\":[\"big用来描述人或事物，表示“大的”。它可以跟在is后面说事物是什么样，也可以放在名词前，构成“big＋物品”的短语。\"],\"examples\":[{\"en\":\"The ball is big.\",\"zh\":\"这个球很大。\",\"analysis\":\"The ball指“这个球”，is后面的big说明它的特点。ball是单数，所以用is。\"},{\"en\":\"This is a big ball.\",\"zh\":\"这是一个大球。\",\"analysis\":\"This is表示“这是”，a big ball表示“一个大的球”。先说特点，再说物品，big放在ball前。\"}],\"pitfalls\":[\"描述词放在名词前时，不要因后面物品数量变化给它加s。一个完整句子还需要is等谓语，不能只说The ball big。\"],\"memory\":\"看一件身边的东西，用“物品＋is＋特点”说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u6-w6",
@@ -1071,7 +1140,8 @@
             "position": 5,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习mouth，意思是“嘴巴”。mouth是身体部位，意思是“嘴巴”。\",\"usage\":[\"mouth是身体部位，意思是“嘴巴”。一处可以说a mouth；两处或多处通常用复数mouths。介绍自己的身体部位，常把my放在名词前。\"],\"examples\":[{\"en\":\"This is my mouth.\",\"zh\":\"这是我的嘴巴。\",\"analysis\":\"This is表示“这是”，my mouth表示“我的嘴巴”。这里介绍一个部位，所以用is和单数mouth。\"},{\"en\":\"My mouth is small.\",\"zh\":\"我的嘴巴很小。\",\"analysis\":\"My表示我的，mouth是身体部位。这里谈一个部位，用单数，所以配is。small说明大小；my不决定用is还是are，要看后面名词的数量。\"}],\"pitfalls\":[\"说一个用mouth，说多个用mouths。my和a不能同时放在同一个名词前，不能写成my a mouth。\"],\"memory\":\"指着自己的嘴巴读这个词，再练习my mouth。\"}"
           },
           {
             "id": "ljxj-3u-u6-w7",
@@ -1085,7 +1155,8 @@
             "position": 6,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习funny，意思是“有趣的”。funny用来描述人或事物，表示“有趣的”。\",\"usage\":[\"funny用来描述人或事物，表示“有趣的”。它可以跟在is后面说事物是什么样，也可以放在名词前，构成“funny＋物品”的短语。\"],\"examples\":[{\"en\":\"The picture is funny.\",\"zh\":\"这幅图很有趣。\",\"analysis\":\"The picture指“这个图片”，is后面的funny说明它的特点。picture是单数，所以用is。\"},{\"en\":\"This is a funny picture.\",\"zh\":\"这是一幅有趣的图。\",\"analysis\":\"This is表示“这是”，a funny picture表示“一个有趣的图片”。先说特点，再说物品，funny放在picture前。\"}],\"pitfalls\":[\"funny多指好笑、有趣；不要把所有表示开心或漂亮的场景都换成funny。\"],\"memory\":\"看一件身边的东西，用“物品＋is＋特点”说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u6-w8",
@@ -1099,7 +1170,8 @@
             "position": 7,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习her，意思是“她的”。her在本课表示“她的”，放在名词前。\",\"usage\":[\"her在本课表示“她的”，放在名词前。它在其他句子里也能作“她”的宾格，但先掌握描述外貌的her hair等短语。\"],\"examples\":[{\"en\":\"Her eyes are big.\",\"zh\":\"她的眼睛很大。\",\"analysis\":\"Her eyes是她的眼睛，eyes是复数，所以用are；big表示大的。\"},{\"en\":\"Her nose is small.\",\"zh\":\"她的鼻子很小。\",\"analysis\":\"Her nose是一个鼻子，用单数is；small说明大小。her只说明是谁的，is或are由后面的名词决定。\"}],\"pitfalls\":[\"不要用she直接修饰名词；不能写She eyes。注意her后名词的单复数会影响is或are。\"],\"memory\":\"her牵着身体部位：her eyes、her nose。\"}"
           },
           {
             "id": "ljxj-3u-u6-w9",
@@ -1113,7 +1185,8 @@
             "position": 8,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习eye，意思是“眼睛”。eye是身体部位，意思是“眼睛”。\",\"usage\":[\"eye是身体部位，意思是“眼睛”。一处可以说an eye；两处或多处通常用复数eyes。介绍自己的身体部位，常把my放在名词前。\"],\"examples\":[{\"en\":\"This is my eye.\",\"zh\":\"这是我的眼睛。\",\"analysis\":\"This is表示“这是”，my eye表示“我的眼睛”。这里介绍一个部位，所以用is和单数eye。\"},{\"en\":\"My eyes are small.\",\"zh\":\"我的眼睛很小。\",\"analysis\":\"My表示我的，eyes是身体部位。这里谈两处，用复数，所以配are。small说明大小；my不决定用is还是are，要看后面名词的数量。\"}],\"pitfalls\":[\"说一个用eye，说多个用eyes。my和an不能同时放在同一个名词前，不能写成my an eye。\"],\"memory\":\"指着自己的眼睛读这个词，再练习my eye。\"}"
           },
           {
             "id": "ljxj-3u-u6-w10",
@@ -1127,7 +1200,8 @@
             "position": 9,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习small，意思是“小的”。small用来描述人或事物，表示“小的”。\",\"usage\":[\"small用来描述人或事物，表示“小的”。它可以跟在is后面说事物是什么样，也可以放在名词前，构成“small＋物品”的短语。\"],\"examples\":[{\"en\":\"The bag is small.\",\"zh\":\"这个包很小。\",\"analysis\":\"The bag指“这个包”，is后面的small说明它的特点。bag是单数，所以用is。\"},{\"en\":\"This is a small bag.\",\"zh\":\"这是一个小包。\",\"analysis\":\"This is表示“这是”，a small bag表示“一个小的包”。先说特点，再说物品，small放在bag前。\"}],\"pitfalls\":[\"描述词放在名词前时，不要因后面物品数量变化给它加s。一个完整句子还需要is等谓语，不能只说The bag small。\"],\"memory\":\"看一件身边的东西，用“物品＋is＋特点”说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u6-w11",
@@ -1141,7 +1215,8 @@
             "position": 10,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习nose，意思是“鼻子”。nose是身体部位，意思是“鼻子”。\",\"usage\":[\"nose是身体部位，意思是“鼻子”。一处可以说a nose；两处或多处通常用复数noses。介绍自己的身体部位，常把my放在名词前。\"],\"examples\":[{\"en\":\"This is my nose.\",\"zh\":\"这是我的鼻子。\",\"analysis\":\"This is表示“这是”，my nose表示“我的鼻子”。这里介绍一个部位，所以用is和单数nose。\"},{\"en\":\"My nose is small.\",\"zh\":\"我的鼻子很小。\",\"analysis\":\"My表示我的，nose是身体部位。这里谈一个部位，用单数，所以配is。small说明大小；my不决定用is还是are，要看后面名词的数量。\"}],\"pitfalls\":[\"说一个用nose，说多个用noses。my和a不能同时放在同一个名词前，不能写成my a nose。\"],\"memory\":\"指着自己的鼻子读这个词，再练习my nose。\"}"
           },
           {
             "id": "ljxj-3u-u6-w12",
@@ -1155,7 +1230,8 @@
             "position": 11,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习long，意思是“长的”。long用来描述人或事物，表示“长的”。\",\"usage\":[\"long用来描述人或事物，表示“长的”。它可以跟在is后面说事物是什么样，也可以放在名词前，构成“long＋物品”的短语。\"],\"examples\":[{\"en\":\"The pencil is long.\",\"zh\":\"这支铅笔很长。\",\"analysis\":\"The pencil指“这个铅笔”，is后面的long说明它的特点。pencil是单数，所以用is。\"},{\"en\":\"This is a long pencil.\",\"zh\":\"这是一支长铅笔。\",\"analysis\":\"This is表示“这是”，a long pencil表示“一个长的铅笔”。先说特点，再说物品，long放在pencil前。\"}],\"pitfalls\":[\"描述词放在名词前时，不要因后面物品数量变化给它加s。一个完整句子还需要is等谓语，不能只说The pencil long。\"],\"memory\":\"看一件身边的东西，用“物品＋is＋特点”说完整句子。\"}"
           }
         ]
       },
@@ -1182,7 +1258,8 @@
             "position": 0,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习like，意思是“喜欢”。like在本课是动词“喜欢”。\",\"usage\":[\"like在本课是动词“喜欢”。I like后可以接物品或动物；说喜欢某一类可数动物时，常用复数。\"],\"examples\":[{\"en\":\"I like rabbits.\",\"zh\":\"我喜欢兔子。\",\"analysis\":\"I是我，like是喜欢，rabbits表示兔子这一类动物，用复数。不要在like前再加am。\"},{\"en\":\"Do you like cats?\",\"zh\":\"你喜欢猫吗？\",\"analysis\":\"Do帮助构成疑问句，you是主语，like保持原形；cats用复数泛指猫这一类。\"}],\"pitfalls\":[\"I like是我喜欢，不写I am like。like也有其他意思，但本课先掌握喜欢。\"],\"memory\":\"把喜欢的动物放在I like后面说出来。\"}"
           },
           {
             "id": "ljxj-3u-u7-w2",
@@ -1196,7 +1273,8 @@
             "position": 1,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习bird，意思是“鸟”。bird是可以数的名词，表示“鸟”。\",\"usage\":[\"bird是可以数的名词，表示“鸟”。一个用a bird，多个一般在词尾加s，写成birds。谈论是否喜欢这一类动物时，可以用复数形式。\"],\"examples\":[{\"en\":\"I have a bird.\",\"zh\":\"我有一只鸟。\",\"analysis\":\"I是“我”，have表示“有”，a bird表示“一只鸟”。a已经告诉我们只有一只，所以bird后面不加s。\"},{\"en\":\"I like birds.\",\"zh\":\"我喜欢鸟。\",\"analysis\":\"I like表示“我喜欢”，birds用复数，表示喜欢这一类鸟，并不只指眼前的一只。\"}],\"pitfalls\":[\"不要说a birds：a只能和单数一起用。谈论有一只用a bird，谈论喜欢这一类可以用birds。\"],\"memory\":\"把“一只”和“这一类”分别说一遍，记住单数和复数的变化。\"}"
           },
           {
             "id": "ljxj-3u-u7-w3",
@@ -1210,7 +1288,8 @@
             "position": 2,
             "notes": "本单元结合 Do you like ...? 学习。",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习do，意思是“（疑问句或否定句中的助动词）”。do在本课是帮助构成问句或否定句的助动词，通常不单独译成“做”。\",\"usage\":[\"do在本课是帮助构成问句或否定句的助动词，通常不单独译成“做”。主语you提问用Do you like；否定用do not或don’t。\"],\"examples\":[{\"en\":\"Do you like birds?\",\"zh\":\"你喜欢鸟吗？\",\"analysis\":\"Do放到句首帮助提问，you是你，like是喜欢，birds是鸟这一类。这里Do不译成做。\"},{\"en\":\"I do not like cats.\",\"zh\":\"我不喜欢猫。\",\"analysis\":\"I是主语，do not帮助否定like；not表示不，cats是喜欢与否的对象。do not也可缩写为don’t。\"}],\"pitfalls\":[\"不要把Do you like逐字翻译成“做你喜欢”；回答可用Yes, I do或No, I don’t。\"],\"memory\":\"do在这里像小助手，帮忙提问或否定。\"}"
           },
           {
             "id": "ljxj-3u-u7-w4",
@@ -1224,7 +1303,8 @@
             "position": 3,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习not，意思是“不，没，不是”。not表示否定，常理解为“不”。\",\"usage\":[\"not表示否定，常理解为“不”。它放在哪里要看句子：在be后，例如is not；在do后，例如do not。\"],\"examples\":[{\"en\":\"It is not a cat.\",\"zh\":\"它不是一只猫。\",\"analysis\":\"It是它，is not表示不是，a cat是被否定的身份。not放在is后面。\"},{\"en\":\"I do not like dogs.\",\"zh\":\"我不喜欢狗。\",\"analysis\":\"do not否定动词like，dogs用复数泛指狗。not不能放到dogs后面才否定。\"}],\"pitfalls\":[\"not不要漏写；I not like不是本课要学的完整否定结构，应说I do not like。\"],\"memory\":\"听到not，要留意整句话是否定意思。\"}"
           },
           {
             "id": "ljxj-3u-u7-w5",
@@ -1238,7 +1318,8 @@
             "position": 4,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习rabbit，意思是“兔”。rabbit是可以数的名词，表示“兔子”。\",\"usage\":[\"rabbit是可以数的名词，表示“兔子”。一个用a rabbit，多个一般在词尾加s，写成rabbits。谈论是否喜欢这一类动物时，可以用复数形式。\"],\"examples\":[{\"en\":\"I have a rabbit.\",\"zh\":\"我有一只兔子。\",\"analysis\":\"I是“我”，have表示“有”，a rabbit表示“一只兔子”。a已经告诉我们只有一只，所以rabbit后面不加s。\"},{\"en\":\"I like rabbits.\",\"zh\":\"我喜欢兔子。\",\"analysis\":\"I like表示“我喜欢”，rabbits用复数，表示喜欢这一类兔子，并不只指眼前的一只。\"}],\"pitfalls\":[\"不要说a rabbits：a只能和单数一起用。谈论有一只用a rabbit，谈论喜欢这一类可以用rabbits。\"],\"memory\":\"把“一只”和“这一类”分别说一遍，记住单数和复数的变化。\"}"
           },
           {
             "id": "ljxj-3u-u7-w6",
@@ -1252,7 +1333,8 @@
             "position": 5,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习yes，意思是“是的；好的”。yes表示肯定回答，意思是“是的、好的”。\",\"usage\":[\"yes表示肯定回答，意思是“是的、好的”。回答一般疑问句时，常配合简短完整回答，不只机械重复一个yes。\"],\"examples\":[{\"en\":\"Do you like birds? Yes, I do.\",\"zh\":\"你喜欢鸟吗？是的，我喜欢。\",\"analysis\":\"问句以Do开头，回答用Yes, I do，do呼应提问。这里是两个人的问答。\"},{\"en\":\"Is it a cat? Yes, it is.\",\"zh\":\"它是猫吗？是的，它是。\",\"analysis\":\"问句以Is开头，回答要用it is，不把上个例子的I do照搬过来。\"}],\"pitfalls\":[\"Yes后面的简短回答要和问句相配；Is提问不回答Yes, I do。\"],\"memory\":\"先听问题用is还是do，再接完整的yes回答。\"}"
           },
           {
             "id": "ljxj-3u-u7-w7",
@@ -1266,7 +1348,8 @@
             "position": 6,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习cute，意思是“可爱的”。cute用来描述人或事物，表示“可爱的”。\",\"usage\":[\"cute用来描述人或事物，表示“可爱的”。它可以跟在is后面说事物是什么样，也可以放在名词前，构成“cute＋物品”的短语。\"],\"examples\":[{\"en\":\"The cat is cute.\",\"zh\":\"这只猫很可爱。\",\"analysis\":\"The cat指“这个猫”，is后面的cute说明它的特点。cat是单数，所以用is。\"},{\"en\":\"This is a cute cat.\",\"zh\":\"这是一只可爱的猫。\",\"analysis\":\"This is表示“这是”，a cute cat表示“一个可爱的猫”。先说特点，再说物品，cute放在cat前。\"}],\"pitfalls\":[\"描述词放在名词前时，不要因后面物品数量变化给它加s。一个完整句子还需要is等谓语，不能只说The cat cute。\"],\"memory\":\"看一件身边的东西，用“物品＋is＋特点”说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u7-w8",
@@ -1280,7 +1363,8 @@
             "position": 7,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习cat，意思是“猫”。cat是可以数的名词，表示“猫”。\",\"usage\":[\"cat是可以数的名词，表示“猫”。一个用a cat，多个一般在词尾加s，写成cats。谈论是否喜欢这一类动物时，可以用复数形式。\"],\"examples\":[{\"en\":\"I have a cat.\",\"zh\":\"我有一只猫。\",\"analysis\":\"I是“我”，have表示“有”，a cat表示“一只猫”。a已经告诉我们只有一只，所以cat后面不加s。\"},{\"en\":\"I like cats.\",\"zh\":\"我喜欢猫。\",\"analysis\":\"I like表示“我喜欢”，cats用复数，表示喜欢这一类猫，并不只指眼前的一只。\"}],\"pitfalls\":[\"不要说a cats：a只能和单数一起用。谈论有一只用a cat，谈论喜欢这一类可以用cats。\"],\"memory\":\"把“一只”和“这一类”分别说一遍，记住单数和复数的变化。\"}"
           },
           {
             "id": "ljxj-3u-u7-w9",
@@ -1294,7 +1378,8 @@
             "position": 8,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习dog，意思是“狗”。dog是可以数的名词，表示“狗”。\",\"usage\":[\"dog是可以数的名词，表示“狗”。一个用a dog，多个一般在词尾加s，写成dogs。谈论是否喜欢这一类动物时，可以用复数形式。\"],\"examples\":[{\"en\":\"I have a dog.\",\"zh\":\"我有一只狗。\",\"analysis\":\"I是“我”，have表示“有”，a dog表示“一只狗”。a已经告诉我们只有一只，所以dog后面不加s。\"},{\"en\":\"I like dogs.\",\"zh\":\"我喜欢狗。\",\"analysis\":\"I like表示“我喜欢”，dogs用复数，表示喜欢这一类狗，并不只指眼前的一只。\"}],\"pitfalls\":[\"不要说a dogs：a只能和单数一起用。谈论有一只用a dog，谈论喜欢这一类可以用dogs。\"],\"memory\":\"把“一只”和“这一类”分别说一遍，记住单数和复数的变化。\"}"
           },
           {
             "id": "ljxj-3u-u7-w10",
@@ -1308,7 +1393,8 @@
             "position": 9,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习How about you?，意思是“你呢？”。How about you表示“你呢”，常在自己回答后，把同样的问题自然地问回给对方。\",\"usage\":[\"How about you表示“你呢”，常在自己回答后，把同样的问题自然地问回给对方。它的具体意思由前面的聊天内容决定。\"],\"examples\":[{\"en\":\"I like cats. How about you?\",\"zh\":\"我喜欢猫。你呢？\",\"analysis\":\"先说自己喜欢猫，再用How about you把喜欢什么的问题问给对方。这里不是询问姓名。\"},{\"en\":\"I am fine. How about you?\",\"zh\":\"我很好。你呢？\",\"analysis\":\"前一句谈状态，所以How about you是在问对方状态怎么样，而不是问喜欢什么。\"}],\"pitfalls\":[\"How about you要结合上文理解，不要脱离场景只猜一个固定问题。\"],\"memory\":\"先说自己的情况，再轻轻把问题传给对方。\"}"
           },
           {
             "id": "ljxj-3u-u7-w11",
@@ -1322,7 +1408,8 @@
             "position": 10,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习lovely，意思是“可爱的”。lovely用来描述人或事物，表示“可爱的”。\",\"usage\":[\"lovely用来描述人或事物，表示“可爱的”。它可以跟在is后面说事物是什么样，也可以放在名词前，构成“lovely＋物品”的短语。\"],\"examples\":[{\"en\":\"The rabbit is lovely.\",\"zh\":\"这只兔子很可爱。\",\"analysis\":\"The rabbit指“这个兔子”，is后面的lovely说明它的特点。rabbit是单数，所以用is。\"},{\"en\":\"This is a lovely rabbit.\",\"zh\":\"这是一只可爱的兔子。\",\"analysis\":\"This is表示“这是”，a lovely rabbit表示“一个可爱的兔子”。先说特点，再说物品，lovely放在rabbit前。\"}],\"pitfalls\":[\"lovely是一个完整单词，意思是可爱的；不需要再在词尾加s来配合复数名词。\"],\"memory\":\"看一件身边的东西，用“物品＋is＋特点”说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u7-w12",
@@ -1336,7 +1423,8 @@
             "position": 11,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习it，意思是“它”。it表示“它”，常用来指前面已经知道的一个动物或事物。\",\"usage\":[\"it表示“它”，常用来指前面已经知道的一个动物或事物。与be搭配时，一个用it is。\"],\"examples\":[{\"en\":\"It is a rabbit.\",\"zh\":\"它是一只兔子。\",\"analysis\":\"It指场景中的一个动物，is后面a rabbit说明身份。\"},{\"en\":\"It is white.\",\"zh\":\"它是白色的。\",\"analysis\":\"It仍指前面说过的那个动物，white说明颜色。前后不必反复说rabbit。\"}],\"pitfalls\":[\"it指一个；多个动物或东西常改用they，与are搭配。it和is不要写成同一个词。\"],\"memory\":\"先找到它指谁，再理解It is后面的信息。\"}"
           },
           {
             "id": "ljxj-3u-u7-w13",
@@ -1350,7 +1438,8 @@
             "position": 12,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习sugar painting，意思是“糖画”。sugar painting表示糖画，是用糖浆画出图案的传统手艺，也可以指做出的糖画作品。\",\"usage\":[\"sugar painting表示糖画，是用糖浆画出图案的传统手艺，也可以指做出的糖画作品。这个短语要整体理解。\"],\"examples\":[{\"en\":\"This is a sugar painting.\",\"zh\":\"这是一幅糖画。\",\"analysis\":\"This is介绍眼前的东西，a sugar painting表示一幅糖画；sugar说明材料与糖有关。\"},{\"en\":\"I like sugar painting.\",\"zh\":\"我喜欢糖画。\",\"analysis\":\"I like表示我喜欢，sugar painting在这里说的是糖画这种活动或艺术，不特指一幅作品。\"}],\"pitfalls\":[\"sugar painting不是普通的砂糖加一张画，需结合传统糖画场景理解；活动和具体作品的a用法不同。\"],\"memory\":\"想象糖浆画出一只小兔，把糖和画联系起来。\"}"
           },
           {
             "id": "ljxj-3u-u7-w14",
@@ -1364,7 +1453,8 @@
             "position": 13,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习take me home，意思是“带我回家”。take me home表示带我回家。\",\"usage\":[\"take me home表示带我回家。take是带，me是被带的人，home在这里表示回家的方向，前面不用to。\"],\"examples\":[{\"en\":\"Please take me home.\",\"zh\":\"请带我回家。\",\"analysis\":\"Please使语气礼貌，take是动作，me是我，home表示回家。词序是带谁去哪里。\"},{\"en\":\"Can you take me home?\",\"zh\":\"你能带我回家吗？\",\"analysis\":\"Can you用来礼貌询问对方能否帮忙，后面的take me home保持动作和对象的顺序。\"}],\"pitfalls\":[\"不要说take I home，也不要在这个固定方向表达里加to home。\"],\"memory\":\"记成一组：take＋me＋home。\"}"
           },
           {
             "id": "ljxj-3u-u7-w15",
@@ -1378,7 +1468,8 @@
             "position": 14,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习please，意思是“请”。please表示“请”，用来让请求更礼貌，可以放在句首或句末。\",\"usage\":[\"please表示“请”，用来让请求更礼貌，可以放在句首或句末。它不是请求中的具体动作。\"],\"examples\":[{\"en\":\"Please help me.\",\"zh\":\"请帮助我。\",\"analysis\":\"Please使请求礼貌，help是帮助，me是被帮助的人。句首Please开头大写。\"},{\"en\":\"A pen, please.\",\"zh\":\"请给我一支笔。\",\"analysis\":\"a pen说明想要的东西，please放在最后表达礼貌。在合适场景里可以用这种简短请求。\"}],\"pitfalls\":[\"please不能代替thank you：请求帮助时说please，接受帮助后说thank you。\"],\"memory\":\"请求前想起please，得到帮助后想起thanks。\"}"
           },
           {
             "id": "ljxj-3u-u7-w16",
@@ -1392,7 +1483,8 @@
             "position": 15,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习need，意思是“需要”。need表示“需要”，后面接所需要的人或物。\",\"usage\":[\"need表示“需要”，后面接所需要的人或物。它强调必要或有帮助，不完全等同于只是想要。\"],\"examples\":[{\"en\":\"I need a pen.\",\"zh\":\"我需要一支笔。\",\"analysis\":\"I是我，need表示需要，a pen是需要的东西。pen是单数可数名词，所以有a。\"},{\"en\":\"We need help.\",\"zh\":\"我们需要帮助。\",\"analysis\":\"We表示我们，need后面help在这里是名词帮助；help通常作为不可数概念，不加a。\"}],\"pitfalls\":[\"need和want意思不同；need是需要，want是想要。不要说I am need。\"],\"memory\":\"想一想做这件事必需什么，再用I need说出来。\"}"
           },
           {
             "id": "ljxj-3u-u7-w17",
@@ -1406,7 +1498,8 @@
             "position": 16,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习one year old，意思是“一岁”。one year old表示一岁，用来说明年龄。\",\"usage\":[\"one year old表示一岁，用来说明年龄。说一岁时year用单数；两岁或更多岁数时常改成years old。\"],\"examples\":[{\"en\":\"The baby is one year old.\",\"zh\":\"这个宝宝一岁。\",\"analysis\":\"The baby是主语，is后面one year old说明年龄。one表示一，所以year不加s。\"},{\"en\":\"My dog is two years old.\",\"zh\":\"我的狗两岁。\",\"analysis\":\"My dog是我的狗，two表示二，year要变成复数years，old放在最后。\"}],\"pitfalls\":[\"不要说one years old；one配year，two或更多通常配years。\"],\"memory\":\"年龄数字变化时，留意year和years。\"}"
           },
           {
             "id": "ljxj-3u-u7-w18",
@@ -1420,7 +1513,8 @@
             "position": 17,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习beautiful，意思是“美丽的；漂亮的”。beautiful用来描述人或事物，表示“漂亮的”。\",\"usage\":[\"beautiful用来描述人或事物，表示“漂亮的”。它可以跟在is后面说事物是什么样，也可以放在名词前，构成“beautiful＋物品”的短语。\"],\"examples\":[{\"en\":\"The bird is beautiful.\",\"zh\":\"这只鸟很漂亮。\",\"analysis\":\"The bird指“这个鸟”，is后面的beautiful说明它的特点。bird是单数，所以用is。\"},{\"en\":\"This is a beautiful bird.\",\"zh\":\"这是一只漂亮的鸟。\",\"analysis\":\"This is表示“这是”，a beautiful bird表示“一个漂亮的鸟”。先说特点，再说物品，beautiful放在bird前。\"}],\"pitfalls\":[\"描述词放在名词前时，不要因后面物品数量变化给它加s。一个完整句子还需要is等谓语，不能只说The bird beautiful。\"],\"memory\":\"看一件身边的东西，用“物品＋is＋特点”说完整句子。\"}"
           },
           {
             "id": "ljxj-3u-u7-w19",
@@ -1434,7 +1528,8 @@
             "position": 18,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习baby，意思是“婴儿；幼鸟；幼畜”。baby表示婴儿、宝宝，也可在合适场景指动物幼崽。\",\"usage\":[\"baby表示婴儿、宝宝，也可在合适场景指动物幼崽。一个是a baby，多个的拼写是babies。\"],\"examples\":[{\"en\":\"This is a baby.\",\"zh\":\"这是一个宝宝。\",\"analysis\":\"This is介绍眼前的人，a baby是一个宝宝，a与单数baby搭配。\"},{\"en\":\"The baby is one year old.\",\"zh\":\"这个宝宝一岁。\",\"analysis\":\"The baby指已知的这个宝宝，is后面的one year old说明年龄。\"}],\"pitfalls\":[\"多个宝宝不是babys，应把y变为ies，写babies；本课先把单数baby记牢。\"],\"memory\":\"把baby和宝宝的照片、年龄表达连起来记。\"}"
           },
           {
             "id": "ljxj-3u-u7-w20",
@@ -1448,7 +1543,8 @@
             "position": 19,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习help，意思是“帮助”。help在本课可作动词“帮助”，后面接需要帮助的人。\",\"usage\":[\"help在本课可作动词“帮助”，后面接需要帮助的人。它也可以作名词表示帮助，例如need help。\"],\"examples\":[{\"en\":\"Please help us.\",\"zh\":\"请帮助我们。\",\"analysis\":\"Please表示请，help是帮助，us是被帮助的我们。动作后用宾格us。\"},{\"en\":\"I can help you.\",\"zh\":\"我可以帮助你。\",\"analysis\":\"I是主语，can表示能、可以，help保持动词原形，you是被帮助的人。\"}],\"pitfalls\":[\"can后用help，不用helps；help作动作时，不要在前面无故加am。\"],\"memory\":\"先说谁能帮，再说帮助谁。\"}"
           },
           {
             "id": "ljxj-3u-u7-w21",
@@ -1462,7 +1558,8 @@
             "position": 20,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习us，意思是“我们”。us表示“我们”的宾格，常放在动作或介词后面。\",\"usage\":[\"us表示“我们”的宾格，常放在动作或介词后面。作主语“我们”时一般用we。\"],\"examples\":[{\"en\":\"Please help us.\",\"zh\":\"请帮助我们。\",\"analysis\":\"help是帮助，us是帮助的对象，因此不用we；Please让请求更礼貌。\"},{\"en\":\"Look at us.\",\"zh\":\"看看我们。\",\"analysis\":\"Look at表示看，at后面的我们用us，说明目光要看向谁。\"}],\"pitfalls\":[\"We help表示我们帮助别人，help us表示别人帮助我们，前后位置会改变意思。\"],\"memory\":\"动作落到我们身上，留意用us。\"}"
           },
           {
             "id": "ljxj-3u-u7-w22",
@@ -1476,7 +1573,8 @@
             "position": 21,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习want，意思是“想要”。want表示“想要”，后面可以接想要的东西。\",\"usage\":[\"want表示“想要”，后面可以接想要的东西。想做某事则常用want to加动词原形，但本课先练想要物品。\"],\"examples\":[{\"en\":\"I want a pet.\",\"zh\":\"我想要一只宠物。\",\"analysis\":\"I是我，want是想要，a pet是一只宠物。a说明是一只，不用pets。\"},{\"en\":\"I want to help you.\",\"zh\":\"我想帮助你。\",\"analysis\":\"want to help表示想做帮助这个动作，to后面help用原形，you是被帮助的人。\"}],\"pitfalls\":[\"want接动作时通常不能漏to；不要把I want写成I am want。\"],\"memory\":\"想要东西直接接名词，想做动作留意want to。\"}"
           }
         ]
       },
@@ -1503,7 +1601,8 @@
             "position": 0,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"How many dogs are there?\",\"overview\":\"本课学习How many dogs are there?，意思是“有多少……？”。这个句型询问某处有多少个某种人或东西。\",\"usage\":[\"这个句型询问某处有多少个某种人或东西。How many后接可数名词复数，再接are there；省略号处要换成实际要数的东西。\"],\"examples\":[{\"en\":\"How many dogs are there?\",\"zh\":\"有多少只狗？\",\"analysis\":\"How many问数量，dogs用复数，are there组成存在句的提问。句尾要用问号。\"},{\"en\":\"There are three dogs.\",\"zh\":\"有三只狗。\",\"analysis\":\"回答先说There are，再给数量three和名词dogs；三只超过一个，所以用复数。\"}],\"pitfalls\":[\"How many后通常用复数，不说How many dog。读句子时不要把省略号读出来，要补上实际名词。\"],\"memory\":\"先说How many，再放进要数的东西。\"}"
           },
           {
             "id": "ljxj-3u-u8-w2",
@@ -1517,7 +1616,8 @@
             "position": 1,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"There is one cat. There are two cats.\",\"overview\":\"本课学习There is one cat. There are two cats.，意思是“有……”。There is和There are用于表示某处有某人或某物。\",\"usage\":[\"There is和There are用于表示某处有某人或某物。一个或不可数事物常用is，多个可数事物常用are；后面要补上实际内容。\"],\"examples\":[{\"en\":\"There is one cat.\",\"zh\":\"有一只猫。\",\"analysis\":\"one cat是一个事物，所以用There is。这里there不是在回答位置的“那里”，要把There is作为有来理解。\"},{\"en\":\"There are two cats.\",\"zh\":\"有两只猫。\",\"analysis\":\"two cats是多个，所以用There are，cats加s。和上一句对比，数量变了，is也变成are。\"}],\"pitfalls\":[\"不要把There is和I have混在一起：前者说有某物，后者说我拥有某物。多个物品时不要仍用is。\"],\"memory\":\"先看数量，一用is，多用are。\"}"
           },
           {
             "id": "ljxj-3u-u8-w3",
@@ -1531,7 +1631,8 @@
             "position": 2,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习one，意思是“一”。one表示数字1，用于数数量。\",\"usage\":[\"one表示数字1，用于数数量。数到几个，就把这个数词放在物品名词前。one后面通常用单数名词。\"],\"examples\":[{\"en\":\"There is one cat.\",\"zh\":\"有一只猫。\",\"analysis\":\"There is是“有”，one cat说出有多少只猫。一只猫是单数，所以用is和cat。\"},{\"en\":\"I have one cat.\",\"zh\":\"我有一只猫。\",\"analysis\":\"I have表示“我有”，one cat作拥有的对象。数词one放在名词前，直接说明猫的数量。\"}],\"pitfalls\":[\"one cat不能写成one cats。注意one中的字母o不要写成数字0。\"],\"memory\":\"伸出相应数量的手指，一边点数一边读one。\"}"
           },
           {
             "id": "ljxj-3u-u8-w4",
@@ -1545,7 +1646,8 @@
             "position": 3,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习three，意思是“三”。three表示数字3，用于数数量。\",\"usage\":[\"three表示数字3，用于数数量。数到几个，就把这个数词放在物品名词前。数量超过一个时，后面的可数名词通常要用复数。\"],\"examples\":[{\"en\":\"There are three cats.\",\"zh\":\"有3只猫。\",\"analysis\":\"There are是“有”，three cats说出有多少只猫。3只猫是复数，所以用are，cat要加s变成cats。\"},{\"en\":\"I have three cats.\",\"zh\":\"我有3只猫。\",\"analysis\":\"I have表示“我有”，three cats作拥有的对象。数词three放在名词前，直接说明猫的数量。\"}],\"pitfalls\":[\"不要写成three cat：本例有3只，cat应改成cats。写数字单词时注意字母顺序。\"],\"memory\":\"伸出相应数量的手指，一边点数一边读three。\"}"
           },
           {
             "id": "ljxj-3u-u8-w5",
@@ -1559,7 +1661,8 @@
             "position": 4,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习two，意思是“二”。two表示数字2，用于数数量。\",\"usage\":[\"two表示数字2，用于数数量。数到几个，就把这个数词放在物品名词前。数量超过一个时，后面的可数名词通常要用复数。\"],\"examples\":[{\"en\":\"There are two cats.\",\"zh\":\"有2只猫。\",\"analysis\":\"There are是“有”，two cats说出有多少只猫。2只猫是复数，所以用are，cat要加s变成cats。\"},{\"en\":\"I have two cats.\",\"zh\":\"我有2只猫。\",\"analysis\":\"I have表示“我有”，two cats作拥有的对象。数词two放在名词前，直接说明猫的数量。\"}],\"pitfalls\":[\"不要写成two cat：本例有2只，cat应改成cats。写数字单词时注意字母顺序。\"],\"memory\":\"伸出相应数量的手指，一边点数一边读two。\"}"
           },
           {
             "id": "ljxj-3u-u8-w6",
@@ -1573,7 +1676,8 @@
             "position": 5,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习four，意思是“四”。four表示数字4，用于数数量。\",\"usage\":[\"four表示数字4，用于数数量。数到几个，就把这个数词放在物品名词前。数量超过一个时，后面的可数名词通常要用复数。\"],\"examples\":[{\"en\":\"There are four cats.\",\"zh\":\"有4只猫。\",\"analysis\":\"There are是“有”，four cats说出有多少只猫。4只猫是复数，所以用are，cat要加s变成cats。\"},{\"en\":\"I have four cats.\",\"zh\":\"我有4只猫。\",\"analysis\":\"I have表示“我有”，four cats作拥有的对象。数词four放在名词前，直接说明猫的数量。\"}],\"pitfalls\":[\"不要写成four cat：本例有4只，cat应改成cats。写数字单词时注意字母顺序。\"],\"memory\":\"伸出相应数量的手指，一边点数一边读four。\"}"
           },
           {
             "id": "ljxj-3u-u8-w7",
@@ -1587,7 +1691,8 @@
             "position": 6,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习five，意思是“五”。five表示数字5，用于数数量。\",\"usage\":[\"five表示数字5，用于数数量。数到几个，就把这个数词放在物品名词前。数量超过一个时，后面的可数名词通常要用复数。\"],\"examples\":[{\"en\":\"There are five cats.\",\"zh\":\"有5只猫。\",\"analysis\":\"There are是“有”，five cats说出有多少只猫。5只猫是复数，所以用are，cat要加s变成cats。\"},{\"en\":\"I have five cats.\",\"zh\":\"我有5只猫。\",\"analysis\":\"I have表示“我有”，five cats作拥有的对象。数词five放在名词前，直接说明猫的数量。\"}],\"pitfalls\":[\"不要写成five cat：本例有5只，cat应改成cats。写数字单词时注意字母顺序。\"],\"memory\":\"伸出相应数量的手指，一边点数一边读five。\"}"
           },
           {
             "id": "ljxj-3u-u8-w8",
@@ -1601,7 +1706,8 @@
             "position": 7,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习six，意思是“六”。six表示数字6，用于数数量。\",\"usage\":[\"six表示数字6，用于数数量。数到几个，就把这个数词放在物品名词前。数量超过一个时，后面的可数名词通常要用复数。\"],\"examples\":[{\"en\":\"There are six cats.\",\"zh\":\"有6只猫。\",\"analysis\":\"There are是“有”，six cats说出有多少只猫。6只猫是复数，所以用are，cat要加s变成cats。\"},{\"en\":\"I have six cats.\",\"zh\":\"我有6只猫。\",\"analysis\":\"I have表示“我有”，six cats作拥有的对象。数词six放在名词前，直接说明猫的数量。\"}],\"pitfalls\":[\"不要写成six cat：本例有6只，cat应改成cats。写数字单词时注意字母顺序。\"],\"memory\":\"伸出相应数量的手指，一边点数一边读six。\"}"
           },
           {
             "id": "ljxj-3u-u8-w9",
@@ -1615,7 +1721,8 @@
             "position": 8,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习seven，意思是“七”。seven表示数字7，用于数数量。\",\"usage\":[\"seven表示数字7，用于数数量。数到几个，就把这个数词放在物品名词前。数量超过一个时，后面的可数名词通常要用复数。\"],\"examples\":[{\"en\":\"There are seven cats.\",\"zh\":\"有7只猫。\",\"analysis\":\"There are是“有”，seven cats说出有多少只猫。7只猫是复数，所以用are，cat要加s变成cats。\"},{\"en\":\"I have seven cats.\",\"zh\":\"我有7只猫。\",\"analysis\":\"I have表示“我有”，seven cats作拥有的对象。数词seven放在名词前，直接说明猫的数量。\"}],\"pitfalls\":[\"不要写成seven cat：本例有7只，cat应改成cats。写数字单词时注意字母顺序。\"],\"memory\":\"伸出相应数量的手指，一边点数一边读seven。\"}"
           },
           {
             "id": "ljxj-3u-u8-w10",
@@ -1629,7 +1736,8 @@
             "position": 9,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习eight，意思是“八”。eight表示数字8，用于数数量。\",\"usage\":[\"eight表示数字8，用于数数量。数到几个，就把这个数词放在物品名词前。数量超过一个时，后面的可数名词通常要用复数。\"],\"examples\":[{\"en\":\"There are eight cats.\",\"zh\":\"有8只猫。\",\"analysis\":\"There are是“有”，eight cats说出有多少只猫。8只猫是复数，所以用are，cat要加s变成cats。\"},{\"en\":\"I have eight cats.\",\"zh\":\"我有8只猫。\",\"analysis\":\"I have表示“我有”，eight cats作拥有的对象。数词eight放在名词前，直接说明猫的数量。\"}],\"pitfalls\":[\"不要写成eight cat：本例有8只，cat应改成cats。写数字单词时注意字母顺序。\"],\"memory\":\"伸出相应数量的手指，一边点数一边读eight。\"}"
           },
           {
             "id": "ljxj-3u-u8-w11",
@@ -1643,7 +1751,8 @@
             "position": 10,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习nine，意思是“九”。nine表示数字9，用于数数量。\",\"usage\":[\"nine表示数字9，用于数数量。数到几个，就把这个数词放在物品名词前。数量超过一个时，后面的可数名词通常要用复数。\"],\"examples\":[{\"en\":\"There are nine cats.\",\"zh\":\"有9只猫。\",\"analysis\":\"There are是“有”，nine cats说出有多少只猫。9只猫是复数，所以用are，cat要加s变成cats。\"},{\"en\":\"I have nine cats.\",\"zh\":\"我有9只猫。\",\"analysis\":\"I have表示“我有”，nine cats作拥有的对象。数词nine放在名词前，直接说明猫的数量。\"}],\"pitfalls\":[\"不要写成nine cat：本例有9只，cat应改成cats。写数字单词时注意字母顺序。\"],\"memory\":\"伸出相应数量的手指，一边点数一边读nine。\"}"
           },
           {
             "id": "ljxj-3u-u8-w12",
@@ -1657,7 +1766,8 @@
             "position": 11,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习ten，意思是“十”。ten表示数字10，用于数数量。\",\"usage\":[\"ten表示数字10，用于数数量。数到几个，就把这个数词放在物品名词前。数量超过一个时，后面的可数名词通常要用复数。\"],\"examples\":[{\"en\":\"There are ten cats.\",\"zh\":\"有10只猫。\",\"analysis\":\"There are是“有”，ten cats说出有多少只猫。10只猫是复数，所以用are，cat要加s变成cats。\"},{\"en\":\"I have ten cats.\",\"zh\":\"我有10只猫。\",\"analysis\":\"I have表示“我有”，ten cats作拥有的对象。数词ten放在名词前，直接说明猫的数量。\"}],\"pitfalls\":[\"不要写成ten cat：本例有10只，cat应改成cats。写数字单词时注意字母顺序。\"],\"memory\":\"伸出相应数量的手指，一边点数一边读ten。\"}"
           }
         ]
       },
@@ -1684,7 +1794,8 @@
             "position": 0,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习have，意思是“有”。have在本课是“有、拥有”。\",\"usage\":[\"have在本课是“有、拥有”。I、you、we、they常用have；he、she、it在一般现在时肯定句里通常用has。\"],\"examples\":[{\"en\":\"I have a white rabbit.\",\"zh\":\"我有一只白兔。\",\"analysis\":\"I是我，have是有，a white rabbit是一只白兔；white放在rabbit前说颜色。\"},{\"en\":\"She has a pet.\",\"zh\":\"她有一只宠物。\",\"analysis\":\"She指一个人，这里have变成has；a pet表示一只宠物。不要把I have原样照搬为She have。\"}],\"pitfalls\":[\"I have中不要再加am；have表示某人拥有，There is表示某处存在，重点不同。\"],\"memory\":\"先看是谁拥有，再选have或has。\"}"
           },
           {
             "id": "ljxj-3u-u9-w2",
@@ -1698,7 +1809,8 @@
             "position": 1,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习pet，意思是“宠物”。pet是可以数的名词，表示“宠物”。\",\"usage\":[\"pet是可以数的名词，表示“宠物”。一个用a pet，多个一般在词尾加s，写成pets。谈论是否喜欢这一类动物时，可以用复数形式。\"],\"examples\":[{\"en\":\"I have a pet.\",\"zh\":\"我有一只宠物。\",\"analysis\":\"I是“我”，have表示“有”，a pet表示“一只宠物”。a已经告诉我们只有一只，所以pet后面不加s。\"},{\"en\":\"I like pets.\",\"zh\":\"我喜欢宠物。\",\"analysis\":\"I like表示“我喜欢”，pets用复数，表示喜欢这一类宠物，并不只指眼前的一只。\"}],\"pitfalls\":[\"不要说a pets：a只能和单数一起用。谈论有一只用a pet，谈论喜欢这一类可以用pets。\"],\"memory\":\"把“一只”和“这一类”分别说一遍，记住单数和复数的变化。\"}"
           },
           {
             "id": "ljxj-3u-u9-w3",
@@ -1712,7 +1824,8 @@
             "position": 2,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"What colour is it? What colour are they?\",\"overview\":\"本课学习What colour is it? What colour are they?，意思是“它/它们是什么颜色？”。这个句型询问颜色。\",\"usage\":[\"这个句型询问颜色。问一个东西用What colour is it，问多个用What colour are they。colour是常见英式拼写，color是常见美式拼写。\"],\"examples\":[{\"en\":\"What colour is it?\",\"zh\":\"它是什么颜色的？\",\"analysis\":\"What colour整体询问颜色，it是一个事物，所以与is搭配。回答可以说It is white。\"},{\"en\":\"What colour are they?\",\"zh\":\"它们是什么颜色的？\",\"analysis\":\"they指多个事物，用are。回答也用They are加颜色，例如They are black。\"}],\"pitfalls\":[\"问一个用is it，问多个用are they，不能写成is they。句型里的斜杠不需要念出来，应分别练完整句子。\"],\"memory\":\"先分一个还是多个，再问颜色。\"}"
           },
           {
             "id": "ljxj-3u-u9-w4",
@@ -1726,7 +1839,8 @@
             "position": 3,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习black，意思是“黑色的”。本课学习black表示“黑色的”，用来描述东西的颜色。\",\"usage\":[\"本课学习black表示“黑色的”，用来描述东西的颜色。颜色词可以放在is后，也可以放在名词前。英语说“颜色＋物品”，例如black bag。\"],\"examples\":[{\"en\":\"The ball is black.\",\"zh\":\"这个球是黑色的。\",\"analysis\":\"The ball指“这个球”，is表示“是”，black说明球的颜色。这里的颜色词在is后面，是对这个球的描述。\"},{\"en\":\"I have a black bag.\",\"zh\":\"我有一个黑色的包。\",\"analysis\":\"I have表示“我有”，a black bag表示“一个黑色的包”。black放在bag前，先说颜色再说物品。a表示一个，后面接颜色和物品。\"}],\"pitfalls\":[\"颜色词描述物品时放在名词前。不要按中文语序把bag black当作一个名词短语。\"],\"memory\":\"找一件黑色的物品，先说物品是什么，再用is black说出颜色。\"}"
           },
           {
             "id": "ljxj-3u-u9-w5",
@@ -1740,7 +1854,8 @@
             "position": 4,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习white，意思是“白色的”。本课学习white表示“白色的”，用来描述东西的颜色。\",\"usage\":[\"本课学习white表示“白色的”，用来描述东西的颜色。颜色词可以放在is后，也可以放在名词前。英语说“颜色＋物品”，例如white bag。\"],\"examples\":[{\"en\":\"The ball is white.\",\"zh\":\"这个球是白色的。\",\"analysis\":\"The ball指“这个球”，is表示“是”，white说明球的颜色。这里的颜色词在is后面，是对这个球的描述。\"},{\"en\":\"I have a white bag.\",\"zh\":\"我有一个白色的包。\",\"analysis\":\"I have表示“我有”，a white bag表示“一个白色的包”。white放在bag前，先说颜色再说物品。a表示一个，后面接颜色和物品。\"}],\"pitfalls\":[\"颜色词描述物品时放在名词前。不要按中文语序把bag white当作一个名词短语。\"],\"memory\":\"找一件白色的物品，先说物品是什么，再用is white说出颜色。\"}"
           },
           {
             "id": "ljxj-3u-u9-w6",
@@ -1754,7 +1869,8 @@
             "position": 5,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习fish，意思是“鱼”。fish在本课是鱼。\",\"usage\":[\"fish在本课是鱼。表示一条鱼用a fish，表示多条鱼时常见复数形式仍然是fish，不像cat那样直接加s。\"],\"examples\":[{\"en\":\"I have a red fish.\",\"zh\":\"我有一条红色的鱼。\",\"analysis\":\"I have表示我有，a red fish表示一条红鱼；red放在fish前说明颜色。\"},{\"en\":\"There are three fish.\",\"zh\":\"有三条鱼。\",\"analysis\":\"three说明数量是三，谓语用are；fish在这个常见数量表达中单复数同形。\"}],\"pitfalls\":[\"不要看到三个就机械写three fishes；本课说多条鱼常用fish。鱼肉等其他意思需看上下文。\"],\"memory\":\"一条fish，多条常常还是fish。\"}"
           },
           {
             "id": "ljxj-3u-u9-w7",
@@ -1768,7 +1884,8 @@
             "position": 6,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习red，意思是“红色的”。本课学习red表示“红色的”，用来描述东西的颜色。\",\"usage\":[\"本课学习red表示“红色的”，用来描述东西的颜色。颜色词可以放在is后，也可以放在名词前。英语说“颜色＋物品”，例如red bag。\"],\"examples\":[{\"en\":\"The ball is red.\",\"zh\":\"这个球是红色的。\",\"analysis\":\"The ball指“这个球”，is表示“是”，red说明球的颜色。这里的颜色词在is后面，是对这个球的描述。\"},{\"en\":\"I have a red bag.\",\"zh\":\"我有一个红色的包。\",\"analysis\":\"I have表示“我有”，a red bag表示“一个红色的包”。red放在bag前，先说颜色再说物品。a表示一个，后面接颜色和物品。\"}],\"pitfalls\":[\"颜色词描述物品时放在名词前。不要按中文语序把bag red当作一个名词短语。\"],\"memory\":\"找一件红色的物品，先说物品是什么，再用is red说出颜色。\"}"
           },
           {
             "id": "ljxj-3u-u9-w8",
@@ -1782,7 +1899,8 @@
             "position": 7,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习blue，意思是“蓝色的”。本课学习blue表示“蓝色的”，用来描述东西的颜色。\",\"usage\":[\"本课学习blue表示“蓝色的”，用来描述东西的颜色。颜色词可以放在is后，也可以放在名词前。英语说“颜色＋物品”，例如blue bag。\"],\"examples\":[{\"en\":\"The ball is blue.\",\"zh\":\"这个球是蓝色的。\",\"analysis\":\"The ball指“这个球”，is表示“是”，blue说明球的颜色。这里的颜色词在is后面，是对这个球的描述。\"},{\"en\":\"I have a blue bag.\",\"zh\":\"我有一个蓝色的包。\",\"analysis\":\"I have表示“我有”，a blue bag表示“一个蓝色的包”。blue放在bag前，先说颜色再说物品。a表示一个，后面接颜色和物品。\"}],\"pitfalls\":[\"颜色词描述物品时放在名词前。不要按中文语序把bag blue当作一个名词短语。\"],\"memory\":\"找一件蓝色的物品，先说物品是什么，再用is blue说出颜色。\"}"
           },
           {
             "id": "ljxj-3u-u9-w9",
@@ -1796,7 +1914,8 @@
             "position": 8,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习yellow，意思是“黄色的”。本课学习yellow表示“黄色的”，用来描述东西的颜色。\",\"usage\":[\"本课学习yellow表示“黄色的”，用来描述东西的颜色。颜色词可以放在is后，也可以放在名词前。英语说“颜色＋物品”，例如yellow bag。\"],\"examples\":[{\"en\":\"The ball is yellow.\",\"zh\":\"这个球是黄色的。\",\"analysis\":\"The ball指“这个球”，is表示“是”，yellow说明球的颜色。这里的颜色词在is后面，是对这个球的描述。\"},{\"en\":\"I have a yellow bag.\",\"zh\":\"我有一个黄色的包。\",\"analysis\":\"I have表示“我有”，a yellow bag表示“一个黄色的包”。yellow放在bag前，先说颜色再说物品。a表示一个，后面接颜色和物品。\"}],\"pitfalls\":[\"颜色词描述物品时放在名词前。不要按中文语序把bag yellow当作一个名词短语。\"],\"memory\":\"找一件黄色的物品，先说物品是什么，再用is yellow说出颜色。\"}"
           },
           {
             "id": "ljxj-3u-u9-w10",
@@ -1810,7 +1929,8 @@
             "position": 9,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习green，意思是“绿色的”。本课学习green表示“绿色的”，用来描述东西的颜色。\",\"usage\":[\"本课学习green表示“绿色的”，用来描述东西的颜色。颜色词可以放在is后，也可以放在名词前。英语说“颜色＋物品”，例如green bag。\"],\"examples\":[{\"en\":\"The ball is green.\",\"zh\":\"这个球是绿色的。\",\"analysis\":\"The ball指“这个球”，is表示“是”，green说明球的颜色。这里的颜色词在is后面，是对这个球的描述。\"},{\"en\":\"I have a green bag.\",\"zh\":\"我有一个绿色的包。\",\"analysis\":\"I have表示“我有”，a green bag表示“一个绿色的包”。green放在bag前，先说颜色再说物品。a表示一个，后面接颜色和物品。\"}],\"pitfalls\":[\"颜色词描述物品时放在名词前。不要按中文语序把bag green当作一个名词短语。\"],\"memory\":\"找一件绿色的物品，先说物品是什么，再用is green说出颜色。\"}"
           },
           {
             "id": "ljxj-3u-u9-w11",
@@ -1824,7 +1944,8 @@
             "position": 10,
             "notes": "本单元按颜色词学习；另有橙子这一词义。",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习orange，意思是“橙色的”。本课学习orange表示“橙色的”，用来描述东西的颜色。\",\"usage\":[\"本课学习orange表示“橙色的”，用来描述东西的颜色。颜色词可以放在is后，也可以放在名词前。英语说“颜色＋物品”，例如orange bag。\"],\"examples\":[{\"en\":\"The ball is orange.\",\"zh\":\"这个球是橙色的。\",\"analysis\":\"The ball指“这个球”，is表示“是”，orange说明球的颜色。这里的颜色词在is后面，是对这个球的描述。\"},{\"en\":\"I have an orange bag.\",\"zh\":\"我有一个橙色的包。\",\"analysis\":\"I have表示“我有”，an orange bag表示“一个橙色的包”。orange放在bag前，先说颜色再说物品。orange以元音音素开头，所以前面用an。\"}],\"pitfalls\":[\"orange也能表示橙子，但本课颜色问题要回答“橙色”，不能把颜色解释成果实。an orange bag中的an由后面orange的读音决定。\"],\"memory\":\"找一件橙色的物品，先说物品是什么，再用is orange说出颜色。\"}"
           },
           {
             "id": "ljxj-3u-u9-w12",
@@ -1838,7 +1959,8 @@
             "position": 11,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习so many，意思是“这么多（的），那么多（的）”。so many表示“这么多、那么多”，后面通常接可数名词复数，表达数量很多带来的感受。\",\"usage\":[\"so many表示“这么多、那么多”，后面通常接可数名词复数，表达数量很多带来的感受。\"],\"examples\":[{\"en\":\"There are so many birds!\",\"zh\":\"有这么多鸟！\",\"analysis\":\"There are表示有，so many加强数量多的感受，birds用复数，感叹号表达惊喜。\"},{\"en\":\"I have so many books.\",\"zh\":\"我有这么多书。\",\"analysis\":\"I have表示我拥有，so many books是数量很多的书，books是可数复数。\"}],\"pitfalls\":[\"many一般搭配可数名词复数；不要写so many book。不可数名词常用much，不在本例里混用。\"],\"memory\":\"many后面找一群，名词通常要用复数。\"}"
           },
           {
             "id": "ljxj-3u-u9-w13",
@@ -1852,7 +1974,8 @@
             "position": 12,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习yeah，意思是“是的；对”。yeah是口语化、较随意的肯定回应，也可以表达开心。\",\"usage\":[\"yeah是口语化、较随意的肯定回应，也可以表达开心。正式或需要特别礼貌的场景通常选择yes等更合适的表达。\"],\"examples\":[{\"en\":\"Do you like cats? Yeah!\",\"zh\":\"你喜欢猫吗？喜欢！\",\"analysis\":\"问句询问是否喜欢猫，Yeah在轻松聊天中表示肯定；完整回答也可用Yes, I do。\"},{\"en\":\"Yeah! We have a new pet.\",\"zh\":\"太好了！我们有一只新宠物。\",\"analysis\":\"Yeah表达开心，We have说明我们拥有，a new pet表示一只新宠物。\"}],\"pitfalls\":[\"yeah语气随意，不要在所有正式回答中代替yes；注意不是year。\"],\"memory\":\"和朋友分享好消息时，轻松说yeah。\"}"
           },
           {
             "id": "ljxj-3u-u9-w14",
@@ -1866,7 +1989,8 @@
             "position": 13,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习now，意思是“现在”。now表示“现在”，把事情和说话这一刻联系起来。\",\"usage\":[\"now表示“现在”，把事情和说话这一刻联系起来。它通常放在句尾，也可以在合适语境放句首。\"],\"examples\":[{\"en\":\"I am at home now.\",\"zh\":\"我现在在家。\",\"analysis\":\"I am at home表示我在家，now补充时间是现在。at home是常见的在家表达。\"},{\"en\":\"Look at the picture now.\",\"zh\":\"现在看看这幅图。\",\"analysis\":\"Look at提出看的动作，the picture是对象，now说明现在就看。\"}],\"pitfalls\":[\"now和how拼写相近，但now是现在，how是怎么样；要注意首字母。\"],\"memory\":\"看看此时此刻，把now和现在连起来。\"}"
           },
           {
             "id": "ljxj-3u-u9-w15",
@@ -1880,7 +2004,8 @@
             "position": 14,
             "notes": "",
             "verified": false,
-            "archived": false
+            "archived": false,
+            "lesson": "{\"version\":1,\"spokenWord\":\"\",\"overview\":\"本课学习aha，意思是“啊哈”。aha是恍然大悟、发现某事时的感叹，类似“啊哈”。\",\"usage\":[\"aha是恍然大悟、发现某事时的感叹，类似“啊哈”。它表达语气，后面的句子说明发现了什么。\"],\"examples\":[{\"en\":\"Aha! It is a cat!\",\"zh\":\"啊哈！原来是一只猫！\",\"analysis\":\"Aha表达发现，It is a cat说明发现的对象是一只猫。这里a和cat一起表示一只。\"},{\"en\":\"Aha! I can see three birds.\",\"zh\":\"啊哈！我看见三只鸟。\",\"analysis\":\"I can see表示我能看见，three birds说明数量和对象；Aha为发现增加语气。\"}],\"pitfalls\":[\"aha不是事物名字，不需要在前面加a；只在合适的发现或领会场景使用。\"],\"memory\":\"找到答案时，轻轻说一声Aha。\"}"
           }
         ]
       }

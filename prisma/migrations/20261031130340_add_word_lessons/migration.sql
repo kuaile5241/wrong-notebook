@@ -1,0 +1,1 @@
+ALTER TABLE "TextbookTerm" ADD COLUMN "lesson" TEXT NOT NULL DEFAULT '';

@@ -119,12 +119,13 @@ describe('数据导出后再导入（真实 SQLite）', () => {
         await database.user.update({ where: { id: 'user-1' }, data: { role: 'admin' } }); mocks.session.user.role = 'admin';
         await database.textbookBook.create({ data });
         await database.textbookUnit.create({ data: { id: 'backup-unit', bookId: data.id, code: 'U1', title: 'Hello' } });
-        await database.textbookTerm.create({ data: { id: 'backup-term', unitId: 'backup-unit', key: termKey('two'), word: 'two', meaning: '二' } });
+        await database.textbookTerm.create({ data: { id: 'backup-term', unitId: 'backup-unit', key: termKey('two'), word: 'two', meaning: '二', lesson: JSON.stringify({ version: 1, overview: 'two表示数字二。', usage: ['后面接复数名词。'], examples: [{ en: 'I have two cats.', zh: '我有两只猫。', analysis: 'two说明数量，cats表示两只猫。' }], pitfalls: ['two cat应改为two cats。'], memory: '伸出两根手指。' }) } });
         const progress = scheduleWord('', 3);
         await database.vocabularyCard.create({ data: { userId: 'user-1', wordId: 'tb-backup-term', ...progress, reviews: 1, correct: 1 } });
         const backup = await exportBackup(); expect(backup.textbooks).toHaveLength(1);
         await clearUserData(); await database.textbookBook.deleteMany(); await importBackup(backup);
         expect((await database.textbookTerm.findUniqueOrThrow({ where: { id: 'backup-term' } })).meaning).toBe('二');
+        expect((await database.textbookTerm.findUniqueOrThrow({ where: { id: 'backup-term' } })).lesson).toContain('two表示数字二');
         expect((await database.vocabularyCard.findFirstOrThrow()).reviews).toBe(1);
         await database.textbookBook.update({ where: { id: data.id }, data: { title: '新的编辑' } });
         await importBackup(backup); expect((await database.textbookBook.findUniqueOrThrow({ where: { id: data.id } })).title).toBe('新的编辑');

@@ -1,4 +1,8 @@
 export const textbookEn = {
+    lessonTitle: 'Meaning explained', lessonUsage: 'How to use it', lessonExample: 'Example', sentenceAnalysis: 'Sentence explained', lessonPitfalls: 'Watch out', lessonMemory: 'Memory helper',
+    explanationAudio: 'Listen to explanation', usageAudio: 'Listen to usage', exampleAudio: 'Read example', analysisAudio: 'Explain sentence', pitfallAudio: 'Listen to common mistakes', memoryAudio: 'Listen to memory helper',
+    lessonNotice: 'AI-assisted explanations and original examples. Check against your textbook; not an official teacher guide. Press play to generate natural speech once and save it for replay.', lessonEdit: 'Detailed teaching notes', lessonOverview: 'Meaning and situation', lessonSpokenWord: 'Reading for sentence patterns (optional)', lessonExamples: 'Example sentences', lessonSeed: 'Fill missing detailed lessons', lessonSeedHint: 'Add detailed explanations and two examples for the prepared 125 entries; existing teaching notes and changed meanings are preserved.',
+
     gradeNames: ['Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Senior 1', 'Senior 2', 'Senior 3'], title: 'Textbook shelf', intro: 'Choose your textbook and follow its units. Add more grades and editions through the management area.', manage: 'Manage textbooks', create: 'Create a textbook', edit: 'Edit', save: 'Save', cancel: 'Cancel', back: 'Back to shelf',
     bookTitle: 'Book title', subject: 'Subject', stage: 'School stage', grade: 'Grade', volume: 'Volume / compulsory book', publisher: 'Publisher / series', edition: 'Edition and reprint', isbn: 'ISBN',
     primary: 'Primary', junior_high: 'Junior high', senior_high: 'Senior high', all: 'All', search: 'Find a textbook', english: 'English', math: 'Math', chinese: 'Chinese', science: 'Science', morality: 'Morality', physics: 'Physics', history: 'History', chemistry: 'Chemistry', biology: 'Biology',
@@ -13,6 +17,10 @@ export const textbookEn = {
     audioHint: 'Existing recordings are reused. Missing words can use configured natural speech when you press play; the first generation is saved and reused.', natural: 'Natural speech · first generation saved', currentBook: 'Current textbook',
 };
 export const textbookZh: typeof textbookEn = {
+    lessonTitle: '本课详细讲解', lessonUsage: '用法小课堂', lessonExample: '例句', sentenceAnalysis: '逐句讲解', lessonPitfalls: '易错提醒', lessonMemory: '记忆小窍门',
+    explanationAudio: '听词义讲解', usageAudio: '听用法讲解', exampleAudio: '例句朗读', analysisAudio: '听句子讲解', pitfallAudio: '听易错提醒', memoryAudio: '听记忆提示',
+    lessonNotice: 'AI辅助整理的讲解与自编例句，需结合课本核对，并非官方教师用书。点击朗读后首次生成自然语音并保存，后续重复播放复用。', lessonEdit: '详细教学讲解', lessonOverview: '词义和使用场景', lessonSpokenWord: '句型示范读法（可选）', lessonExamples: '例句与分析', lessonSeed: '补齐缺少的详细讲解', lessonSeedHint: '为已整理的125条补充详细讲解和两组例句；已有讲解或改过的本课词义不会被覆盖。',
+
     gradeNames: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级', '七年级', '八年级', '九年级', '高一', '高二', '高三'], title: '教材书架', intro: '选对课本，按单元一步一步学。其他年级、版本也可以在管理区继续添加。', manage: '教材管理', create: '新建教材', edit: '编辑', save: '保存', cancel: '取消', back: '返回书架',
     bookTitle: '教材名称', subject: '学科', stage: '学段', grade: '年级', volume: '册次／必修册', publisher: '出版社／教材版本', edition: '版次与印次', isbn: 'ISBN',
     primary: '小学', junior_high: '初中', senior_high: '高中', all: '全部', search: '搜索教材', english: '英语', math: '数学', chinese: '语文', science: '科学', morality: '道德与法治', physics: '物理', history: '历史', chemistry: '化学', biology: '生物',

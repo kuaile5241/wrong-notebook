@@ -15,6 +15,7 @@ import { GET as BOOK, POST as SAVE } from '@/app/api/textbooks/[id]/route';
 import { POST as UNIT } from '@/app/api/textbooks/[id]/units/route';
 import { POST as TERM } from '@/app/api/textbooks/[id]/terms/route';
 import { POST as IMPORT } from '@/app/api/textbooks/[id]/import/route';
+import { POST as ENRICH } from '@/app/api/textbooks/seed/lessons/route';
 import { POST as SEED } from '@/app/api/textbooks/seed/route';
 import { GET as AUDIO, HEAD } from '@/app/api/textbooks/terms/[id]/audio/route';
 import { POST as PREFERENCES } from '@/app/api/vocabulary/preferences/route';
@@ -81,6 +82,24 @@ describe('教材书架和管理（真实SQLite）', () => {
         const response = await AUDIO(new Request('http://localhost?text=should-not-read', { headers: { range: 'bytes=0-9' } }), ctx(t.id)); expect(response.status).toBe(206); expect((await response.arrayBuffer()).byteLength).toBe(10);
         expect(mocks.voice).toHaveBeenCalledWith('learner', 'two', undefined, 'en', 'natural');
         await db.user.update({ where: { id: 'learner' }, data: { accessExpiresAt: new Date(0) } }); expect((await AUDIO(get(), ctx(t.id))).status).toBe(403); expect(mocks.voice).toHaveBeenCalledTimes(1);
+    });
+    it('补充讲解仅填空白和匹配词义，普通账号不可写，反复执行不覆盖管理员内容', async () => {
+        await SEED(); await db.textbookTerm.updateMany({ data: { lesson: '' } });
+        const first = await db.textbookTerm.findUniqueOrThrow({ where: { id: 'ljxj-3u-u1-w1' } });
+        await db.textbookTerm.update({ where: { id: first.id }, data: { meaning: '教师已修改词义' } });
+        mocks.userId = 'learner'; expect((await ENRICH()).status).toBe(403); mocks.userId = 'book-admin';
+        const result = await (await ENRICH()).json(); expect(result.filled).toBe(124); expect((await (await ENRICH()).json()).filled).toBe(0);
+        const term = await db.textbookTerm.findUniqueOrThrow({ where: { id: 'ljxj-3u-u9-w11' } }); expect(term.lesson).toContain('橙色');
+        const word = await (await WORD(get(), ctx('tb-' + term.id))).json(); expect(word.word.lesson.examples).toHaveLength(2);
+        const voiceRequest = (query: string, method = 'GET') => new Request('http://localhost/?' + query, { method });
+        expect((await AUDIO(voiceRequest('part=analysis&index=1', 'HEAD'), ctx(term.id))).status).toBe(200); expect(mocks.voice).not.toHaveBeenCalled();
+        expect((await AUDIO(voiceRequest('part=analysis&index=1'), ctx(term.id))).status).toBe(200); expect(mocks.voice).toHaveBeenCalledWith('book-admin', expect.stringContaining('颜色'), undefined, 'zh', 'natural');
+        expect((await AUDIO(voiceRequest('part=example&index=2'), ctx(term.id))).status).toBe(404);
+        expect((await AUDIO(voiceRequest('part=overview&v=outdated'), ctx(term.id))).status).toBe(409);
+        expect((await AUDIO(voiceRequest('part=arbitrary&text=unsafe'), ctx(term.id))).status).toBe(400); expect(mocks.voice).toHaveBeenCalledTimes(1);
+        expect((await db.textbookTerm.findUniqueOrThrow({ where: { id: first.id } })).lesson).toBe('');
+        expect((await TERM(request({ ...term, meaning: '教师改为另一种词义', revision: await revision('ljxj-en-3-upper-2024') }), ctx('ljxj-en-3-upper-2024'))).status).toBe(200);
+        expect((await db.textbookTerm.findUniqueOrThrow({ where: { id: term.id } })).lesson).toBe('');
     });
     it('首本教材包含官方核对的9单元和125条参考词汇，重复安装不覆盖编辑内容', async () => {
         expect((await SEED()).status).toBe(200); const book = await db.textbookBook.findUniqueOrThrow({ where: { id: 'ljxj-en-3-upper-2024' }, include: { units: { include: { terms: true } } } });

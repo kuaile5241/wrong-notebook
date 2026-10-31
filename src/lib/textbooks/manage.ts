@@ -56,7 +56,7 @@ export async function applyImport(bookId: string, revision: number, raw: unknown
             const data = { word: row.word, meaning: row.meaning, example: row.example, translation: row.translation, atlasId: row.atlasId,
                 useAtlasImage: row.useAtlasImage, notes: row.notes, verified: row.verified };
             if (!previous) await tx.textbookTerm.create({ data: { ...data, unitId: unit.id, key: termKey(row.word), position: unit.terms.length + preview.rows.indexOf(row) } });
-            else if (mode === 'update') await tx.textbookTerm.update({ where: { id: previous.id }, data });
+            else if (mode === 'update') await tx.textbookTerm.update({ where: { id: previous.id }, data: { ...data, ...(previous.word !== row.word || previous.meaning !== row.meaning ? { lesson: '' } : {}) } });
         }
     });
     return preview.summary;

@@ -1,8 +1,10 @@
+import type { WordLesson } from '@/lib/textbooks/lesson';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { z } from 'zod';
 
 export interface WordEntry {
+    textbookTermId?: string; lesson?: WordLesson; speechVersion?: string;
     mediaId?: string; media?: number; onlineSpeechId?: string; id: string; w: string; uk: string; us: string; cefr: string; topic: string; note?: string;
     senses: { pos: string; zh: string; en: string }[]; ex: { en: string; zh: string }[];
     col: string[]; fam: string[]; syn: string[]; ant: string[]; tip: string;

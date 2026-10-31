@@ -23,3 +23,12 @@ Cover, copyright page and directory were checked against public National Smart E
 Matching words reuse self-hosted recordings. Unmatched entries can use the configured Aliyun natural voice only after an explicit play action; the audio element defers its online source until that action, andHEAD never generates speech. The server reads a published term, ignoring caller text. Existing persistent lesson-audio caching reuses identical text/model/voice/synthesis-rate and deduplicates generation. Pause/replay do not re-synthesize. Initial generation follows the configured provider’s fees and is not labeled nativeUK/US recording. No mechanical fallback is used.
 
 Migration20261031114206_add_textbook_books adds three textbook tables and an additive scope column toVocabularyAttempt. Preserve Word Atlas media mounts and existing lesson speech files. Administrator JSON backups include global books/units/terms; restore missing content before vocabulary progress without overwriting newer existing books. Normal imports cannot publish shared content and require the corresponding server-side catalog for term progress. Archiving retains progress. All endpoints enforce active/unexpired accounts. Factory reset includes textbook tables and was tested only on temporary databases.
+
+
+## Detailed word lessons
+
+Each of the 125 prepared entries includes meaning, usage, two original bilingual examples with sentence analysis, pitfalls and a memory tip (250 examples total). These Codex-assisted notes are not textbook passages or teacher-reviewed material. Review status remains unchanged. Administrators can edit fields in the term editor.
+
+The additive migration 20261031130340_add_word_lessons stores validated content in TextbookTerm.lesson. Admin backups retain it. New installations include lessons; the administrator fill action only updates blank lessons whose original word and meaning still match, preserving edited and archived content.
+
+Meaning, usage, each example and analysis, pitfalls and memory tips have explicit natural-speech controls. Sentence patterns have complete spoken forms. The server reads saved published content only, validates sections and content versions, and keeps existing persistent Aliyun audio deduplication. HEAD and opening cards never synthesize. Pausing and replaying reuse audio. The written notes were authored directly with Codex; no additional text-model API was called.

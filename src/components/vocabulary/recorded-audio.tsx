@@ -15,7 +15,7 @@ export function RecordedAudio({ id, kind, label, source }: Props) {
         if (source && audio.src !== new URL(source, window.location.href).href) audio.src = source;
         if (error) audio.load();
         setError(false);
-        try { await audio.play(); } catch { setError(true); setPlaying(false); }
+        try { await audio.play(); } catch (e) { if (e instanceof DOMException && e.name === 'AbortError') return; setError(true); setPlaying(false); }
     }
     return <div className="space-y-1">
         <div className="flex flex-wrap items-center gap-2">

@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+import { readWordLesson } from './lesson';
 import type { Prisma, TextbookTerm } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { vocabularyCatalog, wordDetails } from '@/lib/vocabulary/catalog';
@@ -5,7 +7,7 @@ import type { WordEntry } from '@/lib/vocabulary/catalog';
 export interface VocabularyDictionary { words: WordEntry[]; byId: Map<string, WordEntry> }
 export function termEntry(term: TextbookTerm): WordEntry {
     const base = vocabularyCatalog().byId.get(term.atlasId), media = base ? wordDetails(base).media : 0;
-    return { id: 'tb-' + term.id, w: term.word, uk: base?.uk ?? '', us: base?.us ?? '', cefr: base?.cefr ?? '教材词汇', topic: 'textbook',
+    return { textbookTermId: term.id, lesson: readWordLesson(term.lesson), speechVersion: createHash('sha256').update(JSON.stringify([term.word, term.meaning, term.example, term.lesson])).digest('hex'), id: 'tb-' + term.id, w: term.word, uk: base?.uk ?? '', us: base?.us ?? '', cefr: base?.cefr ?? '教材词汇', topic: 'textbook',
         senses: [{ pos: '', zh: term.meaning, en: '' }], ex: term.example ? [{ en: term.example, zh: term.translation }] : [],
         col: [], fam: [], syn: [], ant: [], tip: term.notes, note: term.verified ? '' : '词条待核对', mediaId: base?.id, onlineSpeechId: base ? undefined : term.id,
         media: (media & 6) | (term.useAtlasImage ? media & 1 : 0) | (term.example && term.example === base?.ex[0]?.en ? media & 8 : 0) };

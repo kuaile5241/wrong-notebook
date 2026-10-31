@@ -16,7 +16,11 @@ export async function POST(req: Request, ctx: Context) {
         if (!validAtlasLink(data.word, data.atlasId) || (data.useAtlasImage && !data.atlasId)) return NextResponse.json({ message: 'Word and atlas entry must match' }, { status: 400 });
         const term = await editBook(bookId, revision.data, async tx => {
             if (!await tx.textbookUnit.findFirst({ where: { id: data.unitId, bookId } })) throw new BookConflict();
-            if (id) { if (!await tx.textbookTerm.findFirst({ where: { id, unit: { bookId } } })) throw new BookConflict(); return tx.textbookTerm.update({ where: { id }, data: { ...data, key: termKey(data.word) } }); }
+            if (id) {
+                const previous = await tx.textbookTerm.findFirst({ where: { id, unit: { bookId } } }); if (!previous) throw new BookConflict();
+                if ((previous.word !== data.word || previous.meaning !== data.meaning) && (data.lesson === undefined || data.lesson === previous.lesson)) data.lesson = '';
+                return tx.textbookTerm.update({ where: { id }, data: { ...data, key: termKey(data.word) } });
+            }
             return tx.textbookTerm.create({ data: { ...data, key: termKey(data.word) } });
         });
         return NextResponse.json(term, noStore);
