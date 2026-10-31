@@ -8,6 +8,8 @@ describe('完整知识图谱', () => {
     it('准确复现用户截图导数的概念：向上两层、下游一层，共六节点五条边', () => {
         const c = getCatalog(), map = localKnowledgeGraph(c.topics, c.dependencies, 'cnm_h217', 2);
         expect(map.nodes.map(n => n.id).sort()).toEqual(['cnm_h215', 'cnm_h216', 'cnm_h217', 'cnm_h218', 'cnm_h219', 'cnm_h221']); expect(map.edges).toHaveLength(5);
+        const row = map.nodes.filter(n => n.id !== 'cnm_h217' && n.y > map.nodes.find(n => n.id === 'cnm_h217')!.y).sort((a, b) => a.x - b.x);
+        for (let i = 1; i < row.length; i++) expect(row[i].x - row[i - 1].x).toBeGreaterThanOrEqual(190);
         expect(map.nodes.find(n => n.id === 'cnm_h215')!.y).toBeLessThan(map.nodes.find(n => n.id === 'cnm_h217')!.y);
     });
     it('全层图不裁100条，保留软硬边；所有课标引用都能找到条文，待答答案未混入知识详情', () => {

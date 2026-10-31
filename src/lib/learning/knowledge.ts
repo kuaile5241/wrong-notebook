@@ -18,6 +18,6 @@ export function localKnowledgeGraph(topics: Topic[], dependencies: Dependency[],
     for (const edge of dependencies) if (edge.prerequisiteId === selected && byId.has(edge.topicId) && !levels.has(edge.topicId)) levels.set(edge.topicId, 1);
     const rows = new Map<number, string[]>(); for (const [id, level] of levels) { if (!byId.has(id)) continue; rows.set(level, [...(rows.get(level) ?? []), id]); }
     const sorted = [...rows.keys()].sort((a, b) => a - b), width = Math.max(480, ...[...rows.values()].map(r => r.length * 190 + 40)), height = Math.max(360, sorted.length * 110 + 50);
-    const nodes = sorted.flatMap((level, row) => rows.get(level)!.map((id, i, arr) => ({ ...byId.get(id)!, x: width / (arr.length + 1) * (i + 1), y: 60 + row * 110 })));
+    const nodes = sorted.flatMap((level, row) => rows.get(level)!.map((id, i, arr) => ({ ...byId.get(id)!, x: width / 2 + (i - (arr.length - 1) / 2) * 190, y: 60 + row * 110 })));
     return { nodes, edges: dependencies.filter(d => levels.has(d.topicId) && levels.has(d.prerequisiteId)), width, height };
 }
