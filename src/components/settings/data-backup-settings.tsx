@@ -43,7 +43,9 @@ function formatImportResult(stats: ImportStats, t: Translations): string {
         .replace('{schedules}', String(stats.reviewSchedulesCreated))
         .replace('{records}', String(stats.practiceRecordsCreated))
         .replace('{papers}', String(stats.examPapersCreated ?? 0))
-        .replace('{duplicates}', String(stats.duplicateErrorItems ?? 0));
+        .replace('{duplicates}', String(stats.duplicateErrorItems ?? 0))
+        .replace('{vocabularyCards}', String(stats.vocabularyCardsCreated ?? 0))
+        .replace('{vocabularyAttempts}', String(stats.vocabularyAttemptsCreated ?? 0));
 }
 
 /** 数据备份：导出、导入 JSON；管理员可导出、导入全部用户的数据 */

@@ -41,6 +41,9 @@ model User {
   examPapers ExamPaper[]
   aiUsages   AiUsage[]
   learningSessions LearningSession[]
+  vocabularySettings String @default("{}")
+  vocabularyCards VocabularyCard[]
+  vocabularyAttempts VocabularyAttempt[]
 }
 
 // 公共题库不按用户复制；会话存服务端状态与每次作答快照。
@@ -255,4 +258,41 @@ model AiUsage {
   createdAt DateTime @default(now())
 
   @@index([userId, createdAt])
+}
+
+// 词汇复习与其他学科复习分开；公共词条不按用户复制。
+model VocabularyCard {
+  id String @id @default(cuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wordId String
+  state String @default("")
+  reviews Int @default(0)
+  correct Int @default(0)
+  wrong Int @default(0)
+  selfReviews Int @default(0)
+  favorite Boolean @default(false)
+  dueAt DateTime?
+  revision Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([userId, wordId])
+  @@index([userId, dueAt])
+}
+
+// 每个题目有独立ID；首次提交才更新复习，重复提交返回原结果。
+model VocabularyAttempt {
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wordId String
+  mode String
+  choices String @default("[]")
+  cardRevision Int
+  answer String?
+  correct Boolean?
+  grade Int?
+  createdAt DateTime @default(now())
+  completedAt DateTime?
+  @@index([userId, completedAt])
 }

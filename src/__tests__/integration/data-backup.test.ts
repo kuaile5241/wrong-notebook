@@ -27,6 +27,7 @@ import { sanitizeFigureSvg } from '@/lib/figure-svg';
 import { sanitizeSvgAnimation } from '@/lib/svg-animation';
 import { createLearningState, nextLearningQuestion, applyLearningAnswer, parseLearning } from '@/lib/learning/session';
 import { DATASET_REVISION } from '@/lib/learning/catalog';
+import { scheduleWord } from '@/lib/vocabulary/srs';
 
 let database: PrismaClient;
 let directory: string;
@@ -52,6 +53,8 @@ async function importBackup(body: object) {
 
 /** 清空当前用户的学习数据（保留账户），模拟换机后导入 */
 async function clearUserData() {
+    await database.vocabularyAttempt.deleteMany({ where: { userId: 'user-1' } });
+    await database.vocabularyCard.deleteMany({ where: { userId: 'user-1' } });
     await database.learningSession.deleteMany({ where: { userId: 'user-1' } });
     await database.examPaper.deleteMany({ where: { userId: 'user-1' } });
     await database.subject.deleteMany({ where: { userId: 'user-1' } });
@@ -109,6 +112,27 @@ afterAll(async () => {
 });
 
 describe('数据导出后再导入（真实 SQLite）', () => {
+    it('词汇进度、收藏、偏好和已答记录随备份还原，不覆盖新进度或跨用户记录', async () => {
+        const progress = scheduleWord('', 3, new Date('2026-10-31T01:00:00Z'));
+        await database.user.update({ where: { id: 'user-1' }, data: { vocabularySettings: JSON.stringify({ stage: 'senior', accent: 'us' }) } });
+        await database.vocabularyCard.create({ data: { userId: 'user-1', wordId: 'library', ...progress, reviews: 1, correct: 1, favorite: true, revision: 1 } });
+        const id = '12345678-1234-4234-8234-123456789012';
+        await database.vocabularyAttempt.create({ data: { id, userId: 'user-1', wordId: 'library', mode: 'spelling', cardRevision: 0, answer: 'library', correct: true, grade: 3, completedAt: new Date() } });
+        const backup = await exportBackup();
+        expect(backup.vocabularyCards).toHaveLength(1); expect(backup.vocabularyAttempts).toHaveLength(1);
+        await clearUserData(); await importBackup(backup);
+        expect(await database.vocabularyCard.findFirstOrThrow()).toMatchObject({ reviews: 1, correct: 1, favorite: true, dueAt: progress.dueAt });
+        expect((await database.vocabularyAttempt.findFirstOrThrow()).correct).toBe(true);
+        expect(JSON.parse((await database.user.findUniqueOrThrow({ where: { id: 'user-1' } })).vocabularySettings).accent).toBe('us');
+        await database.vocabularyCard.updateMany({ data: { reviews: 2, correct: 2, revision: 2 } });
+        await importBackup(backup); expect((await database.vocabularyCard.findFirstOrThrow()).reviews).toBe(2);
+        await database.user.create({ data: { id: 'foreign', email: 'foreign@example.com', password: 'test-only' } });
+        backup.vocabularyCards[0].userId = 'foreign'; backup.vocabularyCards[0].wordId = 'apple';
+        backup.vocabularyAttempts[0].id = '12345678-1234-4234-8234-123456789013'; backup.vocabularyAttempts[0].userId = 'foreign';
+        await importBackup(backup); expect(await database.vocabularyCard.count({ where: { wordId: 'apple' } })).toBe(0);
+        expect(await database.vocabularyAttempt.count()).toBe(1);
+    });
+
     it('管理员全量导入也不能把学习会话的错题链接到另一账户', async () => {
         mocks.session.user.role = 'admin';
         await database.user.create({ data: { id: 'user-2', email: 'second@example.com', password: 'test-only' } });

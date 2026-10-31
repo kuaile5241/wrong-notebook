@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 /** 登录、注册与打印页不显示导航 */
 const BARE_PATHS = [/^\/access-denied/, /^\/login/, /^\/register/, /^\/setup/, /^\/print-preview/, /^\/exams\/[^/]+\/print/];
 
-type NavKey = "home" | "notebooks" | "review" | "stats" | "exams" | "learn";
+type NavKey = "home" | "notebooks" | "review" | "stats" | "exams" | "learn" | "words";
 
 interface NavItem {
     key: NavKey;
@@ -25,6 +25,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
+    { key: "words", href: "/words", icon: BookOpen, match: p => p.startsWith("/words") },
     { key: "learn", href: "/learn", icon: Sparkles, match: p => p.startsWith("/learn") },
     { key: "home", href: "/", icon: PlusCircle, match: (p) => p === "/" },
     {
@@ -62,7 +63,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                         <span className="hidden lg:inline text-base font-semibold tracking-tight">{t.pageTitle.base}</span>
                     </Link>
 
-                    <nav className="ml-4 hidden items-center gap-1 md:flex">
+                    <nav className="ml-2 hidden min-w-0 flex-1 items-center gap-1 overflow-x-auto md:flex">
                         {NAV_ITEMS.map((item) => {
                             const active = item.match(pathname);
                             const Icon = item.icon;
@@ -72,7 +73,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                                     href={item.href}
                                     data-study-nav={item.key}
                                     className={cn(
-                                        "study-nav flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors",
+                                        "study-nav flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors",
                                         active
                                             ? "bg-accent text-accent-foreground"
                                             : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -120,7 +121,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <div className="pb-20 md:pb-0">{children}</div>
 
             <nav className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t-2 border-primary/10 bg-card/95 backdrop-blur-md md:hidden print:hidden">
-                <div className="grid h-16 grid-cols-6">
+                <div className="grid h-16 grid-cols-7">
                     {NAV_ITEMS.map((item) => {
                         const active = item.match(pathname);
                         const Icon = item.icon;

@@ -1,3 +1,4 @@
+import { restoreVocabulary, vocabularySettingsBackupSchema } from '@/lib/vocabulary/backup';
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
@@ -29,6 +30,8 @@ interface ImportData {
     exportedAt: string;
     scope?: string;
     learningSessions?: unknown[];
+    vocabularyCards?: unknown[];
+    vocabularyAttempts?: unknown[];
     user: {
         id: string;
         email: string;
@@ -44,6 +47,7 @@ interface ImportData {
         masteryThreshold?: number;
         enableGeogebra?: boolean;
         enableSvgAnimation?: boolean;
+        vocabularySettings?: string;
     };
     subjects: Array<{
         id: string;
@@ -164,6 +168,7 @@ const PREFERENCE_SCHEMAS = {
     masteryThreshold: z.number().int().min(MIN_MASTERY_THRESHOLD).max(MAX_MASTERY_THRESHOLD),
     enableGeogebra: z.boolean(),
     enableSvgAnimation: z.boolean(),
+    vocabularySettings: vocabularySettingsBackupSchema,
 };
 
 // 刻意不接收 accessControl、角色或有效期，避免导入绕过管理员授权。
@@ -265,6 +270,8 @@ export async function POST(req: Request) {
             tagsLinked: 0,
             duplicateErrorItems: 0,
             learningSessionsCreated: 0,
+            vocabularyCardsCreated: 0,
+            vocabularyAttemptsCreated: 0,
         };
         const masteryIds = new Set<string>();
         // 已带掌握概率导入的新题无需重新评估
@@ -596,6 +603,9 @@ export async function POST(req: Request) {
                 } });
                 stats.learningSessionsCreated++;
             }
+
+            const vocabularyStats = await restoreVocabulary(tx, body.vocabularyCards, body.vocabularyAttempts, { userId: user.id, sourceUserId: body.user.id, all: importAll });
+            Object.assign(stats, vocabularyStats);
 
             // 9. 还原了已掌握阈值时，按新阈值同步该账户全部错题的 masteryLevel
             if (typeof preferences.masteryThreshold === 'number') {

@@ -1,3 +1,5 @@
+New [English vocabulary atlas](doc/VOCABULARY.en.md): stage-based browsing, illustrations, UK/US recordings, four practice modes, favorites and account-synced FSRS reviews. Textbook mappings remain limited to verified material.
+
 Practice now includes seven subjects, including junior-high history, with an account review map and chapter rechecks. See [online practice](doc/ONLINE_LEARNING.en.md).
 
 Administrators can manage registered users, roles, activation, AI and backup permissions, and access expiry. Expiry blocks existing sessions and new logins; extending access restores use. See [account access](doc/ACCOUNT_ACCESS.en.md).

@@ -1,3 +1,4 @@
+import { vocabularyEn, vocabularyZh } from './vocabulary-translations';
 import { learningEn, learningZh } from "./learning-translations";
 import { lessonEn, lessonZh } from './lesson-translations';
 export type Language = 'zh' | 'en';
@@ -5,6 +6,7 @@ export type Language = 'zh' | 'en';
 export const translations = {
     en: {
         learning: learningEn,
+        vocabulary: vocabularyEn,
         lesson: lessonEn,
         pageTitle: {
             base: "AI Smart Error Notebook",
@@ -91,6 +93,7 @@ export const translations = {
         },
         nav: {
             learn: "Practice",
+            words: "Vocabulary",
             home: "Add",
             notebooks: "Notebooks",
             review: "Review",
@@ -648,7 +651,7 @@ export const translations = {
             importFailed: "Import failed",
             importConfirm: "Are you sure you want to import? This will add new data to your account without deleting existing data.",
             importResult: "Import Result",
-            importResultDesc: "Imported {subjects} notebooks, {tags} tags, {items} error items, {schedules} review schedules, {records} practice records, {papers} exam papers. {duplicates} duplicate questions were skipped and recorded as incorrect attempts.",
+            importResultDesc: "Imported {subjects} notebooks, {tags} tags, {items} error items, {schedules} review schedules, {records} practice records, {papers} exam papers. {duplicates} duplicate questions were skipped and recorded as incorrect attempts. Vocabulary cards: {vocabularyCards}; answered reviews: {vocabularyAttempts}.",
             exportAllData: "Export All",
             exportAllConfirm: "Export all users' data? This may take a while.",
             importAllData: "Import All",
@@ -1208,6 +1211,7 @@ export const translations = {
     },
     zh: {
         learning: learningZh,
+        vocabulary: vocabularyZh,
         lesson: lessonZh,
         pageTitle: {
             base: "AI智能错题本",
@@ -1294,6 +1298,7 @@ export const translations = {
         },
         nav: {
             learn: "在线练习",
+            words: "英语词汇",
             home: "录入",
             notebooks: "错题本",
             review: "复习",
@@ -1850,7 +1855,7 @@ export const translations = {
             importFailed: "导入失败",
             importConfirm: "确定要导入数据吗？导入操作将添加新数据到您的账户中，不会删除现有数据。",
             importResult: "导入结果",
-            importResultDesc: "已导入 {subjects} 个笔记本、{tags} 个标签、{items} 道错题、{schedules} 条复习计划、{records} 条练习记录、{papers} 份试卷。另有 {duplicates} 道重复题目未重复导入，已记录本次相同题目的做错信息。",
+            importResultDesc: "已导入 {subjects} 个笔记本、{tags} 个标签、{items} 道错题、{schedules} 条复习计划、{records} 条练习记录、{papers} 份试卷。另有 {duplicates} 道重复题目未重复导入，已记录本次相同题目的做错信息；词汇进度 {vocabularyCards} 条、已答记录 {vocabularyAttempts} 条。",
             exportAllData: "导出全部",
             exportAllConfirm: "导出所有用户的数据？这可能需要一些时间。",
             importAllData: "导入全部",

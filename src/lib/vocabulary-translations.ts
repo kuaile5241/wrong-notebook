@@ -1,0 +1,28 @@
+export const vocabularyEn = {
+    noDue: 'No due or new words in this selection right now. You can still open and practice any word.', title: 'English word atlas', subtitle: 'See it, hear it, remember it', intro: 'Illustrated words, recorded UK/US pronunciation and a personal review plan, from primary school to advanced learning.',
+    notice: 'AI-created reference vocabulary, not individually teacher-reviewed. Stage suggestions are not grade standards or textbook unit lists. Lujiao-Xiangjiao textbook mapping is not yet available.',
+    source: 'Word Atlas contributors · CC BY 4.0 · Adapted vocabulary learning module', stage: 'Learning stage', primary: 'Primary foundations', junior: 'Junior-high expansion', senior: 'Senior-high expansion', all: 'All vocabulary',
+    stageHint: 'Primary uses a selected foundation list; junior suggests A1–B1, senior A2–B2. These are learning filters, not official syllabus mappings.',
+    level: 'Ability level', topic: 'Topic', allTopics: 'All topics', accent: 'Pronunciation', uk: 'UK', us: 'US', dailyGoal: 'Daily goal', search: 'Find a word or meaning',
+    learned: 'Words reviewed', due: 'Due across your account', today: 'Reviews today', accuracy: 'First-answer accuracy', plan: 'Start today’s practice', planHint: 'Review due words in this selection first, then learn new words. Self-assessments are separate from graded accuracy.',
+    scopeMistakes: 'Words with mistakes', scopeAll: 'Browse', scopeDue: 'Due in this selection', scopeFavorite: 'Favorites', empty: 'No matching words. Try another selection.', loading: 'Preparing words…', failure: 'Unable to load. Please try again.', retry: 'Retry',
+    mode: 'Practice mode', meaning: 'Choose the meaning', listening: 'Listen and choose', spelling: 'Spell the word', self: 'Recall and rate', view: 'Open word card', favorite: 'Favorite', unfavorite: 'Remove favorite', close: 'Close',
+    previous: 'Previous page', nextPage: 'Next page', results: 'Matching words', audio: 'Play recording', pause: 'Pause', audioError: 'Recording unavailable. Please retry.', sentence: 'Example recording', speed: 'Playback speed',
+    details: 'More meanings and usage', practice: 'Practice this word', back: 'Back to vocabulary', submit: 'Check answer', answer: 'Your spelling', reveal: 'Show the word card',
+    again: 'Forgot', hard: 'Difficult', good: 'Remembered', easy: 'Easy', correct: 'Well done!', wrong: 'Let’s learn it again', selfResult: 'Self-assessed review saved', next: 'Next word', saved: 'Saved to your account', nextReview: 'Next review',
+    stale: 'This question changed or expired. Start a new question.', restart: 'Start a new question', reference: 'Word card and explanation', firstExample: 'Start with the first example; extra examples may be more advanced.',
+};
+export const vocabularyZh: typeof vocabularyEn = {
+    noDue: '当前筛选暂无到期词或新词，仍可打开指定单词自主练习。', title: '英语词汇图鉴', subtitle: '看见画面，听见发音，记住单词', intro: '从小学基础到初高中拓展，用插画、英美发音和专属复习计划，慢慢积累自己的词汇库。',
+    notice: '词库为 AI 生成参考内容，尚未逐条经教师审核。学段推荐不等于年级标准或教材单元词表，鲁教湘教版教材匹配尚待补充。',
+    source: 'Word Atlas contributors · CC BY 4.0 · 已适配为账号词汇学习模块', stage: '学习阶段', primary: '小学基础', junior: '初中拓展', senior: '高中拓展', all: '全部词库',
+    stageHint: '小学使用基础推荐清单；初中建议 A1—B1，高中建议 A2—B2。这些是学习筛选，不代表官方课程对应关系。',
+    level: '能力分级', topic: '主题', allTopics: '全部主题', accent: '发音偏好', uk: '英音', us: '美音', dailyGoal: '每日目标', search: '搜索单词或中文释义',
+    learned: '已复习词数', due: '账号待复习', today: '今日复习次数', accuracy: '首次作答正确率', plan: '开始今日练习', planHint: '先复习当前筛选中到期的词，再学习新词。自评单独记录，不计入判分正确率。',
+    scopeMistakes: '错词记录', scopeAll: '浏览词汇', scopeDue: '当前筛选待复习', scopeFavorite: '我的收藏', empty: '没有找到相应单词，可以调整筛选条件。', loading: '正在准备词汇…', failure: '加载失败，请稍后重试。', retry: '重试',
+    mode: '练习方式', meaning: '看词选义', listening: '听音辨词', spelling: '单词拼写', self: '回忆自评', view: '查看词卡', favorite: '收藏', unfavorite: '取消收藏', close: '关闭',
+    previous: '上一页', nextPage: '下一页', results: '符合条件的单词', audio: '播放录音', pause: '暂停', audioError: '录音暂时无法播放，请重试。', sentence: '例句朗读', speed: '播放速度',
+    details: '更多释义与用法', practice: '练习这个词', back: '返回词汇图鉴', submit: '提交答案', answer: '我的拼写', reveal: '翻开词卡看答案',
+    again: '没记住', hard: '有点难', good: '记住了', easy: '很轻松', correct: '做得好！', wrong: '一起再记一遍', selfResult: '已记录本次自主评定', next: '继续下一个词', saved: '已保存到你的账号', nextReview: '下次复习',
+    stale: '这道练习已更新或过期，请重新开始一道。', restart: '重新开始一道', reference: '词卡与讲解', firstExample: '先学第一条例句；展开后的其他例句可能更难。',
+};

@@ -71,6 +71,8 @@ export async function GET(req: Request) {
         });
 
         const learningSessions = await prisma.learningSession.findMany({ where: userFilter });
+        const vocabularyCards = await prisma.vocabularyCard.findMany({ where: userFilter });
+        const vocabularyAttempts = await prisma.vocabularyAttempt.findMany({ where: { ...userFilter, completedAt: { not: null } } });
         const exportData = {
             version: 2,
             exportedAt: new Date().toISOString(),
@@ -88,6 +90,7 @@ export async function GET(req: Request) {
                 masteryThreshold: user.masteryThreshold,
                 enableGeogebra: user.enableGeogebra,
                 enableSvgAnimation: user.enableSvgAnimation,
+                vocabularySettings: user.vocabularySettings,
             },
             subjects,
             customTags,
@@ -96,6 +99,8 @@ export async function GET(req: Request) {
             practiceRecords,
             examPapers,
             learningSessions,
+            vocabularyCards,
+            vocabularyAttempts,
         };
 
         logger.info({
