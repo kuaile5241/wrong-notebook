@@ -62,6 +62,7 @@ export async function POST() {
                 }
             });
 
+            await tx.user.updateMany({ data: { learningSettings: '{}' } });
             // 5. Delete other users? 
             // "All data, including user data". 
             // If I delete other users, I am truly resetting the system.

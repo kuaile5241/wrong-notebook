@@ -41,6 +41,7 @@ model User {
   examPapers ExamPaper[]
   aiUsages   AiUsage[]
   learningSessions LearningSession[]
+  learningSettings String @default("{}")
   vocabularySettings String @default("{}")
   vocabularyCards VocabularyCard[]
   vocabularyAttempts VocabularyAttempt[]
@@ -48,6 +49,7 @@ model User {
 
 // 公共题库不按用户复制；会话存服务端状态与每次作答快照。
 model LearningSession {
+  profileId String @default("")
   id             String   @id @default(cuid())
   userId         String
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)

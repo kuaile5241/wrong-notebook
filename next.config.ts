@@ -2,7 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'standalone',
-  outputFileTracingIncludes: { '/api/textbooks/seed/lessons': ['./resources/textbooks/**'],
+  outputFileTracingIncludes: { '/api/knowledge': ['./resources/learning/**'],
+        '/api/knowledge/sample': ['./resources/learning/**'],
+        '/api/textbooks/seed/lessons': ['./resources/textbooks/**'],
         '/api/textbooks/seed': ['./resources/textbooks/**/*'], '/api/vocabulary': ['./resources/vocabulary/**/*'], '/api/vocabulary/**/*': ['./resources/vocabulary/**/*'], '/api/learning': ['./resources/learning/**/*'], '/api/learning/*': ['./resources/learning/**/*'], '/api/import': ['./resources/learning/**/*', './resources/vocabulary/**/*'], '/api/lesson-audio': ['./resources/learning/**/*'] },
   serverExternalPackages: ['@prisma/client', 'bcryptjs'],
   // 禁止 next dev 自动向 AGENTS.md / CLAUDE.md 写入 agent-rules 段落

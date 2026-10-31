@@ -1,0 +1,2 @@
+ALTER TABLE "User" ADD COLUMN "learningSettings" TEXT NOT NULL DEFAULT '{}';
+ALTER TABLE "LearningSession" ADD COLUMN "profileId" TEXT NOT NULL DEFAULT '';

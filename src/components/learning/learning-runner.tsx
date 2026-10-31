@@ -9,10 +9,13 @@ import type { AnswerHistory, LearningView } from '@/lib/learning/types';
 import { questionLesson } from '@/lib/lesson-content';
 import { learningRequest, submissionId } from './client';
 import { LearningAttribution } from './attribution';
+import { LearningReport } from './report';
+import { AnswerCorrection } from './answer-correction';
+import { useRouter } from 'next/navigation';
 import { QuestionContent } from './question-content';
 
 export function LearningRunner({ id }: { id: string }) {
-    const { t } = useLanguage(), l = t.learning;
+    const { t } = useLanguage(), l = t.learning, router = useRouter();
     const [view, setView] = useState<LearningView | null>(null), [feedback, setFeedback] = useState<AnswerHistory | null>(null);
     const [answer, setAnswer] = useState(''), [busy, setBusy] = useState(false), [error, setError] = useState('');
     const [manual, setManual] = useState<{ answer: string; explanation: string } | null>(null);
@@ -29,14 +32,23 @@ export function LearningRunner({ id }: { id: string }) {
         } catch { setError(l.failure); }
         finally { setBusy(false); }
     }
+    async function action(body: Record<string, unknown>) {
+        if (!view || busy) return; setBusy(true); setError('');
+        try { setView(await learningRequest<LearningView>(`/api/learning/${id}/actions`, { ...body, revision: view.revision })); setFeedback(null); setManual(null); setAnswer(''); requestId.current = ''; } catch { setError(l.failure); } finally { setBusy(false); }
+    }
+    async function restart() {
+        if (!view?.configuration || busy) return; setBusy(true);
+        try { const next = await learningRequest<LearningView>('/api/learning', view.configuration); router.push('/learn/' + next.id); } catch { setError(l.failure); setBusy(false); }
+    }
     if (!view) return <main className="mx-auto max-w-3xl p-6"><p role={error ? 'alert' : undefined}>{error || l.loading}</p><Button onClick={load}>{l.retry}</Button></main>;
     const q = feedback?.question ?? view.question;
     const heading = feedback?.verdict === 'correct' ? l.correct : feedback?.verdict === 'skip' ? l.skipped : l.wrong;
     return <main className="mx-auto max-w-3xl space-y-5 px-4 py-6 md:px-8">
         <Link href="/learn" className="text-sm text-primary">← {l.home}</Link>
-        <header><h1 className="text-2xl font-bold">{view.title}</h1><p className="mt-2 text-sm text-muted-foreground">{view.mode === 'diagnose' ? l.diagnose : l.practice} · {l.progress} {view.answered} / {view.limit}</p><div className="mt-3 h-2 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-gradient-to-r from-sky-400 to-violet-500" style={{ width: `${view.finished ? 100 : view.answered / view.limit * 100}%` }} /></div></header>
-        {view.mode === 'diagnose' && <p className="rounded-xl bg-sky-50 p-3 text-sm text-sky-900 dark:bg-sky-950 dark:text-sky-100">{l.diagnosisHint}</p>}
+        <header><h1 className="text-2xl font-bold">{view.title}</h1><p className="mt-2 text-sm text-muted-foreground">{view.mode === 'screen' ? l.screen : view.mode === 'diagnose' ? l.diagnose : l.practice} · {l.progress} {view.answered} / {view.limit}</p><div className="mt-3 h-2 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-gradient-to-r from-sky-400 to-violet-500" style={{ width: `${view.finished ? 100 : view.answered / view.limit * 100}%` }} /></div></header>
+        {view.mode !== 'practice' && <p className="rounded-xl bg-sky-50 p-3 text-sm text-sky-900 dark:bg-sky-950 dark:text-sky-100">{l.diagnosisHint}</p>}
         {error && <div role="alert" className="text-destructive">{error} <Button variant="outline" onClick={() => { setFeedback(null); setManual(null); setAnswer(''); requestId.current = ''; void load(); }}>{l.retry}</Button></div>}
+        {!!view.history.length && !view.finished && <Button variant="outline" disabled={busy} onClick={() => void action({ action: 'undo' })}>{l.undo}</Button>}
         {q && <section className="space-y-5 rounded-2xl border-2 border-primary/15 bg-card p-5 md:p-7">
             {!feedback && view.topic && <p className="text-sm font-medium text-primary">{l.currentTopic} · {view.topic.name}</p>}
             <QuestionContent question={q} answer={answer} disabled={busy || !!feedback || !!manual} onAnswer={setAnswer} />
@@ -52,8 +64,8 @@ export function LearningRunner({ id }: { id: string }) {
             </div>}
         </section>}
         {view.finished && !feedback && <section className="space-y-5 rounded-2xl border bg-card p-5"><h2 className="text-xl font-bold">{l.result}</h2><p>{l.accuracy} {view.correct} / {view.answered}</p>
-            <div className="grid gap-2 sm:grid-cols-2">{view.topics.map(topic => <div key={topic.id} className={`rounded-xl border p-3 ${topic.status === 'weak' || topic.status === 'shaky' ? 'border-orange-200 bg-orange-50 text-orange-950 dark:bg-orange-950 dark:text-orange-100' : ''}`}><strong>{topic.name}</strong><p className="text-sm">{l[topic.status]}</p><Link className="text-sm underline" href={`/learn?search=${encodeURIComponent(topic.name)}`}>{l.practice} →</Link></div>)}</div>
-            <h3 className="font-semibold">{l.history}</h3>{view.history.map((h, i) => <details key={h.requestId} className="rounded-xl border p-3"><summary className="cursor-pointer">{i + 1}. {h.question.prompt.slice(0, 70)} · {h.verdict === 'correct' ? '✓' : '↻'}</summary><div className="mt-3 space-y-2"><p>{l.answer}：{h.answer || '—'}</p><MarkdownRenderer content={h.question.prompt} /><StepLesson content={questionLesson(h.question)} source={{ kind: 'learning', id, questionId: h.question.id }} />{h.errorItemId && <Link className="text-primary underline" href={`/error-items/${h.errorItemId}`}>{l.openMistake}</Link>}</div></details>)}
+            <LearningReport view={view} busy={busy} action={body => void action(body)} restart={() => void restart()} />
+            <h3 className="font-semibold">{l.history}</h3>{view.history.map((h, i) => <details key={h.requestId} className="rounded-xl border p-3"><summary className="cursor-pointer">{i + 1}. {h.question.prompt.slice(0, 70)} · {h.verdict === 'correct' ? '✓' : '↻'}</summary><div className="mt-3 space-y-2"><p>{l.answer}：{h.answer || '—'}</p><AnswerCorrection history={h} index={i} busy={busy} save={body => void action(body)} /><MarkdownRenderer content={h.question.prompt} /><StepLesson content={questionLesson(h.question)} source={{ kind: 'learning', id, questionId: h.question.id }} />{h.errorItemId && <Link className="text-primary underline" href={`/error-items/${h.errorItemId}`}>{l.openMistake}</Link>}</div></details>)}
             <Link href="/learn" className="inline-block rounded-xl bg-primary px-5 py-3 text-primary-foreground">{l.home}</Link>
         </section>}
         <LearningAttribution />

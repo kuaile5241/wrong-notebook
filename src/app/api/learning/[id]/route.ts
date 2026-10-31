@@ -34,7 +34,7 @@ export async function POST(req: Request, ctx: Context) {
             // 乐观锁先占位，避免双击、重试和多个页面同时提交重复归档。
             const locked = await tx.learningSession.updateMany({ where: { id: row.id, userId: user.id, revision: input.revision }, data: { revision: { increment: 1 } } });
             if (locked.count !== 1) return null;
-            applied.history.errorItemId = await archiveLearningMistake(tx, user.id, getCatalog().byId.get(q.topicId)!, applied.history);
+            applied.history.errorItemId = await archiveLearningMistake(tx, user.id, getCatalog().byId.get(q.topicId)!, applied.history, row.profileId);
             return tx.learningSession.update({ where: { id: row.id }, data: { state: JSON.stringify(applied.state),
                 status: nextLearningQuestion(applied.state) ? 'active' : 'completed' } });
         });

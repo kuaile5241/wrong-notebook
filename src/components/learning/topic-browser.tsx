@@ -10,27 +10,32 @@ import type { LearningView, Topic } from '@/lib/learning/types';
 import { readLearningFilters, reconcileLearningFilters, useLearningFilters } from '@/lib/learning/preferences';
 import { learningRequest } from './client';
 import type { BlindspotChapter } from '@/lib/learning/blindspots';
+import { useLearningProfiles, ProfileSelector } from './profiles';
 import { LearningBlindspots } from './blindspots';
 import { LearningAttribution } from './attribution';
 
 interface CatalogView {
     blindspots?: BlindspotChapter[];
     subjects: { key: string; name: string; topics: number }[]; volumes: { key: string; name: string }[];
-    volume: string; chapters: string[]; topics: Topic[]; total: number;
+    scopeTopicIds?: string[]; volume: string; chapters: string[]; topics: Topic[]; total: number;
     recent: { id: string; title: string; mode: string; status: string; updatedAt: string }[];
 }
 export function TopicBrowser({ initialSearch = '' }: { initialSearch?: string }) {
     const { t } = useLanguage(), l = t.learning, router = useRouter();
     const { filters, ready, userId, update } = useLearningFilters();
     const { subject, volume, chapter, count } = filters;
+    const profiles = useLearningProfiles(), profileId = profiles.data?.active || '';
+    const [pagination, setPagination] = useState({ key: '', page: 1 });
     const [search, setSearch] = useState(initialSearch), [query, setQuery] = useState(initialSearch);
     const [catalog, setCatalog] = useState<{ owner: string; value: CatalogView } | null>(null), [error, setError] = useState(''), [busy, setBusy] = useState(false), [refresh, setRefresh] = useState(0);
     const data = ready && catalog?.owner === userId ? catalog.value : null;
+    const pageKey = JSON.stringify([subject, volume, chapter, query, profileId]), page = pagination.key === pageKey ? pagination.page : 1;
+    function setPage(change: (page: number) => number) { setPagination({ key: pageKey, page: change(page) }); }
     useEffect(() => { const timer = setTimeout(() => setQuery(search), 300); return () => clearTimeout(timer); }, [search]);
     useEffect(() => {
-        if (!ready) return;
+        if (!ready || !profiles.data) return;
         let cancelled = false;
-        const p = new URLSearchParams({ subject, volume, chapter, search: query });
+        const p = new URLSearchParams({ subject, volume, chapter, search: query, page: String(page), profileId });
         learningRequest<CatalogView>(`/api/learning?${p}`).then(value => {
             if (cancelled || readLearningFilters(userId) !== filters) return;
             const corrected = reconcileLearningFilters(filters, value);
@@ -41,10 +46,10 @@ export function TopicBrowser({ initialSearch = '' }: { initialSearch?: string })
             setCatalog({ owner: userId, value }); setError('');
         }).catch(() => { if (!cancelled) setError(l.failure); });
         return () => { cancelled = true; };
-    }, [subject, volume, chapter, query, refresh, l.failure, ready, userId, filters, update]);
+    }, [subject, volume, chapter, query, refresh, l.failure, ready, userId, filters, update, page, profileId, profiles.data]);
     async function start(topicIds: string[], mode: string) {
         setBusy(true); setError('');
-        try { const view = await learningRequest<LearningView>('/api/learning', { topicIds, mode, count }); router.push(`/learn/${view.id}`); }
+        try { const view = await learningRequest<LearningView>('/api/learning', { topicIds, mode, count, profileId, confirm: 2 }); router.push(`/learn/${view.id}`); }
         catch { setError(l.failure); setBusy(false); }
     }
     if (!ready) return <main className="mx-auto max-w-5xl px-4 py-6"><p>{l.loading}</p></main>;
@@ -54,7 +59,7 @@ export function TopicBrowser({ initialSearch = '' }: { initialSearch?: string })
             <div className="mb-3 flex items-center gap-2 text-primary"><Sparkles className="h-5 w-5" />{l.subtitle}</div>
             <h1 className="text-3xl font-bold">{l.title}</h1><p className="mt-3 max-w-2xl leading-relaxed">{l.intro}</p><Button asChild className="mt-3"><Link href="/books">{t.textbooks.title}</Link></Button>
         </header>
-        <LearningAttribution />
+        <LearningAttribution /><div className="flex flex-wrap gap-3"><Button asChild><Link href="/knowledge">{t.knowledge.title}</Link></Button><Button asChild variant="outline"><Link href="/learn/profiles">{t.knowledge.profiles}</Link></Button>{profiles.data && <ProfileSelector data={profiles.data} onChange={id => void profiles.save({ action: 'select', id }).catch(() => setError(l.failure))} />}</div>
         <section className="space-y-4 rounded-2xl border bg-card p-4">
             <div className="grid gap-3 sm:grid-cols-3">
                 <label className="space-y-1 text-sm">{l.subject}<select aria-label={l.subject} disabled={!data} className={selectClass} value={subject} onChange={e => { update({ subject: e.target.value, volume: '', chapter: '' }); setSearch(''); }}>{(data?.subjects ?? [{ key: subject, name: '', topics: 0 }]).map(s => <option key={s.key} value={s.key}>{s.name} · {s.topics}</option>)}</select></label>
@@ -63,7 +68,7 @@ export function TopicBrowser({ initialSearch = '' }: { initialSearch?: string })
             </div>
             <Input aria-label={l.search} placeholder={l.search} value={search} onChange={e => setSearch(e.target.value)} />
             {!query && <div className="flex flex-wrap gap-2">{['', ...(data?.chapters ?? [])].map(c => <Button key={c} size="sm" variant={chapter === c ? 'default' : 'outline'} aria-pressed={chapter === c} className="h-auto min-h-10 max-w-full whitespace-normal text-left" onClick={() => update({ chapter: c, volume: volume || data?.volume || '' })}>{c || l.all}</Button>)}</div>}
-            {chapter && !query && <div className="flex flex-wrap gap-2"><Button disabled={busy || !data?.topics.length} onClick={() => start(data!.topics.map(t => t.id), 'practice')}>{l.chapterPractice}</Button><Button variant="outline" disabled={busy || !data?.topics.length} onClick={() => start(data!.topics.map(t => t.id), 'diagnose')}>{l.chapterDiagnose}</Button></div>}
+            {chapter && !query && <div className="flex flex-wrap gap-2"><Button disabled={busy || !data?.topics.length} onClick={() => start((data!.scopeTopicIds ?? data!.topics.map(t => t.id)), 'practice')}>{l.chapterPractice}</Button><Button variant="outline" disabled={busy || !data?.topics.length} onClick={() => start((data!.scopeTopicIds ?? data!.topics.map(t => t.id)), 'screen')}>{l.chapterDiagnose}</Button></div>}
         </section>
         {data && <LearningBlindspots chapters={data.blindspots ?? []} busy={busy} onStart={start} />}
         {error && <p role="alert" className="text-destructive">{error} <Button variant="outline" onClick={() => setRefresh(n => n + 1)}>{l.retry}</Button></p>}
@@ -73,9 +78,9 @@ export function TopicBrowser({ initialSearch = '' }: { initialSearch?: string })
                 <div className="mb-2 flex items-center gap-2 text-primary"><BookOpen className="h-4 w-4" /><span className="text-xs">{topic.chapter}</span></div>
                 <h2 className="text-lg font-semibold">{topic.name}</h2><p className="my-3 flex-1 text-sm leading-relaxed text-muted-foreground">{topic.description}</p>
                 {!!topic.prerequisites?.length && <details className="mb-3 text-sm"><summary className="cursor-pointer text-primary">{l.prerequisites}</summary><div className="mt-2 flex flex-wrap gap-2">{topic.prerequisites.map(p => <Button key={p.id} variant="outline" size="sm" className="h-auto min-h-10 whitespace-normal" disabled={busy} onClick={() => start([p.id], 'practice')}>{p.name} · {p.strength === 'hard' ? l.required : l.suggested}</Button>)}</div></details>}
-                <div className="flex flex-wrap gap-2"><Button disabled={busy} onClick={() => start([topic.id], 'practice')}>{l.practice}</Button><Button disabled={busy} variant="outline" onClick={() => start([topic.id], 'diagnose')}>{l.diagnose}</Button></div>
+                <div className="flex flex-wrap gap-2"><Button disabled={busy} onClick={() => start([topic.id], 'practice')}>{l.practice}</Button><Button disabled={busy} variant="outline" onClick={() => start([topic.id], 'diagnose')}>{l.diagnose}</Button><Button asChild variant="outline" size="sm"><Link href={`/knowledge?subject=${subject}&id=${topic.id}`}>{t.knowledge.title}</Link></Button></div>
             </article>)}
-            {data.total > 100 && <p>{l.more}</p>}
+            {data.total > 100 && <div className="flex items-center gap-3"><Button disabled={page <= 1} onClick={() => setPage(n => n - 1)}>{t.knowledge.previous}</Button><span>{page} / {Math.ceil(data.total / 100)}</span><Button disabled={page * 100 >= data.total} onClick={() => setPage(n => n + 1)}>{t.knowledge.more}</Button></div>}
         </section>}
         {!!data?.recent.length && <section className="space-y-3"><h2 className="text-xl font-bold">{l.recent}</h2>{data.recent.map(s => <Link key={s.id} href={`/learn/${s.id}`} className="flex items-center justify-between gap-3 rounded-xl border bg-card p-4"><span className="min-w-0 break-words">{s.title}<span className="ml-2 text-xs text-muted-foreground">{s.mode === 'diagnose' ? l.diagnose : l.practice}</span></span><span className="shrink-0 text-sm text-primary">{s.status === 'active' ? l.active : l.completed} →</span></Link>)}</section>}
     </main>;

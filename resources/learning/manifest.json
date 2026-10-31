@@ -28,6 +28,18 @@
       "path": "resources/learning/LICENSE",
       "sha256": "41003d4a74749c0220e33dd415042164b5a1093ed401f36277234f772d22d3d0",
       "bytes": 19347
+    },
+    {
+      "path": "resources/learning/standards.json",
+      "sha256": "64a37afda0b2047e67d4329199dc019e8e565c2f537133bea9e803d7a7a8d3fa",
+      "bytes": 259188,
+      "note": "same pinned upstream; normalized public metadata, no question answers"
+    },
+    {
+      "path": "resources/learning/id-aliases.json",
+      "sha256": "47760dc1d5c3cba350e94e5430bea042de6c3dd571b8862fedafa1af01ecfab3",
+      "bytes": 3324,
+      "note": "same pinned upstream; normalized public metadata, no question answers"
     }
   ],
   "compatibleRevisions": [

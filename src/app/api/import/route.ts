@@ -1,3 +1,4 @@
+import { profileSettingsSchema, readProfileSettings } from '@/lib/learning/profiles';
 import { restoreTextbooks } from '@/lib/textbooks/backup';
 import { restoreVocabulary, vocabularySettingsBackupSchema } from '@/lib/vocabulary/backup';
 import { NextResponse } from "next/server";
@@ -31,6 +32,7 @@ interface ImportData {
     exportedAt: string;
     scope?: string;
     learningSessions?: unknown[];
+    learningProfiles?: { userId: string; settings: string }[];
     textbooks?: unknown[];
     vocabularyCards?: unknown[];
     vocabularyAttempts?: unknown[];
@@ -290,6 +292,13 @@ export async function POST(req: Request) {
                 stats.preferencesRestored = true;
             }
 
+            for (const row of body.learningProfiles ?? []) {
+                if (!importAll && row.userId !== body.user.id) continue;
+                const owner = importAll ? row.userId : user.id, account = await tx.user.findUnique({ where: { id: owner }, select: { learningSettings: true } }); if (!account) continue;
+                const incoming = profileSettingsSchema.parse(JSON.parse(row.settings)), current = readProfileSettings(account.learningSettings), empty = current.profiles.length === 0;
+                for (const profile of incoming.profiles) if (!current.profiles.some(p => p.id === profile.id) && current.profiles.length < 100) current.profiles.push(profile);
+                await tx.user.update({ where: { id: owner }, data: { learningSettings: JSON.stringify({ ...current, active: empty && current.profiles.some(p => p.id === incoming.active && !p.archived) ? incoming.active : current.active, revision: current.revision + 1 }) } });
+            }
             // 1. 导入 subjects
             const subjectIdMap = new Map<string, string>();
             for (const subject of (body.subjects || [])) {
@@ -593,13 +602,16 @@ export async function POST(req: Request) {
             // 8. 学习会话按所属用户恢复；目标状态由原题与作答重算，不能信任导入的答案或 SVG。
             for (const raw of (body.learningSessions || [])) {
                 const record = learningBackupSchema.parse(raw);
+                if (!importAll && record.userId !== body.user.id) continue;
                 const targetUserId = importAll ? record.userId : user.id;
                 const ownedItemMap = new Map([...errorItemIdMap].filter(([oldId]) => errorItemOwnerMap.get(oldId) === targetUserId));
                 const state = restoreLearningState(record.state, record.mode, ownedItemMap);
+                const profileOwner = await tx.user.findUniqueOrThrow({ where: { id: targetUserId }, select: { learningSettings: true } });
+                const profileId = record.profileId && readProfileSettings(profileOwner.learningSettings).profiles.some(p => p.id === record.profileId) ? record.profileId : '';
                 const existing = await tx.learningSession.findFirst({ where: { id: record.id } });
                 if (existing) continue; // 不覆盖任何现有会话，包括其他用户的同 ID。
                 await tx.learningSession.create({ data: {
-                    id: record.id, userId: targetUserId, title: record.title, mode: record.mode,
+                    id: record.id, userId: targetUserId, profileId, title: record.title, mode: record.mode,
                     datasetVersion: record.datasetVersion, state: JSON.stringify(state),
                     status: nextLearningQuestion(state) ? 'active' : 'completed', revision: state.history.length,
                     createdAt: safeParseDate(record.createdAt),

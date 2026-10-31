@@ -19,3 +19,12 @@ Pinned upstream 068db3c2550626529269d40939e3c93311a61349 adds junior-high histor
 The review map groups the account’s latest compatible learning snapshots by subject/book/chapter, including unfinished sessions. Only attempted topics contribute; inferred mastery cannot erase observed mistakes. Two distinct rule-graded passes remove a topic; one correct answer or self-assessment still needs confirmation. This is session-update-based aggregation, not a per-answer timeline or proof of mastery. Chapter rechecks/practice reuse existing account isolation, backups and tables; notebooks and review schedules are preserved. No anonymous upstream local ledger is introduced.
 
 The existing English dataset remains aligned to PEP and other People’s Education series, not the child’s Lujiao-Xiangjiao edition. This refresh does not provide textbook-matched English lessons for that edition.
+
+
+## Complete graph and diagnosis tools
+
+/knowledge restores the full directory, stage/book/domain/ID search, soft and hard prerequisite graphs, 1/2/3/all upstream levels, downstream links, pan/zoom/fit, topic details, curriculum clauses, cross-subject math links and explicit study examples. All curriculum references resolve to the bundled 712 clauses. Catalogue pages support real pagination.
+
+Target diagnosis and scope screening are distinct. Screening stays inside the chosen scope; confirmation can be 2/3/5 and sessions have up to 60 questions. Reports include untested topics, chapter counts, possible roots with pending/out-of-scope warnings and ordered learning paths/graphs. Continue, undo, correction, restart, JSON/PNG downloads and print/PDF are available. Correction discards subsequent session branches for re-answering; previously archived mistakes and practice history remain.
+
+New sessions use the original complete relation graph; legacy sessions keep the old hard-edge graph and question order. /learn/profiles adds private per-account learner profiles, scoped progress/review topics/mistake sources, archive/restore and backup support. Existing records remain in the default profile. The migration adds User.learningSettings and LearningSession.profileId only. Current pinned questions remain unchanged; no upstream trackers or service workers are copied.

@@ -22,6 +22,7 @@ let cached: ReturnType<typeof loadCatalog> | undefined;
 function loadCatalog() {
     const read = (name: string) => JSON.parse(readFileSync(join(process.cwd(), 'resources/learning', name), 'utf8'));
     const topics = (read('topics.json') as Topic[]).map(t => ({ id: t.id, name: t.name, subject: t.subject,
+        domain: t.domain, type: t.type, standards: t.standards, mathLinks: t.mathLinks, root_reason: t.root_reason,
         grade: t.grade, semester: t.semester, chapter: t.chapter, description: t.description,
         mastery_criteria: t.mastery_criteria, external: t.external }));
     const dependencies = read('dependencies.json') as Dependency[];
@@ -31,7 +32,8 @@ function loadCatalog() {
     }));
     return { topics, dependencies, questions, byId: new Map(topics.map(t => [t.id, t])),
         questionsById: new Map(questions.map(q => [q.id, q])),
-        // 教学诊断仅沿硬先修回溯；软关系不用于推断孩子不会哪些基础。
+        // 新会话接回原版完整关系；旧会话保留硬先修图，避免改变既有选题顺序。
+        fullGraph: Engine.buildGraph(topics, dependencies, questions),
         graph: Engine.buildGraph(topics, dependencies.filter(d => d.strength === 'hard'), questions) };
 }
 export function getCatalog() { return cached ??= loadCatalog(); }

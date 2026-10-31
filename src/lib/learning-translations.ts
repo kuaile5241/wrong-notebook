@@ -1,4 +1,6 @@
 export const learningEn = {
+ untested: 'Not tested', screen: 'Scope screening', reportStats: 'Diagnostic overview', mastered: 'Mastered / inferred', roots: 'Possible foundation gaps', rootNotice: 'Prerequisites not yet tested; this is a possible root, not a confirmed cause.', outside: 'Prerequisites outside this screening scope were not checked.', chapters: 'Chapter summary', path: 'Recommended learning path', extend: 'Answer up to 10 more', undo: 'Undo last answer', correctAnswer: 'Correct this answer', correctionHint: 'Correcting an answer recalculates this session and requires answering subsequent branches again. Saved mistakes and past practice records remain.', print: 'Print / save PDF', exportReport: 'Export report JSON', shareImage: 'Download report image', restart: 'Start a new session',
+
     blindspots: 'My review map', blindspotsHint: 'Saved under your account for this subject and book, including unfinished practice. Two different rule-graded questions must pass before a topic leaves this list; one correct answer or self-assessment still needs confirmation.', blindspotsEmpty: 'No review topics recorded for this book yet. Keep exploring!', recheckChapter: 'Recheck these foundations', reviewBlindspots: 'Practice review topics',
     title: 'Practice & discover', subtitle: 'Small steps, stronger foundations', intro: 'Choose a chapter or topic. Answers and explanations appear after you submit. Mistakes join your notebook.',
     subject: 'Subject', volume: 'Book', chapter: 'Chapter', all: 'All chapters', search: 'Find a topic', practice: 'Practice', diagnose: 'Check foundations', chapterPractice: 'Practice this chapter', chapterDiagnose: 'Check this chapter',
@@ -9,10 +11,12 @@ export const learningEn = {
     correct: 'Well done!', wrong: 'Let’s review this step', skipped: 'We’ll add this to your review', manual: 'This answer needs your review. Compare with the reference, then choose:', selfCorrect: 'My answer is correct', selfWrong: 'I need more practice', selfLabel: 'Self-assessed',
     archived: 'Saved to your mistake notebook', openMistake: 'Open mistake', progress: 'Answered', result: 'Learning summary', accuracy: 'Correct', history: 'Your answers',
     direct: 'Passed this check', self: 'Passed by self-assessment', inferred: 'Likely familiar · not tested', shaky: 'Needs practice', weak: 'Foundation to review', pending: 'Needs confirmation',
-    diagnosisHint: 'Checks follow required foundations. Two correct answers are a clue, not proof of lasting mastery. Inferred knowledge stays separate from tested results.',
+    diagnosisHint: 'Checks follow required foundations. Passing the selected consecutive-answer requirement is a clue, not proof of lasting mastery. Inferred knowledge stays separate from tested results.',
     back: 'Back', pick: 'Choose a topic to begin', currentTopic: 'Current topic', rule: 'Rule-graded', sourceContent: 'Question content is in the source language.', prerequisites: 'Helpful foundations', required: 'Required', suggested: 'Suggested', related: 'Practice related topics',
 };
 export const learningZh: typeof learningEn = {
+ untested: '未测', screen: '范围整体筛查', reportStats: '诊断统计', mastered: '已掌握／含推断', roots: '可能薄弱的基础（根因线索）', rootNotice: '先修还有未测点，目前只是可能根因，不能当作已确认原因。', outside: '这些先修不在本次筛查范围内，尚未检查。', chapters: '按章汇总', path: '建议补习路径', extend: '继续增加最多10题', undo: '撤销上一题', correctAnswer: '更正本题作答', correctionHint: '更正会重算本次会话，该题之后的分支需要重新作答；已归档错题和历史练习记录保留。', print: '打印／另存PDF', exportReport: '导出报告JSON', shareImage: '下载报告分享图', restart: '重新开始一次',
+
     blindspots: '我的知识盲区', blindspotsHint: '按当前学科和册次汇总账号学习记录，未完成练习中的错题也会记住。两道不同题规则判分通过后移出；单次答对或自评仍需确认，原错题不会删除。', blindspotsEmpty: '本册还没有需要补练的记录，继续探索吧！', recheckChapter: '本章盲区再测', reviewBlindspots: '补练这些知识点',
     title: '在线练习', subtitle: '每天进步一点点，知识更牢一点点', intro: '按章节或知识点开始练习，提交后看答案与解析，做错的题会自动进入错题本。',
     subject: '学科', volume: '教材册次', chapter: '章节', all: '全部章节', search: '搜索知识点', practice: '练一练', diagnose: '查查基础', chapterPractice: '本章练习', chapterDiagnose: '本章诊断',
@@ -23,6 +27,6 @@ export const learningZh: typeof learningEn = {
     correct: '做得好，继续加油！', wrong: '一起把这一步弄明白', skipped: '已加入复习，慢慢来', manual: '这种答案需要对照参考答案自评，请确认：', selfCorrect: '我的答案正确', selfWrong: '还需要练习', selfLabel: '自主评定',
     archived: '已归入你的错题本', openMistake: '查看错题', progress: '已答题数', result: '本次学习小结', accuracy: '答对', history: '我的作答',
     direct: '本次实测通过', self: '自主评定通过', inferred: '推测已会 · 尚未验证', shaky: '还不太稳定', weak: '建议补一补', pending: '还需要确认',
-    diagnosisHint: '沿必需的前置基础出题。连续答对两题只是掌握线索；推测已会和实际做题通过分别记录，不会覆盖以前的错题。',
+    diagnosisHint: '沿必需的前置基础出题。连续答对达到本次设置的确认题数只是掌握线索；推测已会和实际做题通过分别记录，不会覆盖以前的错题。',
     back: '返回', pick: '选一个知识点，开始今天的进步', currentTopic: '当前知识点', rule: '规则判分', sourceContent: '题目保持来源语言。', prerequisites: '先学哪些基础', required: '必需基础', suggested: '建议了解', related: '练习相关知识点',
 };

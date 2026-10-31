@@ -1,3 +1,5 @@
+- Complete knowledge graphs and scope screening, curriculum details, root/path reports, corrections, report sharing/printing and private learner profiles.
+
 - Prepared textbook cards include 125 detailed lessons and 250 original examples, with per-section natural speech and persistent audio reuse.
 
 New [textbook shelf and import management](doc/TEXTBOOKS.en.md): learn by book/unit and maintain other grades through previewed CSV/TSV/JSON imports. The prepared Lujiao-Xiangjiao grade3 upper book has9 units and125 reference entries; the directory is verified and vocabulary awaits individual glossary checks.

@@ -114,6 +114,17 @@ afterAll(async () => {
 });
 
 describe('数据导出后再导入（真实 SQLite）', () => {
+    it('孩子档案和范围筛查会话一起备份恢复，旧记录仍保留默认档案', async () => {
+        const { createLearningState } = await import('@/lib/learning/session');
+        const profileId = 'c8aef312-93bd-4a3f-b2f7-8dd17d96281c';
+        await database.user.update({ where: { id: 'user-1' }, data: { learningSettings: JSON.stringify({ revision: 1, active: profileId, profiles: [{ id: profileId, name: '孩子甲', grade: 3, archived: false }] }) } });
+        const state = createLearningState(['cnm_p001'], 'screen', 3, [], 3);
+        await database.learningSession.create({ data: { id: 'profile-session', userId: 'user-1', profileId, title: '档案筛查', mode: 'screen', datasetVersion: '068db3c2550626529269d40939e3c93311a61349', state: JSON.stringify(state) } });
+        const backup = await exportBackup(); expect(backup.learningProfiles[0].settings).toContain('孩子甲');
+        await clearUserData(); await database.user.update({ where: { id: 'user-1' }, data: { learningSettings: '{}' } });
+        await importBackup(backup); const user = await database.user.findUniqueOrThrow({ where: { id: 'user-1' } }); expect(JSON.parse(user.learningSettings).active).toBe(profileId);
+        expect((await database.learningSession.findUniqueOrThrow({ where: { id: 'profile-session' } })).profileId).toBe(profileId);
+    });
     it('管理员教材内容与对应学习进度可一起恢复，普通账号不能借备份发布教材', async () => {
         const data = { id: 'backup-book', title: '备份教材', subject: 'english', stage: 'primary', grade: 3, volume: '上册', publisher: '测试', edition: '2024', published: true };
         await database.user.update({ where: { id: 'user-1' }, data: { role: 'admin' } }); mocks.session.user.role = 'admin';
