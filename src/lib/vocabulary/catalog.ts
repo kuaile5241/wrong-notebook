@@ -3,11 +3,12 @@ import { join } from 'node:path';
 import { z } from 'zod';
 
 export interface WordEntry {
-    id: string; w: string; uk: string; us: string; cefr: string; topic: string; note?: string;
+    mediaId?: string; media?: number; onlineSpeechId?: string; id: string; w: string; uk: string; us: string; cefr: string; topic: string; note?: string;
     senses: { pos: string; zh: string; en: string }[]; ex: { en: string; zh: string }[];
     col: string[]; fam: string[]; syn: string[]; ant: string[]; tip: string;
 }
 export const settingsSchema = z.object({
+    bookId: z.string().max(100).default(''), unitId: z.string().max(100).default(''),
     stage: z.enum(['primary', 'junior', 'senior', 'all']).default('primary'),
     level: z.enum(['all', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2']).default('all'),
     topic: z.string().max(30).default(''), accent: z.enum(['uk', 'us']).default('uk'),
@@ -33,6 +34,6 @@ export function matchesSettings(w: WordEntry, settings: VocabularySettings): boo
     return levels.includes(w.cefr) && (settings.stage !== 'primary' || PRIMARY.has(w.w.toLowerCase()))
         && (settings.level === 'all' || settings.level === w.cefr) && (!settings.topic || settings.topic === w.topic);
 }
-export function wordSummary(w: WordEntry) { return { id: w.id, word: w.w, zh: w.senses.map(s => `${s.pos} ${s.zh}`).join('；'), cefr: w.cefr, topic: w.topic, ipa: w.uk }; }
+export function wordSummary(w: WordEntry) { return { id: w.id, word: w.w, zh: w.senses.map(s => `${s.pos} ${s.zh}`).join('；'), cefr: w.cefr, topic: w.topic, ipa: w.uk, media: wordDetails(w).media, mediaId: w.mediaId ?? w.id }; }
 export function mediaUrl(id: string, kind: string) { return `/api/vocabulary/media/${kind}/${encodeURIComponent(id)}`; }
-export function wordDetails(w: WordEntry) { return { ...w, media: vocabularyCatalog().media.get(w.id) ?? 0 }; }
+export function wordDetails(w: WordEntry) { return { ...w, media: w.media ?? vocabularyCatalog().media.get(w.id) ?? 0 }; }

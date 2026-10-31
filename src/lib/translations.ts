@@ -1,3 +1,4 @@
+import { textbookEn, textbookZh } from './textbook-translations';
 import { vocabularyEn, vocabularyZh } from './vocabulary-translations';
 import { learningEn, learningZh } from "./learning-translations";
 import { lessonEn, lessonZh } from './lesson-translations';
@@ -7,6 +8,7 @@ export const translations = {
     en: {
         learning: learningEn,
         vocabulary: vocabularyEn,
+        textbooks: textbookEn,
         lesson: lessonEn,
         pageTitle: {
             base: "AI Smart Error Notebook",
@@ -1212,6 +1214,7 @@ export const translations = {
     zh: {
         learning: learningZh,
         vocabulary: vocabularyZh,
+        textbooks: textbookZh,
         lesson: lessonZh,
         pageTitle: {
             base: "AI智能错题本",

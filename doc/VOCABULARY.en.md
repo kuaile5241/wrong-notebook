@@ -4,7 +4,7 @@ Open Vocabulary at /words. The module adapts 7298 Word Atlas entries across 19 t
 
 ## Learning
 
-Primary uses a selected foundation list; junior suggests A1–B1 and senior A2–B2. All vocabulary exposes A1–C2. These filters are not official grade standards or textbook lists; Lujiao-Xiangjiao unit mapping is not yet available. Cards show the first meaning/example with expandable details; extra examples may be harder than the word’s level.
+Primary uses a selected foundation list; junior suggests A1–B1 and senior A2–B2. All vocabulary exposes A1–C2. These filters are not official grade standards or textbook lists; A prepared Lujiao-Xiangjiao book now provides the directory and reference vocabulary, pending individual glossary checks; see[Textbooks](TEXTBOOKS.en.md). Cards show the first meaning/example with expandable details; extra examples may be harder than the word’s level.
 
 Meaning choice, listening choice, spelling and self-rated recall are supported. Server-graded first submissions update progress once; retries return the saved result. Conflicting word revisions and questions older than 24 hours return409. Account write queues improve concurrency; database revision conditions protect cross-process updates. Self-assessments are counted separately from objective accuracy. This dictionary is not a secure examination system.
 
@@ -29,3 +29,5 @@ python3 scripts/install-vocabulary-media.py --source /path/to/word-atlas/public/
 The installer verifies every file against resources/vocabulary/media-manifest.json and creates a new target rather than overwriting a live directory. Mount the result read-only at /app/resources/vocabulary-media, or set VOCABULARY_MEDIA_DIR. The image includes text resources separately from /app/data.
 
 Preserve existing /app/data/lesson-audio; vocabulary recordings do not replace or clear persistent lesson speech. Self-hosted assets remove dependence on the author’s website. Reopening the existing online Android client loads the new web feature; physical Android testing is not implied.
+
+Unmatched textbook entries can use explicitly requested, persistently cached natural speech; see[Textbooks](TEXTBOOKS.en.md).

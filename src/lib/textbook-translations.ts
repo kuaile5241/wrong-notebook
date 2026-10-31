@@ -1,0 +1,28 @@
+export const textbookEn = {
+    gradeNames: ['Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Senior 1', 'Senior 2', 'Senior 3'], title: 'Textbook shelf', intro: 'Choose your textbook and follow its units. Add more grades and editions through the management area.', manage: 'Manage textbooks', create: 'Create a textbook', edit: 'Edit', save: 'Save', cancel: 'Cancel', back: 'Back to shelf',
+    bookTitle: 'Book title', subject: 'Subject', stage: 'School stage', grade: 'Grade', volume: 'Volume / compulsory book', publisher: 'Publisher / series', edition: 'Edition and reprint', isbn: 'ISBN',
+    primary: 'Primary', junior_high: 'Junior high', senior_high: 'Senior high', all: 'All', search: 'Find a textbook', english: 'English', math: 'Math', chinese: 'Chinese', science: 'Science', morality: 'Morality', physics: 'Physics', history: 'History', chemistry: 'Chemistry', biology: 'Biology',
+    sourceTitle: 'Source description', sourceUrl: 'Official textbook link', verificationNote: 'Verification notes', source: 'Open source textbook', published: 'Published', draft: 'Draft', archived: 'Archived', publish: 'Publish for learners', archive: 'Archive / hide without deleting progress', metadata: 'Book details',
+    units: 'Units', terms: 'Words and phrases', addUnit: 'Add a unit', unitCode: 'Unit code', unitTitle: 'Unit title', moduleTitle: 'Module', position: 'Order', pages: 'Pages', notes: 'Notes', courseUrl: 'Course link', course: 'Open course',
+    addTerm: 'Add a word', word: 'Word or phrase', meaning: 'Meaning in this lesson', example: 'Original example (optional)', translation: 'Example translation', atlasId: 'Atlas ID (optional; exact words can match automatically)', image: 'Use atlas illustration after checking its meaning', verified: 'Word checked against source', unchecked: 'Not individually verified', checked: 'Source checked',
+    study: 'Study this book', studyUnit: 'Study this unit', open: 'Open textbook', freeAtlas: 'Free vocabulary browsing', bookChoice: 'Textbook', unitChoice: 'Unit', allUnits: 'All units',
+    importTitle: 'Batch import words', importHelp: 'Use the CSV template, UTF-8 TSV or JSON. Preview first, check the rows, then confirm. Excel files can be saved as CSV.', template: 'Download CSV template', input: 'Paste CSV / TSV / JSON', file: 'Choose a file', format: 'Format', preview: 'Preview import', commit: 'Confirm import', mode: 'Duplicates', skip: 'Skip existing words', update: 'Update existing words',
+    summary: 'New units / added words / updated / skipped / missing recorded audio', importErrors: 'Fix these rows before importing', row: 'Row', imported: 'Import complete', invalidFile: 'The file format or rows are invalid. Check the template.',
+    empty: 'No textbooks yet', emptyUnit: 'No words in this unit yet', loading: 'Loading textbooks…', failure: 'Unable to save or load. Check required fields and retry.', conflict: 'Content changed elsewhere. Reload and preview again.', retry: 'Reload',
+    seed: 'Install prepared grade 3 English book', seedHint: 'Adds Lujiao-Xiangjiao grade 3 upper: 9 units and 125 word/phrase entries. Directory verified; vocabulary still needs individual textbook checks. Existing content is preserved.',
+    audioHint: 'Existing recordings are reused. Missing words can use configured natural speech when you press play; the first generation is saved and reused.', natural: 'Natural speech · first generation saved', currentBook: 'Current textbook',
+};
+export const textbookZh: typeof textbookEn = {
+    gradeNames: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级', '七年级', '八年级', '九年级', '高一', '高二', '高三'], title: '教材书架', intro: '选对课本，按单元一步一步学。其他年级、版本也可以在管理区继续添加。', manage: '教材管理', create: '新建教材', edit: '编辑', save: '保存', cancel: '取消', back: '返回书架',
+    bookTitle: '教材名称', subject: '学科', stage: '学段', grade: '年级', volume: '册次／必修册', publisher: '出版社／教材版本', edition: '版次与印次', isbn: 'ISBN',
+    primary: '小学', junior_high: '初中', senior_high: '高中', all: '全部', search: '搜索教材', english: '英语', math: '数学', chinese: '语文', science: '科学', morality: '道德与法治', physics: '物理', history: '历史', chemistry: '化学', biology: '生物',
+    sourceTitle: '来源说明', sourceUrl: '官方教材链接', verificationNote: '核对说明', source: '查看原教材', published: '已发布', draft: '草稿', archived: '已归档', publish: '发布给孩子学习', archive: '归档隐藏（保留学习记录）', metadata: '教材信息',
+    units: '单元', terms: '单词与短语', addUnit: '添加单元', unitCode: '单元编号', unitTitle: '单元名称', moduleTitle: '模块名称', position: '排序', pages: '页码', notes: '备注', courseUrl: '课程链接', course: '查看课程',
+    addTerm: '添加词条', word: '单词或短语', meaning: '本课词义', example: '自编例句（可选）', translation: '例句翻译', atlasId: '图鉴ID（可选，同名单词可自动匹配）', image: '已核对词义，使用图鉴插画', verified: '已对照教材核对此词', unchecked: '待逐词核对', checked: '已核对来源',
+    study: '按这本教材学习', studyUnit: '学习本单元', open: '打开教材', freeAtlas: '自由浏览词库', bookChoice: '教材', unitChoice: '单元', allUnits: '全册单元',
+    importTitle: '批量导入词汇', importHelp: '支持模板CSV、UTF-8制表符文件和JSON。先预览、核对，再确认导入；Excel表格可另存为CSV。', template: '下载CSV模板', input: '粘贴CSV／TSV／JSON内容', file: '选择文件', format: '文件格式', preview: '预览导入', commit: '确认导入', mode: '重复词条', skip: '跳过已有词条', update: '更新已有词条',
+    summary: '新建单元／新增词条／更新／跳过／无现成录音', importErrors: '请先修正以下行再导入', row: '第几行', imported: '导入完成', invalidFile: '文件格式或内容有误，请对照模板检查。',
+    empty: '书架还没有教材', emptyUnit: '本单元还没有词条', loading: '正在准备教材…', failure: '加载或保存失败，请检查必填内容后重试。', conflict: '内容已在其他页面更新，请重新加载后预览。', retry: '重新加载',
+    seed: '导入已整理的三年级英语教材', seedHint: '鲁教湘教版三年级上册：9个单元、125个单词或短语条目。目录已核对，词汇待逐词复核；已有教材内容不会被覆盖。',
+    audioHint: '优先复用现成录音。缺少录音的词可点击已配置的自然语音朗读，首次生成后保存复用。', natural: '自然朗读 · 首次生成后保存', currentBook: '当前教材',
+};

@@ -1,0 +1,40 @@
+{
+  "verifiedAt": "2026-10-31",
+  "officialCatalogVersion": 1254188463,
+  "officialResourceId": "2f82125b-9f17-8415-4576-89799231e916",
+  "directoryVerified": true,
+  "vocabularyTeacherReviewed": false,
+  "referenceUrls": [
+    "https://yy.suyang123.com/xiaoxue/sannianji/xlb_2024shangce_words1.html",
+    "https://yy.suyang123.com/xiaoxue/sannianji/xlb_2024shangce_words2.html",
+    "https://yy.suyang123.com/xiaoxue/sannianji/xlb_2024shangce_words3.html",
+    "https://yy.suyang123.com/xiaoxue/sannianji/xlb_2024shangce_words4.html",
+    "https://yy.suyang123.com/xiaoxue/sannianji/xlb_2024shangce_words5.html",
+    "https://yy.suyang123.com/xiaoxue/sannianji/xlb_2024shangce_words6.html",
+    "https://yy.suyang123.com/xiaoxue/sannianji/xlb_2024shangce_words7.html",
+    "https://yy.suyang123.com/xiaoxue/sannianji/xlb_2024shangce_words8.html",
+    "https://yy.suyang123.com/xiaoxue/sannianji/xlb_2024shangce_words9.html"
+  ],
+  "previewPages": [
+    {
+      "slide": 1,
+      "sha256": "e70d5c7666c16ddc95f61d79f164b3776c0ed91d2ae8242008ee0fbd832a528c",
+      "url": "https://r3-ndr.ykt.cbern.com.cn/edu_product/esp/assets/2f82125b-9f17-8415-4576-89799231e916.t/zh-CN/1756486415522/transcode/image/1.jpg"
+    },
+    {
+      "slide": 3,
+      "sha256": "8f722a886b1e542ad61629ee01926fb1f73a63636e48e9c243671abca9f77a01",
+      "url": "https://r1-ndr.ykt.cbern.com.cn/edu_product/esp/assets/2f82125b-9f17-8415-4576-89799231e916.t/zh-CN/1756486415522/transcode/image/3.jpg"
+    },
+    {
+      "slide": 5,
+      "sha256": "ad6494492d5ceba8c8d2f35599bbed77366f0e023885a79dce2473993111fece",
+      "url": "https://r3-ndr.ykt.cbern.com.cn/edu_product/esp/assets/2f82125b-9f17-8415-4576-89799231e916.t/zh-CN/1756486415522/transcode/image/5.jpg"
+    },
+    {
+      "slide": 6,
+      "sha256": "78966bb73a18cf5f72a65d3bdeedc956f018c2e9506b563cd42f08f33226c508",
+      "url": "https://r2-ndr.ykt.cbern.com.cn/edu_product/esp/assets/2f82125b-9f17-8415-4576-89799231e916.t/zh-CN/1756486415522/transcode/image/6.jpg"
+    }
+  ]
+}

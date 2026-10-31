@@ -1,3 +1,4 @@
+import { restoreTextbooks } from '@/lib/textbooks/backup';
 import { restoreVocabulary, vocabularySettingsBackupSchema } from '@/lib/vocabulary/backup';
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -30,6 +31,7 @@ interface ImportData {
     exportedAt: string;
     scope?: string;
     learningSessions?: unknown[];
+    textbooks?: unknown[];
     vocabularyCards?: unknown[];
     vocabularyAttempts?: unknown[];
     user: {
@@ -270,6 +272,7 @@ export async function POST(req: Request) {
             tagsLinked: 0,
             duplicateErrorItems: 0,
             learningSessionsCreated: 0,
+            textbooksCreated: 0,
             vocabularyCardsCreated: 0,
             vocabularyAttemptsCreated: 0,
         };
@@ -604,6 +607,7 @@ export async function POST(req: Request) {
                 stats.learningSessionsCreated++;
             }
 
+            Object.assign(stats, await restoreTextbooks(tx, body.textbooks, user.role === 'admin'));
             const vocabularyStats = await restoreVocabulary(tx, body.vocabularyCards, body.vocabularyAttempts, { userId: user.id, sourceUserId: body.user.id, all: importAll });
             Object.assign(stats, vocabularyStats);
 

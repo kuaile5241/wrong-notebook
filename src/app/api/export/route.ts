@@ -73,6 +73,7 @@ export async function GET(req: Request) {
         const learningSessions = await prisma.learningSession.findMany({ where: userFilter });
         const vocabularyCards = await prisma.vocabularyCard.findMany({ where: userFilter });
         const vocabularyAttempts = await prisma.vocabularyAttempt.findMany({ where: { ...userFilter, completedAt: { not: null } } });
+        const textbooks = user.role === 'admin' ? await prisma.textbookBook.findMany({ include: { units: { include: { terms: true } } } }) : [];
         const exportData = {
             version: 2,
             exportedAt: new Date().toISOString(),
@@ -99,6 +100,7 @@ export async function GET(req: Request) {
             practiceRecords,
             examPapers,
             learningSessions,
+            textbooks,
             vocabularyCards,
             vocabularyAttempts,
         };

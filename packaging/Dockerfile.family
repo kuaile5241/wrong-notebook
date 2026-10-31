@@ -37,6 +37,7 @@ COPY --from=builder --chown=nextjs:nodejs /build/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /build/public ./public
 COPY --from=builder --chown=nextjs:nodejs /build/resources/learning ./resources/learning
 COPY --from=builder --chown=nextjs:nodejs /build/resources/vocabulary ./resources/vocabulary
+COPY --from=builder --chown=nextjs:nodejs /build/resources/textbooks ./resources/textbooks
 COPY --from=builder --chown=nextjs:nodejs /build/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder --chown=nextjs:nodejs /build/node_modules/prisma ./node_modules/prisma
 COPY --from=builder --chown=nextjs:nodejs /build/node_modules/@prisma ./node_modules/@prisma

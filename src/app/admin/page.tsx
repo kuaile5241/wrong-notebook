@@ -380,7 +380,7 @@ export default function AdminPage() {
             <PageHeader
                 title={t.admin?.dashboard?.title || "Admin Dashboard"}
                 description={t.admin?.dashboard?.subtitle || "View all users and error statistics"}
-                actions={<Button onClick={() => router.push("/admin/users")}>{t.access.manageAccounts}</Button>}
+                actions={<div className="flex flex-wrap gap-2"><Button variant="outline" onClick={() => router.push("/admin/textbooks")}>{t.textbooks.manage}</Button><Button onClick={() => router.push("/admin/users")}>{t.access.manageAccounts}</Button></div>}
             />
 
             {/* Overview Cards */}

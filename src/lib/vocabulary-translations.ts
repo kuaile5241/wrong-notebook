@@ -1,6 +1,6 @@
 export const vocabularyEn = {
-    noDue: 'No due or new words in this selection right now. You can still open and practice any word.', title: 'English word atlas', subtitle: 'See it, hear it, remember it', intro: 'Illustrated words, recorded UK/US pronunciation and a personal review plan, from primary school to advanced learning.',
-    notice: 'AI-created reference vocabulary, not individually teacher-reviewed. Stage suggestions are not grade standards or textbook unit lists. Lujiao-Xiangjiao textbook mapping is not yet available.',
+    noDue: 'No due or new words in this selection right now. You can still open and practice any word.', naturalAudio: 'Natural speech · saved after first generation', title: 'English word atlas', subtitle: 'See it, hear it, remember it', intro: 'Illustrated words, recorded UK/US pronunciation and a personal review plan, from primary school to advanced learning.',
+    notice: 'AI-created reference atlas, not individually teacher-reviewed. Free-browsing stage suggestions are not syllabus mappings. Textbook-specific meanings and verification notes are available on the textbook shelf.',
     source: 'Word Atlas contributors · CC BY 4.0 · Adapted vocabulary learning module', stage: 'Learning stage', primary: 'Primary foundations', junior: 'Junior-high expansion', senior: 'Senior-high expansion', all: 'All vocabulary',
     stageHint: 'Primary uses a selected foundation list; junior suggests A1–B1, senior A2–B2. These are learning filters, not official syllabus mappings.',
     level: 'Ability level', topic: 'Topic', allTopics: 'All topics', accent: 'Pronunciation', uk: 'UK', us: 'US', dailyGoal: 'Daily goal', search: 'Find a word or meaning',
@@ -13,8 +13,8 @@ export const vocabularyEn = {
     stale: 'This question changed or expired. Start a new question.', restart: 'Start a new question', reference: 'Word card and explanation', firstExample: 'Start with the first example; extra examples may be more advanced.',
 };
 export const vocabularyZh: typeof vocabularyEn = {
-    noDue: '当前筛选暂无到期词或新词，仍可打开指定单词自主练习。', title: '英语词汇图鉴', subtitle: '看见画面，听见发音，记住单词', intro: '从小学基础到初高中拓展，用插画、英美发音和专属复习计划，慢慢积累自己的词汇库。',
-    notice: '词库为 AI 生成参考内容，尚未逐条经教师审核。学段推荐不等于年级标准或教材单元词表，鲁教湘教版教材匹配尚待补充。',
+    noDue: '当前筛选暂无到期词或新词，仍可打开指定单词自主练习。', naturalAudio: '自然朗读 · 首次生成后保存', title: '英语词汇图鉴', subtitle: '看见画面，听见发音，记住单词', intro: '从小学基础到初高中拓展，用插画、英美发音和专属复习计划，慢慢积累自己的词汇库。',
+    notice: '自由图鉴为 AI 生成参考内容，尚未逐条经教师审核。学段推荐不等于教材目录；按课本学习请到教材书架，并查看每本书的核对说明。',
     source: 'Word Atlas contributors · CC BY 4.0 · 已适配为账号词汇学习模块', stage: '学习阶段', primary: '小学基础', junior: '初中拓展', senior: '高中拓展', all: '全部词库',
     stageHint: '小学使用基础推荐清单；初中建议 A1—B1，高中建议 A2—B2。这些是学习筛选，不代表官方课程对应关系。',
     level: '能力分级', topic: '主题', allTopics: '全部主题', accent: '发音偏好', uk: '英音', us: '美音', dailyGoal: '每日目标', search: '搜索单词或中文释义',

@@ -1,3 +1,4 @@
+import { termKey } from '@/lib/textbooks/schema';
 // @vitest-environment node
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
@@ -81,6 +82,7 @@ beforeEach(async () => {
     mocks.session.user.role = 'user';
     mocks.scheduleMasteryEvaluation.mockClear();
     await database.user.deleteMany();
+    await database.textbookBook.deleteMany();
     await database.user.create({ data: { id: 'user-1', email: mocks.session.user.email, password: 'test-only' } });
     await database.subject.create({ data: { id: 'math', name: '数学', stage: 'junior_high', subjectKey: 'math', userId: 'user-1' } });
     await database.knowledgeTag.create({ data: { id: 'tag-1', name: '自定义标签', subject: 'math', userId: 'user-1' } });
@@ -112,6 +114,25 @@ afterAll(async () => {
 });
 
 describe('数据导出后再导入（真实 SQLite）', () => {
+    it('管理员教材内容与对应学习进度可一起恢复，普通账号不能借备份发布教材', async () => {
+        const data = { id: 'backup-book', title: '备份教材', subject: 'english', stage: 'primary', grade: 3, volume: '上册', publisher: '测试', edition: '2024', published: true };
+        await database.user.update({ where: { id: 'user-1' }, data: { role: 'admin' } }); mocks.session.user.role = 'admin';
+        await database.textbookBook.create({ data });
+        await database.textbookUnit.create({ data: { id: 'backup-unit', bookId: data.id, code: 'U1', title: 'Hello' } });
+        await database.textbookTerm.create({ data: { id: 'backup-term', unitId: 'backup-unit', key: termKey('two'), word: 'two', meaning: '二' } });
+        const progress = scheduleWord('', 3);
+        await database.vocabularyCard.create({ data: { userId: 'user-1', wordId: 'tb-backup-term', ...progress, reviews: 1, correct: 1 } });
+        const backup = await exportBackup(); expect(backup.textbooks).toHaveLength(1);
+        await clearUserData(); await database.textbookBook.deleteMany(); await importBackup(backup);
+        expect((await database.textbookTerm.findUniqueOrThrow({ where: { id: 'backup-term' } })).meaning).toBe('二');
+        expect((await database.vocabularyCard.findFirstOrThrow()).reviews).toBe(1);
+        await database.textbookBook.update({ where: { id: data.id }, data: { title: '新的编辑' } });
+        await importBackup(backup); expect((await database.textbookBook.findUniqueOrThrow({ where: { id: data.id } })).title).toBe('新的编辑');
+        await database.user.update({ where: { id: 'user-1' }, data: { role: 'user' } }); mocks.session.user.role = 'user';
+        backup.textbooks[0].id = 'forged-book'; backup.textbooks[0].units = [];
+        await importBackup(backup); expect(await database.textbookBook.findUnique({ where: { id: 'forged-book' } })).toBeNull();
+    });
+
     it('词汇进度、收藏、偏好和已答记录随备份还原，不覆盖新进度或跨用户记录', async () => {
         const progress = scheduleWord('', 3, new Date('2026-10-31T01:00:00Z'));
         await database.user.update({ where: { id: 'user-1' }, data: { vocabularySettings: JSON.stringify({ stage: 'senior', accent: 'us' }) } });

@@ -1,3 +1,5 @@
+New [textbook shelf and import management](doc/TEXTBOOKS.en.md): learn by book/unit and maintain other grades through previewed CSV/TSV/JSON imports. The prepared Lujiao-Xiangjiao grade3 upper book has9 units and125 reference entries; the directory is verified and vocabulary awaits individual glossary checks.
+
 New [English vocabulary atlas](doc/VOCABULARY.en.md): stage-based browsing, illustrations, UK/US recordings, four practice modes, favorites and account-synced FSRS reviews. Textbook mappings remain limited to verified material.
 
 Practice now includes seven subjects, including junior-high history, with an account review map and chapter rechecks. See [online practice](doc/ONLINE_LEARNING.en.md).

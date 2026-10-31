@@ -52,7 +52,7 @@ export function TopicBrowser({ initialSearch = '' }: { initialSearch?: string })
     return <main className="mx-auto max-w-5xl space-y-6 px-4 py-6 md:px-8">
         <header className="rounded-3xl border border-primary/15 bg-gradient-to-br from-violet-100 via-sky-50 to-emerald-100 p-6 text-slate-900 dark:from-violet-950 dark:via-slate-900 dark:to-emerald-950 dark:text-slate-100">
             <div className="mb-3 flex items-center gap-2 text-primary"><Sparkles className="h-5 w-5" />{l.subtitle}</div>
-            <h1 className="text-3xl font-bold">{l.title}</h1><p className="mt-3 max-w-2xl leading-relaxed">{l.intro}</p>
+            <h1 className="text-3xl font-bold">{l.title}</h1><p className="mt-3 max-w-2xl leading-relaxed">{l.intro}</p><Button asChild className="mt-3"><Link href="/books">{t.textbooks.title}</Link></Button>
         </header>
         <LearningAttribution />
         <section className="space-y-4 rounded-2xl border bg-card p-4">

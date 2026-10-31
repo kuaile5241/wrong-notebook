@@ -31,7 +31,7 @@ export function VocabularyPractice({ id }: Props) {
     }
     async function next() {
         if (busy) return; setBusy(true); setError('');
-        try { const value = await vocabularyRequest<PracticeView>('/api/vocabulary/practice', { wordId: '', mode: view?.mode ?? 'meaning' }); router.push(`/words/practice/${value.id}`); }
+        try { const value = await vocabularyRequest<PracticeView>('/api/vocabulary/practice', { wordId: '', mode: view?.mode ?? 'meaning', scope: view?.scope }); router.push(`/words/practice/${value.id}`); }
         catch (e) { setError(e instanceof VocabularyRequestError && e.status === 404 ? l.noDue : l.failure); } finally { setBusy(false); }
     }
     async function reveal() {
@@ -46,7 +46,7 @@ export function VocabularyPractice({ id }: Props) {
             <h1 className="text-xl font-bold">{l[view.mode as 'meaning' | 'listening' | 'spelling' | 'self']}</h1>
             {!view.completed && <>
                 {view.prompt && <p className="rounded-2xl bg-sky-50 p-6 text-center text-3xl font-bold leading-relaxed text-sky-950 dark:bg-sky-950 dark:text-sky-100">{view.prompt}</p>}
-                <RecordedAudio key={`${id}:${accent}`} id={view.audioId} kind={accent} label={view.mode === 'listening' ? l.audio : l[accent]} />
+                <RecordedAudio key={`${id}:${accent}`} id={view.onlineSpeechId ?? view.audioId} kind={accent} label={view.onlineSpeechId ? l.naturalAudio : view.mode === 'listening' ? l.audio : l[accent]} source={view.onlineSpeechId ? `/api/textbooks/terms/${view.onlineSpeechId}/audio` : undefined} />
                 {!!view.choices.length && <div className="grid gap-3 sm:grid-cols-2">{view.choices.map(choice => <Button key={choice.key} disabled={busy} aria-pressed={answer === choice.key} className="h-auto min-h-14 whitespace-normal rounded-xl p-4 text-left" variant={answer === choice.key ? 'default' : 'outline'} onClick={() => setAnswer(choice.key)}>{choice.key}. {choice.label}</Button>)}</div>}
                 {view.mode === 'spelling' && <Input autoCapitalize="none" autoComplete="off" autoCorrect="off" spellCheck={false} aria-label={l.answer} placeholder={l.answer} value={answer} onChange={e => setAnswer(e.target.value)} />}
                 {view.mode !== 'self' && <Button disabled={busy || !answer.trim()} onClick={() => void submit()}>{l.submit}</Button>}

@@ -289,10 +289,71 @@ model VocabularyAttempt {
   mode String
   choices String @default("[]")
   cardRevision Int
+  scope String @default("")
   answer String?
   correct Boolean?
   grade Int?
   createdAt DateTime @default(now())
   completedAt DateTime?
   @@index([userId, completedAt])
+}
+
+// 教材内容由管理员维护，发布后供所有有效账号学习；学习进度仍按账号隔离。
+model TextbookBook {
+  id String @id @default(cuid())
+  seedKey String? @unique
+  title String
+  subject String @default("english")
+  stage String
+  grade Int
+  volume String
+  publisher String
+  edition String
+  isbn String @default("")
+  sourceTitle String @default("")
+  sourceUrl String @default("")
+  verificationNote String @default("")
+  published Boolean @default(false)
+  archived Boolean @default(false)
+  revision Int @default(0)
+  units TextbookUnit[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([published, archived, stage, grade])
+}
+
+model TextbookUnit {
+  id String @id @default(cuid())
+  bookId String
+  book TextbookBook @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  code String
+  title String
+  moduleTitle String @default("")
+  position Int @default(0)
+  pageReference String @default("")
+  notes String @default("")
+  courseUrl String @default("")
+  archived Boolean @default(false)
+  terms TextbookTerm[]
+  @@unique([bookId, code])
+  @@index([bookId, position])
+}
+
+model TextbookTerm {
+  id String @id @default(cuid())
+  unitId String
+  unit TextbookUnit @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  key String
+  word String
+  meaning String
+  example String @default("")
+  translation String @default("")
+  atlasId String @default("")
+  useAtlasImage Boolean @default(false)
+  position Int @default(0)
+  notes String @default("")
+  verified Boolean @default(false)
+  archived Boolean @default(false)
+  @@unique([unitId, key])
+  @@index([unitId, position])
 }

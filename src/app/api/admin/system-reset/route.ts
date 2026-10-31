@@ -40,6 +40,7 @@ export async function POST() {
             // 新增词汇私有记录也属于恢复出厂设置的清理范围。
             await tx.vocabularyAttempt.deleteMany({});
             await tx.vocabularyCard.deleteMany({});
+            await tx.textbookBook.deleteMany({});
             await tx.user.updateMany({ data: { vocabularySettings: '{}' } });
             // 1. Delete Practice Records (dependent on nothing usually, or User/ErrorItem)
             await tx.practiceRecord.deleteMany({});
