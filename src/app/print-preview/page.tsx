@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/ui/back-button";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { QuestionFigure } from "@/components/question-figure";
+import { createDocxArchive, rasterizeSvgFigureForDocx, triggerDocxDownload, rasterizeImageForDocx } from "@/lib/docx-export";
 import { apiClient } from "@/lib/api-client";
 import type { PaginatedResponse, PrintableErrorItem } from "@/types/api";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -25,6 +26,8 @@ function PrintPreviewContent() {
     const [items, setItems] = useState<PrintableErrorItem[]>([]);
     usePageTitle(t.printPreview.title);
     const [loading, setLoading] = useState(true);
+    const [exportingDocx, setExportingDocx] = useState(false);
+    const [docxError, setDocxError] = useState(false);
     const [showAnswers, setShowAnswers] = useState(false);
     const [showAnalysis, setShowAnalysis] = useState(false);
     const [showTags, setShowTags] = useState(false);
@@ -60,6 +63,41 @@ function PrintPreviewContent() {
     const reserveAnswerSpace = shouldReserveAnswerSpace(showAnswers, showAnalysis);
     const countLabel = getPrintPreviewCountLabel(items.length, selectedItems.length);
     const emptyState = getPrintPreviewEmptyState(items.length, selectedItems.length);
+
+    const downloadDocx = async () => {
+        setExportingDocx(true);
+        setDocxError(false);
+        try {
+            const questions = [];
+            for (const [index, item] of selectedItems.entries()) {
+                const useText = showQuestionText && Boolean(item.questionText);
+                const image = useText
+                    ? await rasterizeSvgFigureForDocx(item.figureSvg)
+                    : item.originalImageUrl
+                        ? await rasterizeImageForDocx(item.originalImageUrl, { scalePercent: imageScale })
+                        : null;
+                if (!image && !item.questionText) throw new Error("Missing printable question content");
+                questions.push({
+                    heading: `${index + 1}.`,
+                    meta: item.shortId ? `${t.exam.sourceLabel}：${item.shortId}` : undefined,
+                    questionText: useText || !image ? item.questionText ?? undefined : undefined,
+                    image,
+                    inlineAnswerLabel: t.printPreview.referenceAnswer,
+                    inlineAnswerText: showAnswers ? item.answerText ?? undefined : undefined,
+                    inlineAnalysisLabel: t.printPreview.analysis,
+                    inlineAnalysisText: showAnalysis ? item.analysis ?? undefined : undefined,
+                    answerSpacePx: reserveAnswerSpace ? 64 : 0,
+                });
+            }
+            const title = t.printPreview.title;
+            triggerDocxDownload(createDocxArchive({ title, questions }), title);
+        } catch (error) {
+            frontendLogger.error("[PrintPreview]", "Word export failed", { error });
+            setDocxError(true);
+        } finally {
+            setExportingDocx(false);
+        }
+    };
 
     const toggleSelectedItem = (id: string) => {
         setSelectedIds((prev) => {
@@ -100,10 +138,15 @@ function PrintPreviewContent() {
                         <h1 className="text-lg sm:text-xl font-bold flex-1">
                             {t.printPreview?.title || 'Print Preview'} ({countLabel} {t.notebooks?.items || 'items'})
                         </h1>
+                        <Button variant="outline" size="sm" onClick={downloadDocx} disabled={exportingDocx || !selectedItems.length}>
+                            {exportingDocx ? t.exam.exportingDocx : t.exam.downloadDocx}
+                        </Button>
                         <Button onClick={handlePrint} size="sm" className="whitespace-nowrap" disabled={selectedItems.length === 0}>
                             {t.printPreview?.printButton || 'Print / Save PDF'}
                         </Button>
                     </div>
+
+                    {docxError && <p role="alert" className="text-destructive">{t.exam.docxError}</p>}
 
                     {/* Controls Row */}
                     <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">

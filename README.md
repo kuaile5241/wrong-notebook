@@ -115,7 +115,7 @@
 
 ![已生成的真实错题试卷、来源 ID 和多次作答结果](doc/screenshots/exam.png)
 
-打印预览可选择包含答案页，支持下载 HTML、打印或通过浏览器保存为 PDF。
+试卷打印预览可选择包含答案页、按题型自动留白或统一留白。试卷和错题打印预览都支持下载 Word（DOCX）或打印为 PDF，试卷也支持下载 HTML。
 
 ![真实试卷的打印预览、来源 ID、答案页开关和导出入口](doc/screenshots/exam-print.png)
 

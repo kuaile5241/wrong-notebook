@@ -1,3 +1,4 @@
+- Exam and mistake print previews export Word (DOCX). Exams also support automatic or fixed answer space.
 - Complete knowledge graphs and scope screening, curriculum details, root/path reports, corrections, report sharing/printing and private learner profiles.
 
 - Prepared textbook cards include 125 detailed lessons and 250 original examples, with per-section natural speech and persistent audio reuse.

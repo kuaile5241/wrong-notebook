@@ -154,7 +154,7 @@ function PracticeContent() {
         if (!userAnswer.trim() || !question || !errorItemId) return;
 
         setIsSubmitted(true);
-        if (matchAnswer(userAnswer, question.answerText)) {
+        if (matchAnswer(userAnswer, question.answerText, question.questionText)) {
             setIsCorrect(true);
             setShowAnswer(true);
             return;

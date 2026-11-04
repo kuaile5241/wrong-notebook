@@ -128,8 +128,7 @@ export class AnthropicProvider implements AIService {
         logger.info({
             provider: 'Anthropic',
             model: this.model,
-            baseURL: this.baseURL,
-            apiKeyPrefix: apiKey ? apiKey.substring(0, 8) + '...' : 'bearer'
+            baseURL: this.baseURL
         }, 'AI Provider initialized');
     }
 
