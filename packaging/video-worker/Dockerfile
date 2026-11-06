@@ -7,4 +7,6 @@ ARG PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
 RUN pip install --no-cache-dir --index-url "${PIP_INDEX_URL}" --timeout 60 playwright==1.64.1 edge-tts==7.3.1
 WORKDIR /worker
 COPY packaging/video-worker/ ./
+ENV HOME=/tmp XDG_CACHE_HOME=/tmp/.cache
+USER 1001:1001
 CMD ["python", "worker.py"]

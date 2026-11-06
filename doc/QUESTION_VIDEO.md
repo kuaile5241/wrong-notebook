@@ -12,7 +12,7 @@
 
 ## 独立渲染服务
 
-使用packaging/video-worker/Dockerfile构建镜像，将正式数据目录挂载为/data，不暴露端口；限制CPU、内存和进程数。主网站负责鉴权、分镜和队列，渲染器只有题目分镜数据，无模型密钥。
+使用packaging/video-worker/Dockerfile构建镜像，将正式数据目录挂载为/data，不暴露端口；限制CPU、内存和进程数。渲染器默认以1001:1001运行，应与网页程序的数据目录属主一致，避免新建目录不可写。主网站负责鉴权、分镜和队列，渲染器只有题目分镜数据，无模型密钥。
 
 持久数据包括 data/video-jobs、data/edge-video-audio、data/lesson-videos 和SQLite中的VideoGeneration表。完整备份应同时包含这些目录。网页JSON备份包含生成记录，恢复后仅在归属凭据匹配且媒体存在时复用完成结果，其他记录等待用户重试。
 
