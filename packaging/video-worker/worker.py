@@ -94,7 +94,7 @@ def make_page(job, plan, lengths):
     scene = (Path(__file__).parent / 'scene.js').read_text(encoding='utf-8')
     data = json.dumps(plan, ensure_ascii=False).replace('<', '\u003c')
     timings = {f's{i}': {'dur': d, 'marks': {}, 'cues': [], 'silent': True} for i, d in enumerate(lengths)}
-    html = f'<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="lib/engine.css"><style>#frame{{width:960px!important;height:540px!important}}#stage{{width:960px!important;height:540px!important}}</style></head><body><script src="lib/engine.js"></script><script>const PLAN={data};window.TIMINGS={json.dumps(timings)};{scene}</script></body></html>'
+    html = f'<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="lib/engine.css"><style>#frame{{width:1600px!important;height:900px!important;transform:translate(-50%,-50%) scale(.6)!important}}#stage{{width:1600px!important;height:900px!important}}</style></head><body><script src="lib/engine.js"></script><script>const PLAN={data};window.TIMINGS={json.dumps(timings)};{scene}</script></body></html>'
     (site / 'index.html').write_text(html, encoding='utf-8')
     return site
 
