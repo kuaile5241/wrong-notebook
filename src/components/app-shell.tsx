@@ -122,7 +122,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <div className="pb-20 md:pb-0">{children}</div>
 
             <nav className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t-2 border-primary/10 bg-card/95 backdrop-blur-md md:hidden print:hidden">
-                <div className="grid h-16 grid-cols-7">
+                <div className="grid h-16 grid-cols-8">
                     {NAV_ITEMS.map((item) => {
                         const active = item.match(pathname);
                         const Icon = item.icon;
