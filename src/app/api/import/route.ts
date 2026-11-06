@@ -1,3 +1,4 @@
+import { restoreVideos, videoLinkBackup } from '@/lib/videos/backup';
 import { profileSettingsSchema, readProfileSettings } from '@/lib/learning/profiles';
 import { restoreTextbooks } from '@/lib/textbooks/backup';
 import { restoreVocabulary, vocabularySettingsBackupSchema } from '@/lib/vocabulary/backup';
@@ -34,6 +35,8 @@ interface ImportData {
     learningSessions?: unknown[];
     learningProfiles?: { userId: string; settings: string }[];
     textbooks?: unknown[];
+    videoLessons?: unknown[];
+    videoLinks?: unknown[];
     vocabularyCards?: unknown[];
     vocabularyAttempts?: unknown[];
     user: {
@@ -620,6 +623,17 @@ export async function POST(req: Request) {
             }
 
             Object.assign(stats, await restoreTextbooks(tx, body.textbooks, user.role === 'admin'));
+            await restoreVideos(tx, body.videoLessons, user.role === 'admin');
+            for (const raw of body.videoLinks || []) {
+                const link = videoLinkBackup.parse(raw);
+                if (!importAll && link.userId !== body.user.id) continue;
+                const owner = importAll ? link.userId : user.id;
+                const errorItemId = errorItemIdMap.get(link.errorItemId);
+                if (!errorItemId || !await tx.errorItem.findFirst({ where: { id: errorItemId, userId: owner }, select: { id: true } })) continue;
+                if (!await tx.videoLesson.findUnique({ where: { id: link.videoId }, select: { id: true } })) continue;
+                const key = { userId: owner, errorItemId, videoId: link.videoId };
+                await tx.videoLessonLink.upsert({ where: { userId_errorItemId_videoId: key }, create: key, update: {} });
+            }
             const vocabularyStats = await restoreVocabulary(tx, body.vocabularyCards, body.vocabularyAttempts, { userId: user.id, sourceUserId: body.user.id, all: importAll });
             Object.assign(stats, vocabularyStats);
 

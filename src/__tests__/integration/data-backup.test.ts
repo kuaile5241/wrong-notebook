@@ -82,6 +82,7 @@ beforeEach(async () => {
     mocks.session.user.role = 'user';
     mocks.scheduleMasteryEvaluation.mockClear();
     await database.user.deleteMany();
+    await database.videoLesson.deleteMany();
     await database.textbookBook.deleteMany();
     await database.user.create({ data: { id: 'user-1', email: mocks.session.user.email, password: 'test-only' } });
     await database.subject.create({ data: { id: 'math', name: '数学', stage: 'junior_high', subjectKey: 'math', userId: 'user-1' } });
@@ -330,5 +331,23 @@ describe('数据导出后再导入（真实 SQLite）', () => {
         expect(item.lastPractice).toBeNull();
         expect(item.masteryProbability).toBeNull();
         expect(mocks.scheduleMasteryEvaluation).toHaveBeenCalledWith([item.id]);
+    });
+});
+
+
+describe('视频备份', () => {
+    it('共享视频元数据由管理员恢复，个人错题关联按导入后的题目重新映射', async () => {
+        const id = 'a'.repeat(64);
+        await database.videoLesson.create({ data: { id, title: '鸡兔同笼', bytes: 64, topics: '["假设法"]' } });
+        await database.videoLessonLink.create({ data: { userId: 'user-1', errorItemId: 'item-1', videoId: id } });
+        const backup = await exportBackup();
+        expect(backup.videoLessons).toHaveLength(0);
+        expect(backup.videoLinks).toHaveLength(1);
+        await clearUserData(); await importBackup(backup);
+        expect(await database.videoLessonLink.count({ where: { userId: 'user-1' } })).toBe(1);
+        mocks.session.user.role = 'admin'; await database.user.update({ where: { id: 'user-1' }, data: { role: 'admin' } });
+        const shared = await exportBackup(); expect(shared.videoLessons[0].topics).toEqual(['假设法']);
+        await database.videoLesson.deleteMany(); await importBackup(shared);
+        expect((await database.videoLesson.findUniqueOrThrow({ where: { id } })).published).toBe(false);
     });
 });

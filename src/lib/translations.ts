@@ -1,3 +1,4 @@
+import { videoEn, videoZh } from './video-translations';
 import { knowledgeEn, knowledgeZh } from './knowledge-translations';
 import { textbookEn, textbookZh } from './textbook-translations';
 import { vocabularyEn, vocabularyZh } from './vocabulary-translations';
@@ -7,6 +8,7 @@ export type Language = 'zh' | 'en';
 
 export const translations = {
     en: {
+        videos: videoEn,
         learning: learningEn,
         vocabulary: vocabularyEn,
         knowledge: knowledgeEn, textbooks: textbookEn,
@@ -95,6 +97,7 @@ export const translations = {
             emptyHint: "Questions come back on schedule after you record practice results. Add new mistakes or check back tomorrow.",
         },
         nav: {
+            videos: "Video lessons",
             learn: "Practice",
             words: "Vocabulary",
             home: "Add",
@@ -1223,6 +1226,7 @@ export const translations = {
         },
     },
     zh: {
+        videos: videoZh,
         learning: learningZh,
         vocabulary: vocabularyZh,
         knowledge: knowledgeZh, textbooks: textbookZh,
@@ -1311,6 +1315,7 @@ export const translations = {
             emptyHint: "录入举一反三结果后，错题会按计划回到这里。可以继续录入新错题，或明天再来。",
         },
         nav: {
+            videos: "视频讲解",
             learn: "在线练习",
             words: "英语词汇",
             home: "录入",

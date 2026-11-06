@@ -1,3 +1,4 @@
+- Papermorph lessons: publish MP4 exports, watch at different speeds, resume playback, and link videos to mistakes. See [workflow](doc/PAPERMORPH.md).
 - Exam and mistake print previews export Word (DOCX). Exams also support automatic or fixed answer space.
 - Complete knowledge graphs and scope screening, curriculum details, root/path reports, corrections, report sharing/printing and private learner profiles.
 

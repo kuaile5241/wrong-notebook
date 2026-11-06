@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 /** 登录、注册与打印页不显示导航 */
 const BARE_PATHS = [/^\/access-denied/, /^\/login/, /^\/register/, /^\/setup/, /^\/print-preview/, /^\/exams\/[^/]+\/print/];
 
-type NavKey = "home" | "notebooks" | "review" | "stats" | "exams" | "learn" | "words";
+type NavKey = "home" | "notebooks" | "review" | "stats" | "exams" | "learn" | "words" | "videos";
 
 interface NavItem {
     key: NavKey;
@@ -25,6 +25,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
+    { key: "videos", href: "/videos", icon: FileText, match: p => p.startsWith("/videos") },
     { key: "words", href: "/words", icon: BookOpen, match: p => p.startsWith("/words") },
     { key: "learn", href: "/learn", icon: Sparkles, match: p => p.startsWith("/learn") },
     { key: "home", href: "/", icon: PlusCircle, match: (p) => p === "/" },

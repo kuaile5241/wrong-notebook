@@ -1,0 +1,15 @@
+CREATE TABLE "VideoLesson" (
+ "id" TEXT NOT NULL PRIMARY KEY, "title" TEXT NOT NULL, "summary" TEXT NOT NULL DEFAULT '',
+ "subject" TEXT NOT NULL DEFAULT 'math', "grade" INTEGER NOT NULL DEFAULT 3,
+ "topics" TEXT NOT NULL DEFAULT '[]', "bookId" TEXT NOT NULL DEFAULT '', "unitId" TEXT NOT NULL DEFAULT '',
+ "published" BOOLEAN NOT NULL DEFAULT false, "archived" BOOLEAN NOT NULL DEFAULT false,
+ "bytes" INTEGER NOT NULL, "revision" INTEGER NOT NULL DEFAULT 0,
+ "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, "updatedAt" DATETIME NOT NULL
+);
+CREATE TABLE "VideoLessonLink" (
+ "id" TEXT NOT NULL PRIMARY KEY, "userId" TEXT NOT NULL, "errorItemId" TEXT NOT NULL, "videoId" TEXT NOT NULL,
+ FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE,
+ FOREIGN KEY ("errorItemId") REFERENCES "ErrorItem"("id") ON DELETE CASCADE ON UPDATE CASCADE,
+ FOREIGN KEY ("videoId") REFERENCES "VideoLesson"("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE UNIQUE INDEX "VideoLessonLink_userId_errorItemId_videoId_key" ON "VideoLessonLink"("userId","errorItemId","videoId");

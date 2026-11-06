@@ -40,6 +40,7 @@ model User {
   customTags KnowledgeTag[] // User's custom tags
   examPapers ExamPaper[]
   aiUsages   AiUsage[]
+  videoLinks VideoLessonLink[]
   learningSessions LearningSession[]
   learningSettings String @default("{}")
   vocabularySettings String @default("{}")
@@ -163,6 +164,7 @@ model ErrorItem {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
+  videoLinks VideoLessonLink[]
   reviewSchedules ReviewSchedule[]
   practiceRecords PracticeRecord[]
   examQuestions   ExamQuestion[]
@@ -368,4 +370,33 @@ model TextbookTerm {
   archived Boolean @default(false)
   @@unique([unitId, key])
   @@index([unitId, position])
+}
+
+// Papermorph 制作端发布的共享视频，媒体按内容哈希单独持久保存。
+model VideoLesson {
+  id String @id
+  title String
+  summary String @default("")
+  subject String @default("math")
+  grade Int @default(3)
+  topics String @default("[]")
+  bookId String @default("")
+  unitId String @default("")
+  published Boolean @default(false)
+  archived Boolean @default(false)
+  bytes Int
+  revision Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  links VideoLessonLink[]
+}
+model VideoLessonLink {
+  id String @id @default(cuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  errorItemId String
+  errorItem ErrorItem @relation(fields: [errorItemId], references: [id], onDelete: Cascade)
+  videoId String
+  video VideoLesson @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  @@unique([userId, errorItemId, videoId])
 }
