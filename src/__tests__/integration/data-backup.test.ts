@@ -351,3 +351,16 @@ describe('视频备份', () => {
         expect((await database.videoLesson.findUniqueOrThrow({ where: { id } })).published).toBe(false);
     });
 });
+
+
+describe('自动讲题视频备份', () => {
+    it('恢复生成记录不会自动调用模型，缺少成品凭据时等待用户重试', async () => {
+        const item = await database.errorItem.findUniqueOrThrow({ where: { id: 'item-1' } });
+        await database.videoGeneration.create({ data: { id: 'b'.repeat(64), userId: 'user-1', errorItemId: item.id,
+            source: JSON.stringify({ question: item.questionText, answer: item.answerText, analysis: item.analysis }), voice: 'zh-CN-XiaoxiaoNeural', status: 'completed', resultHash: 'c'.repeat(64) } });
+        const backup = await exportBackup(); expect(backup.videoGenerations).toHaveLength(1);
+        await clearUserData(); await importBackup(backup);
+        const restored = await database.videoGeneration.findFirstOrThrow({ where: { userId: 'user-1' } });
+        expect(restored.status).toBe('failed'); expect(restored.resultHash).toBe('');
+    });
+});

@@ -17,7 +17,7 @@ export const securityHeaders = [
 
 const nextConfig: NextConfig = {
   output: 'standalone',
-  outputFileTracingIncludes: { '/api/knowledge': ['./resources/learning/**'],
+  outputFileTracingIncludes: { '/api/error-items/*/video': ['./resources/learning/**'], '/api/knowledge': ['./resources/learning/**'],
         '/api/knowledge/sample': ['./resources/learning/**'],
         '/api/textbooks/seed/lessons': ['./resources/textbooks/**'],
         '/api/textbooks/seed': ['./resources/textbooks/**/*'], '/api/vocabulary': ['./resources/vocabulary/**/*'], '/api/vocabulary/**/*': ['./resources/vocabulary/**/*'], '/api/learning': ['./resources/learning/**/*'], '/api/learning/*': ['./resources/learning/**/*'], '/api/import': ['./resources/learning/**/*', './resources/vocabulary/**/*'], '/api/lesson-audio': ['./resources/learning/**/*'] },

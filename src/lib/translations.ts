@@ -1,3 +1,4 @@
+import { generationEn, generationZh } from './video-generation-translations';
 import { videoEn, videoZh } from './video-translations';
 import { knowledgeEn, knowledgeZh } from './knowledge-translations';
 import { textbookEn, textbookZh } from './textbook-translations';
@@ -8,6 +9,7 @@ export type Language = 'zh' | 'en';
 
 export const translations = {
     en: {
+        generation: generationEn,
         videos: videoEn,
         learning: learningEn,
         vocabulary: vocabularyEn,
@@ -1226,6 +1228,7 @@ export const translations = {
         },
     },
     zh: {
+        generation: generationZh,
         videos: videoZh,
         learning: learningZh,
         vocabulary: vocabularyZh,

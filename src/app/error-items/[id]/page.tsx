@@ -17,6 +17,7 @@ import { MasteryPanel } from "@/components/mastery-panel";
 import { MasteryStatusBadge } from "@/components/mastery-status-badge";
 import { RegenerateAnswerButton } from "@/components/regenerate-answer-button";
 import { ShortIdBadge } from "@/components/short-id-badge";
+import { GenerateVideo } from "@/components/video-generation";
 import { ErrorVideos } from "@/components/videos/error-videos";
 import { SvgAnimationExplainer } from "@/components/svg-animation-explainer";
 import { Button } from "@/components/ui/button";
@@ -215,6 +216,7 @@ export default function ErrorDetailPage() {
                 </div>
 
                 <div className="space-y-6">
+                    <GenerateVideo id={item.id} />
                     <ErrorVideos id={item.id} />
                     {svgAnimationEnabled && (
                         // 切换界面语言时自动显示对应语言的动画；key 让播放器随语言重新加载

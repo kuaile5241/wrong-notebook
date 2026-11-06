@@ -40,6 +40,7 @@ model User {
   customTags KnowledgeTag[] // User's custom tags
   examPapers ExamPaper[]
   aiUsages   AiUsage[]
+  videoGenerations VideoGeneration[]
   videoLinks VideoLessonLink[]
   learningSessions LearningSession[]
   learningSettings String @default("{}")
@@ -164,6 +165,7 @@ model ErrorItem {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
+  videoGenerations VideoGeneration[]
   videoLinks VideoLessonLink[]
   reviewSchedules ReviewSchedule[]
   practiceRecords PracticeRecord[]
@@ -399,4 +401,24 @@ model VideoLessonLink {
   videoId String
   video VideoLesson @relation(fields: [videoId], references: [id], onDelete: Cascade)
   @@unique([userId, errorItemId, videoId])
+}
+
+model VideoGeneration {
+  id String @id
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  errorItemId String
+  errorItem ErrorItem @relation(fields: [errorItemId], references: [id], onDelete: Cascade)
+  source String
+  voice String
+  status String @default("queued")
+  attempt String @default("")
+  plan String @default("")
+  error String @default("")
+  resultHash String @default("")
+  bytes Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([userId, errorItemId])
+  @@index([status, createdAt])
 }

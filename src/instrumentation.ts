@@ -8,6 +8,8 @@ export async function register() {
         if (process.env.NEXT_PHASE !== 'phase-production-build') {
             const { startCheckinScheduler } = await import('./lib/minimax-code/checkin');
             startCheckinScheduler();
+            const { startVideoScheduler } = await import("./lib/video-generation/jobs");
+            startVideoScheduler();
         }
     }
 }

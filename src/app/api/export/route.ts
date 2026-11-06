@@ -76,6 +76,7 @@ export async function GET(req: Request) {
         const textbooks = user.role === 'admin' ? await prisma.textbookBook.findMany({ include: { units: { include: { terms: true } } } }) : [];
         const learningProfiles = (await prisma.user.findMany({ where: exportAll ? {} : { id: user.id }, select: { id: true, learningSettings: true } })).map(u => ({ userId: u.id, settings: u.learningSettings }));
         const videoLessons = user.role === 'admin' ? (await prisma.videoLesson.findMany()).map(v => ({ ...v, topics: JSON.parse(v.topics) })) : [];
+        const videoGenerations = await prisma.videoGeneration.findMany({ where: userFilter });
         const videoLinks = await prisma.videoLessonLink.findMany({ where: userFilter });
         const exportData = {
             version: 2,
@@ -107,6 +108,7 @@ export async function GET(req: Request) {
             textbooks,
             videoLessons,
             videoLinks,
+            videoGenerations,
             vocabularyCards,
             vocabularyAttempts,
         };

@@ -91,6 +91,7 @@ export interface CandidateTags {
 }
 
 export interface AIService {
+    generateVideoPlan(question: string, answer: string, analysis: string): Promise<import('../video-generation/plan').VideoPlan>;
     analyzeImage(imageBase64: string, mimeType?: string, language?: 'zh' | 'en', grade?: GradeLevel | null, subject?: string | null, gradeSemester?: string | null, candidateTags?: CandidateTags): Promise<ParsedQuestionFromSchema>;
     /** originalFigureSvg：原题的 SVG 配图，新题需要配图时据此重新绘制 */
     generateSimilarQuestion(originalQuestion: string, knowledgePoints: string[], language?: 'zh' | 'en', difficulty?: DifficultyLevel, gradeSemester?: string | null, originalFigureSvg?: string | null): Promise<ParsedQuestionFromSchema>;

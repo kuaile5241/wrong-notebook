@@ -1,3 +1,5 @@
+import { parseVideoPlan, type VideoPlan } from '../video-generation/plan';
+import { generateVideoPlanPrompt } from './prompts';
 import { AzureOpenAI } from "openai";
 import { AIService, GradeLevel, ParsedQuestion, DifficultyLevel, ReanswerQuestionResult, GeogebraAnalysisResult, MasteryEvaluationInput, MasteryEvaluationResult, AnswerGradingInput, AnswerGradingResult, TagSuggestionInput, TagSuggestionResult, CandidateTags, FigureResult } from "./types";
 import { generateAnalyzePrompt, generateSimilarQuestionPrompt, generateReanswerPrompt, generateGeogebraPrompt, generateMasteryPrompt, generateGradingPrompt, generateTagSuggestPrompt, generateFigurePrompt, generateSvgAnimationPrompt, generateLatexFixPrompt, SVG_ANIMATION_REQUEST } from './prompts';
@@ -588,6 +590,31 @@ Knowledge Points: ${knowledgePoints.join(", ")}
 
             if (!text) throw new Error("Empty response from AI");
             return sanitizeSvgAnimation(this.extractTag(text, "svg_animation") || text);
+        } catch (error) {
+            logger.error({ error, stack: error instanceof Error ? error.stack : undefined }, 'Error during SVG animation generation');
+            this.handleError(error);
+            throw error;
+        }
+    }
+
+    async generateVideoPlan(questionText: string, answerText: string, analysis: string): Promise<VideoPlan> {
+        const prompt = generateVideoPlanPrompt(questionText, answerText, analysis);
+        logger.info({ provider: 'Azure OpenAI', deployment: this.deployment, questionLength: questionText.length }, 'SVG Animation Request');
+
+        try {
+            const response = await withTruncationRetry((maxTokens) => this.client.chat.completions.create({
+                model: this.deployment,
+                messages: [
+                    { role: "system", content: prompt },
+                    { role: "user", content: '请输出该题的视频分镜JSON。' },
+                ],
+                max_tokens: maxTokens,
+            }), 16384, () => logger.warn('Output truncated by reasoning, retrying with larger max_tokens'));
+
+            const text = response.choices[0]?.message?.content || '';
+
+            if (!text) throw new Error("Empty response from AI");
+            return parseVideoPlan(text);
         } catch (error) {
             logger.error({ error, stack: error instanceof Error ? error.stack : undefined }, 'Error during SVG animation generation');
             this.handleError(error);

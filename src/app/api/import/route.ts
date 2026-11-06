@@ -1,3 +1,4 @@
+import { restoreGenerations } from '@/lib/video-generation/backup';
 import { restoreVideos, videoLinkBackup } from '@/lib/videos/backup';
 import { profileSettingsSchema, readProfileSettings } from '@/lib/learning/profiles';
 import { restoreTextbooks } from '@/lib/textbooks/backup';
@@ -37,6 +38,7 @@ interface ImportData {
     textbooks?: unknown[];
     videoLessons?: unknown[];
     videoLinks?: unknown[];
+    videoGenerations?: unknown[];
     vocabularyCards?: unknown[];
     vocabularyAttempts?: unknown[];
     user: {
@@ -634,6 +636,7 @@ export async function POST(req: Request) {
                 const key = { userId: owner, errorItemId, videoId: link.videoId };
                 await tx.videoLessonLink.upsert({ where: { userId_errorItemId_videoId: key }, create: key, update: {} });
             }
+            await restoreGenerations(tx, body.videoGenerations, { userId: user.id, sourceUserId: body.user.id, all: importAll, admin: user.role === 'admin', itemMap: errorItemIdMap });
             const vocabularyStats = await restoreVocabulary(tx, body.vocabularyCards, body.vocabularyAttempts, { userId: user.id, sourceUserId: body.user.id, all: importAll });
             Object.assign(stats, vocabularyStats);
 

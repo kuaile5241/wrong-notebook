@@ -1,3 +1,5 @@
+import { parseVideoPlan, type VideoPlan } from '../video-generation/plan';
+import { generateVideoPlanPrompt } from './prompts';
 import Anthropic from "@anthropic-ai/sdk";
 import { AIService, GradeLevel, ParsedQuestion, DifficultyLevel, AIConfig, ReanswerQuestionResult, GeogebraAnalysisResult, MasteryEvaluationInput, MasteryEvaluationResult, AnswerGradingInput, AnswerGradingResult, TagSuggestionInput, TagSuggestionResult, CandidateTags, FigureResult } from "./types";
 import { generateAnalyzePrompt, generateSimilarQuestionPrompt, generateGeogebraPrompt, generateMasteryPrompt, generateGradingPrompt, generateTagSuggestPrompt, generateReanswerPrompt, generateFigurePrompt, generateSvgAnimationPrompt, generateLatexFixPrompt, SVG_ANIMATION_REQUEST } from './prompts';
@@ -349,6 +351,19 @@ export class AnthropicProvider implements AIService {
             const text = await this.complete(generateSvgAnimationPrompt(questionText, answerText, analysis, figureSvg, language), SVG_ANIMATION_REQUEST[language], 16384);
             logger.debug({ rawResponse: text }, 'SVG animation AI raw response');
             return sanitizeSvgAnimation(extractTag(text, "svg_animation") || text);
+        } catch (error) {
+            logger.error({ error, stack: error instanceof Error ? error.stack : undefined }, 'Error during SVG animation generation');
+            this.handleError(error);
+            throw error;
+        }
+    }
+
+    async generateVideoPlan(questionText: string, answerText: string, analysis: string): Promise<VideoPlan> {
+        logger.info({ provider: 'Anthropic', model: this.model, questionLength: questionText.length }, 'SVG Animation Request');
+
+        try {
+            const text = await this.complete(generateVideoPlanPrompt(questionText, answerText, analysis), '请输出该题的视频分镜JSON。', 16384);
+            return parseVideoPlan(text);
         } catch (error) {
             logger.error({ error, stack: error instanceof Error ? error.stack : undefined }, 'Error during SVG animation generation');
             this.handleError(error);

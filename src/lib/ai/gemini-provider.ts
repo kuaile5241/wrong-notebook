@@ -1,3 +1,5 @@
+import { parseVideoPlan, type VideoPlan } from '../video-generation/plan';
+import { generateVideoPlanPrompt } from './prompts';
 import { GoogleGenAI } from "@google/genai";
 import { AIService, GradeLevel, ParsedQuestion, DifficultyLevel, AIConfig, ReanswerQuestionResult, GeogebraAnalysisResult, MasteryEvaluationInput, MasteryEvaluationResult, AnswerGradingInput, AnswerGradingResult, TagSuggestionInput, TagSuggestionResult, CandidateTags, FigureResult } from "./types";
 import { generateAnalyzePrompt, generateSimilarQuestionPrompt, generateGeogebraPrompt, generateMasteryPrompt, generateGradingPrompt, generateTagSuggestPrompt, generateFigurePrompt, generateSvgAnimationPrompt, generateLatexFixPrompt, SVG_ANIMATION_REQUEST } from './prompts';
@@ -534,6 +536,27 @@ export class GeminiProvider implements AIService {
 
             if (!text) throw new Error(response.candidates?.[0]?.finishReason === 'MAX_TOKENS' ? AI_OUTPUT_TRUNCATED : "Empty response from AI");
             return sanitizeSvgAnimation(this.extractTag(text, "svg_animation") || text);
+        } catch (error) {
+            logger.error({ error, stack: error instanceof Error ? error.stack : undefined }, 'Error during SVG animation generation');
+            this.handleError(error);
+            throw error;
+        }
+    }
+
+    async generateVideoPlan(questionText: string, answerText: string, analysis: string): Promise<VideoPlan> {
+        const prompt = generateVideoPlanPrompt(questionText, answerText, analysis);
+        logger.info({ provider: 'Gemini', model: this.modelName, questionLength: questionText.length }, 'SVG Animation Request');
+
+        try {
+            const response = await this.retryOperation(() => this.ai.models.generateContent({
+                model: this.modelName,
+                contents: [{ text: prompt }, { text: '请输出该题的视频分镜JSON。' }],
+            }));
+
+            const text = response.text || '';
+
+            if (!text) throw new Error(response.candidates?.[0]?.finishReason === 'MAX_TOKENS' ? AI_OUTPUT_TRUNCATED : "Empty response from AI");
+            return parseVideoPlan(text);
         } catch (error) {
             logger.error({ error, stack: error instanceof Error ? error.stack : undefined }, 'Error during SVG animation generation');
             this.handleError(error);
