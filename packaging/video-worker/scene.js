@@ -8,7 +8,7 @@ function lines(p, text, x, y, size, t, color) {
 }
 function counter(p, group, row, duration) {
     const top = 310 + row * 175;
-    lines(p, group.label + ' × ' + group.count, 160, top - 45, 34, .4, COL.nat);
+    lines(p, group.label + ' × ' + group.count, 160, top - 45, 34, .4, row ? '#92400e' : '#0f766e');
     for (let i = 0; i < group.count; i++) {
         const x = 180 + (i % 10) * 64, y = top + Math.floor(i / 10) * 70;
         const g = G(p, { x, y, o: 0 });
