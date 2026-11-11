@@ -4,7 +4,8 @@
  *         createSession(graph, targets, {limit, seed, avoid}) -> session   （会话是可 JSON 序列化的纯数据）
  *         nextQuestion(graph, session) -> topicId | null     （下一个要考的知识点）
  *         nextItem(graph, session) -> {topicId, question, attempt} | null   （要出的具体题目；attempt 从 1 起）
- *         applyAnswer(graph, session, id, 'correct'|'wrong'|'skip', {text}) -> 新 session（不修改入参）
+ *         applyAnswer(graph, session, id, 'correct'|'wrong'|'skip', {text, prompt, pin, qid}) -> 新 session（不修改入参）
+ *           pin 且 qid 对得上题库时，按这个题号记，不再重选。题号对不上则这步不记分。
  *         summarize(graph, session) -> 结果（根因、学习路径、掌握/不稳/薄弱/未测）
  *         gradeTargets(graph, '一年级'|'七上'|'高一'|'选必二', subject?) -> {ids, volumes, label} | null
  *           默认 subject 为 math，不把英语卷进数学的整册；'english' 只取英语（含九全），'physics' 只取物理（八上、八下、九全），'all' 不限学科
@@ -85,6 +86,24 @@
     graph.prereqs[id].forEach(function (p) {
       out.add(p.id);
       ancestorSet(graph, p.id).forEach(function (a) { out.add(a); });
+    });
+    visiting[id] = false;
+    memo[id] = out;
+    return out;
+  }
+
+  /** 只沿 hard 先修走的严格祖先（不含自身），带独立缓存。筛查模式的推断掌握用它。 */
+  function hardAncestorSet(graph, id) {
+    const memo = graph._hardAnc || (graph._hardAnc = Object.create(null));
+    if (memo[id]) return memo[id];
+    const visiting = graph._hardVisiting || (graph._hardVisiting = Object.create(null));
+    if (visiting[id]) throw new Error('先修图存在环：' + id);
+    visiting[id] = true;
+    const out = new Set();
+    graph.prereqs[id].forEach(function (p) {
+      if (p.strength !== 'hard') return;
+      out.add(p.id);
+      hardAncestorSet(graph, p.id).forEach(function (a) { out.add(a); });
     });
     visiting[id] = false;
     memo[id] = out;
@@ -279,7 +298,7 @@
 
   /**
    * 记录一次作答（针对 nextItem 给出的那道题）。
-   *  - 连续答对满 needConfirm 题：该点及其所有尚未判定的祖先记为掌握（祖先为 inferred）；
+   *  - 连续答对满 needConfirm 题：该点及其尚未判定的祖先记为掌握（祖先为 inferred；筛查模式只沿 hard 先修推断，soft 不推断）；
    *  - 连续答对尚未满额：还没有结论，继续出同知识点下一题；
    *  - 中途 wrong/skip：还没有结论，再出一道确认题（没有可出的就直接判薄弱）；
    *  - 确认题 correct：不稳（shaky），不向先修回溯；
@@ -292,9 +311,16 @@
     const s = cloneSession(session);
     if (s.status[id]) { delete s.status[id]; s.attempts[id] = []; } // 对已有结论的点重新作答 = 重新开始
     const prev = s.attempts[id] || [];
-    const q = pickQuestion(graph, s, id, prev.length + 1);
+    let q;
+    if (extra && extra.pin) {
+      q = extra.qid ? questionById(graph, extra.qid) : null;
+      if (!q || q.topicId !== id) return session;
+    } else {
+      q = pickQuestion(graph, s, id, prev.length + 1);
+    }
     const rec = { id: id, qid: q ? q.id : null, result: result };
     if (extra && extra.text != null && extra.text !== '') rec.text = String(extra.text);
+    if (extra && extra.prompt) rec.prompt = String(extra.prompt);
     s.answers.push(rec);
     s.attempts[id] = prev.concat([{ qid: rec.qid, result: result }]);
     const attempts = s.attempts[id];
@@ -304,7 +330,7 @@
     if (result === 'correct') {
       if (fails === 0 && corrects >= need) {
         s.status[id] = { s: 'mastered', src: 'direct' };
-        ancestorSet(graph, id).forEach(function (a) {
+        (s.mode === 'screen' ? hardAncestorSet(graph, id) : ancestorSet(graph, id)).forEach(function (a) {
           if (!s.status[a]) s.status[a] = { s: 'mastered', src: 'inferred' };
         });
       } else if (fails > 0) {
@@ -342,10 +368,19 @@
     return q ? { topicId: id, question: q, attempt: attempt } : null;
   }
 
-  /** 由作答记录重建会话（用于刷新恢复、撤销、更正）。 */
+  /** 由作答记录重建会话（用于刷新恢复、撤销、更正）。
+   *  记录里若有 qid，就钉在该题上，避免删掉中间一题后把后面的结果套到另一道题。
+   *  exclude 的作答整段跳过，不记分。 */
   function replay(graph, targets, answers, opts) {
     let s = createSession(graph, targets, opts);
-    answers.forEach(function (a) { s = applyAnswer(graph, s, a.id, a.result, { text: a.text }); });
+    answers.forEach(function (a) {
+      if (!a || a.exclude) return;
+      const extra = {};
+      if (a.text != null && a.text !== '') extra.text = a.text;
+      if (a.prompt) extra.prompt = a.prompt;
+      if (a.qid) { extra.pin = true; extra.qid = a.qid; }
+      s = applyAnswer(graph, s, a.id, a.result, extra);
+    });
     return s;
   }
 
@@ -527,6 +562,9 @@
     const s = chapter || '';
     const pm = /^([一二三四五六七八九])年级([上下全])册 (第\d+单元|预备单元\d) (.+)$/.exec(s);
     if (pm) return { volume: pm[1] + pm[2], chapterNo: pm[3], chapterName: pm[4], section: '' };
+    // 资源页没有写进某一课的项目，例如「七年级上册 待核」。仍算进该册，不假装有单元号。
+    const pend = /^([一二三四五六七八九])年级([上下全])册 待核$/.exec(s);
+    if (pend) return { volume: pend[1] + pend[2], chapterNo: '待核', chapterName: '未挂到具体单元', section: '' };
     const pi = /^([一二三四五六])年级([上下])册 (综合与实践) (.+)$/.exec(s);
     if (pi) return { volume: pi[1] + pi[2], chapterNo: pi[3], chapterName: pi[4], section: '' };
     // 小学英语复习 / Recycle（如「四年级上册 复习 Let's help!」）
@@ -550,16 +588,19 @@
     return { volume: m[1], chapterNo: m[2], chapterName: m[3], section: m[4] || '' };
   }
 
-  /** 学科：显式 subject 优先，否则 cne_ 是英语、cnp_ 是物理、cnc_ 是语文、cns_ 是科学、cnd_ 是道德与法治、cnh_ 是历史，其余算数学。 */
+  /** 学科：显式 subject 优先，否则 cne_ 是英语、cnp_ 是物理、cnc_ 是语文、cns_ 是科学、cnd_ 是道德与法治、cnh_ 是历史、cng_ 是地理、cnb_ 是生物、cnk_ 是化学，其余算数学。 */
   function subjectOf(topic) {
     if (!topic) return 'math';
-    if (topic.subject === 'english' || topic.subject === 'math' || topic.subject === 'physics' || topic.subject === 'chinese' || topic.subject === 'science' || topic.subject === 'morality' || topic.subject === 'history') return topic.subject;
+    if (topic.subject === 'english' || topic.subject === 'math' || topic.subject === 'physics' || topic.subject === 'chinese' || topic.subject === 'science' || topic.subject === 'morality' || topic.subject === 'history' || topic.subject === 'geography' || topic.subject === 'biology' || topic.subject === 'chemistry') return topic.subject;
     if (String(topic.id || '').indexOf('cne_') === 0) return 'english';
     if (String(topic.id || '').indexOf('cnp_') === 0) return 'physics';
     if (String(topic.id || '').indexOf('cnc_') === 0) return 'chinese';
     if (String(topic.id || '').indexOf('cns_') === 0) return 'science';
     if (String(topic.id || '').indexOf('cnd_') === 0) return 'morality';
     if (String(topic.id || '').indexOf('cnh_') === 0) return 'history';
+    if (String(topic.id || '').indexOf('cng_') === 0) return 'geography';
+    if (String(topic.id || '').indexOf('cnb_') === 0) return 'biology';
+    if (String(topic.id || '').indexOf('cnk_') === 0) return 'chemistry';
     return 'math';
   }
 

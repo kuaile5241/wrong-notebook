@@ -23,7 +23,7 @@ export async function POST(req: Request, ctx: Context) {
         const row = await prisma.learningSession.findFirst({ where: { id: (await ctx.params).id, userId: user.id } });
         if (!row) return NextResponse.json({ message: 'Not found' }, { status: 404 });
         if (!COMPATIBLE_DATASET_REVISIONS.includes(row.datasetVersion)) return NextResponse.json({ message: 'Dataset version mismatch' }, { status: 409 });
-        const state = parseLearning(row.state);
+        const state = parseLearning(row.state, row.datasetVersion);
         if (state.history.some(h => h.requestId === input.requestId)) return NextResponse.json(learningView(row), noStore);
         const q = nextLearningQuestion(state);
         if (row.revision !== input.revision || !q || q.id !== input.questionId)
@@ -34,7 +34,7 @@ export async function POST(req: Request, ctx: Context) {
             // 乐观锁先占位，避免双击、重试和多个页面同时提交重复归档。
             const locked = await tx.learningSession.updateMany({ where: { id: row.id, userId: user.id, revision: input.revision }, data: { revision: { increment: 1 } } });
             if (locked.count !== 1) return null;
-            applied.history.errorItemId = await archiveLearningMistake(tx, user.id, getCatalog().byId.get(q.topicId)!, applied.history, row.profileId);
+            applied.history.errorItemId = await archiveLearningMistake(tx, user.id, getCatalog(row.datasetVersion).byId.get(q.topicId)!, applied.history, row.profileId, row.datasetVersion);
             return tx.learningSession.update({ where: { id: row.id }, data: { state: JSON.stringify(applied.state),
                 status: nextLearningQuestion(applied.state) ? 'active' : 'completed' } });
         });

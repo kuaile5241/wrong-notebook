@@ -2,7 +2,7 @@ import { readProfileSettings } from '@/lib/learning/profiles';
 import { randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getCatalog, DATASET_REVISION, COMPATIBLE_DATASET_REVISIONS, SUBJECT_NAMES, topicSubject, volumeLabel } from '@/lib/learning/catalog';
+import { getCatalog, DATASET_REVISION, COMPATIBLE_DATASET_REVISIONS, SUBJECT_NAMES, sameQuestion, topicSubject, volumeLabel } from '@/lib/learning/catalog';
 import { learningAuth, learningFailure, noStore } from '@/lib/learning/auth';
 import { summarizeBlindspots } from '@/lib/learning/blindspots';
 import { createLearningSchema, createLearningState, learningView, parseLearning } from '@/lib/learning/session';
@@ -19,7 +19,7 @@ export async function GET(req: Request) {
         const filtered = (search ? subjectTopics : volumeTopics).filter(t => (!chapter || t.chapter === chapter || !!search) && (!search || `${t.id} ${t.name} ${t.chapter}`.toLowerCase().includes(search)));
         const recent = await prisma.learningSession.findMany({ where: { userId: user.id, profileId: p.get('profileId') || '' }, orderBy: { updatedAt: 'desc' }, take: 12,
             select: { id: true, title: true, mode: true, status: true, updatedAt: true } });
-        const records = await prisma.learningSession.findMany({ where: { userId: user.id, profileId: p.get('profileId') || '', datasetVersion: { in: COMPATIBLE_DATASET_REVISIONS } }, select: { id: true, state: true, updatedAt: true } });
+        const records = await prisma.learningSession.findMany({ where: { userId: user.id, profileId: p.get('profileId') || '', datasetVersion: { in: COMPATIBLE_DATASET_REVISIONS } }, select: { id: true, state: true, datasetVersion: true, updatedAt: true } });
         return NextResponse.json({ blindspots: summarizeBlindspots(records, subject, volume), revision: DATASET_REVISION, totalTopics: catalog.topics.length, totalQuestions: catalog.questions.length,
             subjects: Object.entries(SUBJECT_NAMES).map(([key, name]) => ({ key, name, topics: catalog.topics.filter(t => topicSubject(t) === key).length })),
             volumes: [...new Map(subjectTopics.map(t => [`${t.grade}-${t.semester}`, { key: `${t.grade}-${t.semester}`, name: volumeLabel(t) }])).values()],
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
         if (topics.some(t => !t) || new Set(topics.map(t => t && topicSubject(t))).size !== 1)
             return NextResponse.json({ message: 'Invalid topics' }, { status: 400 });
         const recent = await prisma.learningSession.findMany({ where: { userId: user.id, profileId, datasetVersion: { in: COMPATIBLE_DATASET_REVISIONS } }, orderBy: { updatedAt: 'desc' }, take: 20 });
-        const avoid = recent.flatMap(r => parseLearning(r.state).history.map(h => h.question.id));
+        const avoid = recent.flatMap(r => parseLearning(r.state, r.datasetVersion).history.filter(h => sameQuestion(h.question, catalog.questionsById.get(h.question.id))).map(h => h.question.id));
         const account = await prisma.user.findUniqueOrThrow({ where: { id: user.id }, select: { learningSettings: true } });
         if (profileId && !readProfileSettings(account.learningSettings).profiles.some(p => p.id === profileId && !p.archived)) return NextResponse.json({ message: 'Unknown profile' }, { status: 400 });
         const state = createLearningState(topicIds, mode, count, avoid, confirm);

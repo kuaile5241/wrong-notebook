@@ -1,11 +1,13 @@
 # 第三方内容声明
 
-数据和诊断引擎来自 [xiaoyang111222/cn-math-taxonomy](https://github.com/xiaoyang111222/cn-math-taxonomy)，通过用户自有 fork kuaile5241/cn-math-taxonomy 获取。固定提交 068db3c2550626529269d40939e3c93311a61349。
+数据和诊断引擎来自 [xiaoyang111222/cn-math-taxonomy](https://github.com/xiaoyang111222/cn-math-taxonomy)，本次直接从原仓库获取。固定提交 07941bcf70bff6a59105e953b8d0e78f1dfa0d55。
 
 该第三方内容以 CC BY-NC 4.0 授权，完整许可见同目录 LICENSE；仅按非商业学习用途集成。wrong-notebook 其他原有代码的许可不因此改变。
 
-修改说明：原始数据保持固定快照；应用层净化 SVG、隐藏待答答案、使用硬先修诊断、区分实测和推断状态，并改为账号下服务端保存。诊断引擎文件保持原样，SHA256 记录在 manifest.json。
+修改说明：原始数据保持固定快照；应用层净化 SVG、隐藏待答答案、使用硬先修诊断、区分实测和推断状态，并改为账号下服务端保存。新旧诊断引擎文件保持原样，SHA256 记录在 manifest.json。
 
 题目与知识关系是 AI 初稿，未经教师审核，不能视为权威测评。商业使用需按上游说明另行取得授权。
 
 补充：standards.json由同一固定上游data/cn-curriculum-standards.json整理为安全展示字段；id-aliases.json来自同一快照，均沿用CC BY-NC 4.0及待核说明。图谱和诊断界面为本系统重新实现，未复制原站统计/推广脚本。
+
+2026-11-11：数据更新至3442点、13915题、4915条关系、791条安全课标元信息；新增苏教数学/译林英语教材对照草稿。旧版068db3c（亦兼容27f7cce）的题目与引擎单独保留，旧记录继续按原版作答、重放和恢复；改写题的作答不混入新版统计和错题。

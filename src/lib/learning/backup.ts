@@ -1,6 +1,5 @@
 import { z } from 'zod';
-import * as Engine from './vendor/engine';
-import { COMPATIBLE_DATASET_REVISIONS, getCatalog } from './catalog';
+import { COMPATIBLE_DATASET_REVISIONS, getCatalog, DATASET_REVISION } from './catalog';
 import { applyLearningAnswer, nextLearningQuestion } from './session';
 import type { StoredLearning } from './types';
 
@@ -15,12 +14,12 @@ const stateSchema = z.object({
         verdict: z.enum(['correct', 'wrong', 'skip']), method: z.enum(['rule', 'self']), errorItemId: z.string().optional() })).max(60),
 });
 /** 从服务端原题和作答重建状态，绝不信任备份中的答案、SVG 或已掌握状态。 */
-export function restoreLearningState(raw: string, mode: string, itemMap: Map<string, string>): StoredLearning {
-    const input = stateSchema.parse(JSON.parse(raw)), { graph, byId, questionsById } = getCatalog();
+export function restoreLearningState(raw: string, mode: string, itemMap: Map<string, string>, datasetVersion = DATASET_REVISION): StoredLearning {
+    const input = stateSchema.parse(JSON.parse(raw)), { graph, fullGraph, byId, questionsById, engine: Engine } = getCatalog(datasetVersion);
     if ((mode !== 'practice') !== !!input.engine) throw new Error('Invalid learning mode');
     if (input.queue.some(id => !questionsById.has(id)) || new Set(input.queue).size !== input.queue.length) throw new Error('Invalid question queue');
     if (input.engine?.targets.some(id => !byId.has(id))) throw new Error('Unknown topic');
-    let state: StoredLearning = { engine: input.engine ? { ...Engine.createSession(input.engine.graphMode === 'full' ? getCatalog().fullGraph : graph, input.engine.targets, { ...input.engine, mode: mode === 'screen' ? 'screen' : 'target' }), ...(input.engine.graphMode ? { graphMode: input.engine.graphMode } : {}) } : null, queue: input.queue, history: [] };
+    let state: StoredLearning = { datasetVersion, engine: input.engine ? { ...Engine.createSession(input.engine.graphMode === 'full' ? fullGraph : graph, input.engine.targets, { ...input.engine, mode: mode === 'screen' ? 'screen' : 'target' }), ...(input.engine.graphMode ? { graphMode: input.engine.graphMode } : {}) } : null, queue: input.queue, history: [] };
     const requests = new Set<string>();
     for (const h of input.history) {
         if (requests.has(h.requestId)) throw new Error('Duplicate answer'); requests.add(h.requestId);

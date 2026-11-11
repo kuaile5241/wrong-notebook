@@ -1,7 +1,8 @@
 import type { Dependency, Topic } from './types';
 export interface KnowledgeTopic extends Topic { volumeName: string }
 export interface Standard { id: string; text: string; text_status?: string; note?: string; page_or_ref?: string; sourceTitle?: string }
-export interface KnowledgeData { revision: string; subjects: Record<string, string>; topics: KnowledgeTopic[]; dependencies: Dependency[]; standards: Standard[]; names: Record<string, { name: string; subject: string }>; aliases: Record<string, { targets?: string[] } | string[]> }
+export interface EditionMapping { edition: string; label: string; status: string; entries: { topicId: string; grade: number; term: string; unit: string; chapter?: string; note?: string }[] }
+export interface KnowledgeData { mappings?: EditionMapping[]; revision: string; subjects: Record<string, string>; topics: KnowledgeTopic[]; dependencies: Dependency[]; standards: Standard[]; names: Record<string, { name: string; subject: string }>; aliases: Record<string, { targets?: string[] } | string[]> }
 export function localKnowledgeGraph(topics: Topic[], dependencies: Dependency[], selected: string, depth: number) {
     const byId = new Map(topics.map(t => [t.id, t])), levels = new Map<string, number>(selected === '*' ? topics.map(t => [t.id, 0] as [string, number]) : [[selected, 0]]); let front = selected === '*' ? [] : [selected];
     if (selected === '*') {

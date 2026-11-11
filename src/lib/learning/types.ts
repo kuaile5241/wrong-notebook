@@ -25,6 +25,7 @@ export interface AnswerHistory {
     verdict: 'correct' | 'wrong' | 'skip'; method: 'rule' | 'self'; errorItemId?: string;
 }
 export interface StoredLearning {
+    datasetVersion?: string;
     engine: EngineSession | null; queue: string[]; history: AnswerHistory[];
 }
 export interface TopicStatus { id: string; name: string; chapter: string; status: 'direct' | 'self' | 'inferred' | 'shaky' | 'weak' | 'pending' | 'untested' }

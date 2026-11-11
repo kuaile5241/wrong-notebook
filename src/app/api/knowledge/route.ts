@@ -12,6 +12,7 @@ export async function GET(req: Request) {
         const standards = JSON.parse(readFileSync(join(process.cwd(), 'resources/learning/standards.json'), 'utf8')) as { id: string; text: string }[];
         const needed = new Set(topics.flatMap(t => (t.standards ?? []).map(s => s.id)));
         return NextResponse.json({ revision: DATASET_REVISION, subjects: SUBJECT_NAMES, topics: topics.map(t => ({ ...t, volumeName: volumeLabel(t) })), dependencies: c.dependencies.filter(d => ids.has(d.topicId) && ids.has(d.prerequisiteId)),
+            mappings: ['sujiao_math', 'yilin_english'].map(name => JSON.parse(readFileSync(join(process.cwd(), 'resources/learning/mappings', name + '.json'), 'utf8'))),
             standards: standards.filter(s => needed.has(s.id)), names: Object.fromEntries(c.topics.map(t => [t.id, { name: t.name, subject: topicSubject(t) }])), aliases: JSON.parse(readFileSync(join(process.cwd(), 'resources/learning/id-aliases.json'), 'utf8')) }, noStore);
     } catch (error) { return learningFailure(error); }
 }

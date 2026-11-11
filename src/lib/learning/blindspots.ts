@@ -1,20 +1,21 @@
-import { getCatalog, topicSubject } from './catalog';
+import { getCatalog, topicSubject, sameQuestion } from './catalog';
 import { parseLearning } from './session';
 import type { AnswerHistory } from './types';
 
 export interface BlindspotChapter {
     chapter: string; volume: string; topicIds: string[]; names: string[]; weak: number; pending: number;
 }
-interface LearningRecord { id: string; state: string; updatedAt: Date }
+interface LearningRecord { id: string; state: string; updatedAt: Date; datasetVersion?: string }
 
 /** 从账号保存的学习快照汇总；推断掌握不抹去实测错题，自评通过不当成实测。 */
 export function summarizeBlindspots(records: LearningRecord[], subject: string, volume: string): BlindspotChapter[] {
     const catalog = getCatalog();
     const latest = new Map<string, 'weak' | 'pending' | 'passed'>();
     for (const row of [...records].sort((a, b) => a.updatedAt.getTime() - b.updatedAt.getTime() || a.id.localeCompare(b.id))) {
-        const state = parseLearning(row.state);
+        const state = parseLearning(row.state, row.datasetVersion);
         const attempts = new Map<string, AnswerHistory[]>();
         for (const h of state.history) {
+            if (!sameQuestion(h.question, catalog.questionsById.get(h.question.id))) continue;
             const id = h.question.topicId;
             attempts.set(id, [...(attempts.get(id) ?? []), h]);
         }

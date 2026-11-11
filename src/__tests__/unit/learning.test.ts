@@ -14,7 +14,7 @@ describe('固定版本题库与规则判题', () => {
     });
     it('数据引用完整、硬先修无环、输出不泄露诊断答案', () => {
         const c = getCatalog();
-        expect([c.topics.length, c.dependencies.length, c.questions.length]).toEqual([2938, 4380, 11899]);
+        expect([c.topics.length, c.dependencies.length, c.questions.length]).toEqual([3442, 4915, 13915]);
         expect(new Set(c.questions.map(q => q.id)).size).toBe(c.questions.length);
         for (const q of c.questions) { expect(c.byId.has(q.topicId)).toBe(true); expect(q.explanation).toBeTruthy(); }
         for (const t of c.topics) expect(t).not.toHaveProperty('diagnostic_question');

@@ -18,7 +18,7 @@ import { GET as PROFILES, POST as PROFILE } from '@/app/api/learning/profiles/ro
 import { POST as ACTION } from '@/app/api/learning/[id]/actions/route';
 import * as Engine from '@/lib/learning/vendor/engine';
 import { restoreLearningState } from '@/lib/learning/backup';
-import { DATASET_REVISION, getCatalog } from '@/lib/learning/catalog';
+import { DATASET_REVISION, LEGACY_DATASET_REVISION, getCatalog } from '@/lib/learning/catalog';
 import { parseLearning } from '@/lib/learning/session';
 import type { LearningView } from '@/lib/learning/types';
 let db: PrismaClient, directory: string;
@@ -36,6 +36,28 @@ beforeEach(async () => {
 });
 afterAll(async () => { await db?.$disconnect(); if (directory) rmSync(directory, { recursive: true, force: true }); });
 describe('图谱、完整筛查报告与档案（真实SQLite）', () => {
+    it('新版三门学科可练习，旧同题号错题不会被新版改写覆盖', async () => {
+        for (const subject of ['geography','biology','chemistry']) {
+            const data = await (await KNOWLEDGE(new Request('http://localhost?subject='+subject))).json();
+            expect(data.topics.length).toBeGreaterThan(20); expect(data.dependencies.length).toBeGreaterThan(0);
+            const view = await (await CREATE(request({topicIds:[data.topics[0].id],mode:'practice',count:3}))).json() as LearningView;
+            expect(view.question).not.toHaveProperty('answer'); expect(view.question!.figure ?? '').not.toContain('onload');
+        }
+        const qid='cnc_p124_q3';
+        for(const datasetVersion of [LEGACY_DATASET_REVISION,DATASET_REVISION]) {
+            const row=await db.learningSession.create({data:{userId:mocks.userId,title:'同号不同题',mode:'practice',datasetVersion,state:JSON.stringify({engine:null,queue:[qid],history:[]})}});
+            const view=await (await GET(new Request('http://localhost'),ctx(row.id))).json() as LearningView;
+            expect(view.question!.prompt).toBe(getCatalog(datasetVersion).questionsById.get(qid)!.prompt);
+            const answer=await POST(request({revision:0,requestId:randomUUID(),questionId:qid,skip:true}),ctx(row.id));expect(answer.status).toBe(200);
+            expect((await ACTION(request({action:'undo',revision:1}),ctx(row.id))).status).toBe(200);
+        }
+        const items=await db.errorItem.findMany(); expect(items).toHaveLength(2);
+        expect(items.map(i=>i.source)).toContain('cn-math-taxonomy:'+qid);
+        expect(items.map(i=>i.source)).toContain('cn-math-taxonomy:'+qid+':'+DATASET_REVISION.slice(0,7));
+        expect(items.some(i=>i.questionText!.includes('离离原上草'))).toBe(true);
+        expect(items.some(i=>i.questionText!.includes('水洒'))).toBe(true);
+    });
+
     it('图谱元数据和课标完整，但默认不发样题答案；到期即时禁止', async () => {
         const data = await (await KNOWLEDGE(new Request('http://localhost?subject=math'))).json(); expect(data.topics.length).toBeGreaterThan(100);
         const topic = data.topics.find((t: { id: string }) => t.id === 'cnm_h217'); expect(topic.domain).toBe('数与代数'); expect(topic.standards[0].id).toBe('cms-2017:H.FUN.22'); expect(data.standards.find((s: { id: string }) => s.id === topic.standards[0].id).text).toContain('导数'); expect(topic).not.toHaveProperty('diagnostic_question');

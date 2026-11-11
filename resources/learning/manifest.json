@@ -1,28 +1,33 @@
 {
   "repository": "https://github.com/xiaoyang111222/cn-math-taxonomy",
   "mirror": "https://github.com/kuaile5241/cn-math-taxonomy",
-  "revision": "068db3c2550626529269d40939e3c93311a61349",
+  "revision": "07941bcf70bff6a59105e953b8d0e78f1dfa0d55",
   "license": "CC-BY-NC-4.0",
   "files": [
     {
       "path": "resources/learning/topics.json",
-      "sha256": "1f6026772b5e1c4ba3ddfc2477c40dfae065b232015b65e56d80f8a6ce8b741b",
-      "bytes": 2553098
+      "sha256": "526d71bee35282e7294f45995fa632d8475cacb3096c58f21e592d33a2c76af3",
+      "bytes": 3185884
     },
     {
       "path": "resources/learning/dependencies.json",
-      "sha256": "2059f5b4bf2e87923520f4a3382d0ded5efda6d3f81522107bf2cc6ee0859afc",
-      "bytes": 864892
+      "sha256": "36f72a139239fee6da3bc6e2bfa049375f754739704e409dfd0d672878248e42",
+      "bytes": 979458
     },
     {
       "path": "resources/learning/questions.json",
-      "sha256": "1a5b4e807f59739321a5c7621c9b0d128b9676721d9418e3ddef9bf72aaf2db9",
-      "bytes": 7574044
+      "sha256": "159a71086834a40e2eba377e785bf6ea0ab36501d4847a3f1d51bd49e83d51ec",
+      "bytes": 9921766
     },
     {
-      "path": "src/lib/learning/vendor/engine.js",
-      "sha256": "d2fb72b24af6c963c1a26e99616655a352974844cbb54a7974fdecec8589865c",
-      "bytes": 48512
+      "path": "resources/learning/standards.json",
+      "sha256": "f1b7decfd4b752fe56aa9d894588113c0518b3b0c6a9ac1be9b0b46248e1321d",
+      "bytes": 351660
+    },
+    {
+      "path": "resources/learning/id-aliases.json",
+      "sha256": "791334fe08835c539ce7dd6afa686dffebba5f810d11ec616b5c5d70a87864fb",
+      "bytes": 3177
     },
     {
       "path": "resources/learning/LICENSE",
@@ -30,19 +35,43 @@
       "bytes": 19347
     },
     {
-      "path": "resources/learning/standards.json",
-      "sha256": "64a37afda0b2047e67d4329199dc019e8e565c2f537133bea9e803d7a7a8d3fa",
-      "bytes": 259188,
-      "note": "same pinned upstream; normalized public metadata, no question answers"
+      "path": "src/lib/learning/vendor/engine.js",
+      "sha256": "4b65503b22ed1e2d8a2fe3a7d2f2f285a4799ed7804c109359797ef3e0dd60a6",
+      "bytes": 50826
     },
     {
-      "path": "resources/learning/id-aliases.json",
-      "sha256": "47760dc1d5c3cba350e94e5430bea042de6c3dd571b8862fedafa1af01ecfab3",
-      "bytes": 3324,
-      "note": "same pinned upstream; normalized public metadata, no question answers"
+      "path": "src/lib/learning/vendor/engine-068db3.js",
+      "sha256": "d2fb72b24af6c963c1a26e99616655a352974844cbb54a7974fdecec8589865c",
+      "bytes": 48512
+    },
+    {
+      "path": "resources/learning/legacy-068db3c/topics.json",
+      "sha256": "1f6026772b5e1c4ba3ddfc2477c40dfae065b232015b65e56d80f8a6ce8b741b",
+      "bytes": 2553098
+    },
+    {
+      "path": "resources/learning/legacy-068db3c/questions.json",
+      "sha256": "1a5b4e807f59739321a5c7621c9b0d128b9676721d9418e3ddef9bf72aaf2db9",
+      "bytes": 7574044
+    },
+    {
+      "path": "resources/learning/legacy-068db3c/dependencies.json",
+      "sha256": "2059f5b4bf2e87923520f4a3382d0ded5efda6d3f81522107bf2cc6ee0859afc",
+      "bytes": 864892
+    },
+    {
+      "path": "resources/learning/mappings/sujiao_math.json",
+      "sha256": "bdb853c7165c7ac90a2d8eb6e91dd65c021edd7a6e196ccb8ea9a1e2b679e0d6",
+      "bytes": 41123
+    },
+    {
+      "path": "resources/learning/mappings/yilin_english.json",
+      "sha256": "25d2f75d2d47d21c070200c83c21c02b9139f551995c6cf204db8ca755765d28",
+      "bytes": 56518
     }
   ],
   "compatibleRevisions": [
+    "068db3c2550626529269d40939e3c93311a61349",
     "27f7cce7e8c875fd740184c93e99d0777ae8bf06"
   ]
 }

@@ -8,7 +8,7 @@ function read(owner: string) {
     let raw: string | null = null; try { raw = localStorage.getItem('knowledge-filters:' + owner); } catch { return cache.get(owner)?.value ?? defaults; }
     const old = cache.get(owner); if (old?.raw === raw) return old.value;
     let parsed: Partial<KnowledgeFilters> = {}; try { parsed = JSON.parse(raw || '{}') || {}; } catch { /* 使用明确默认值。 */ }
-    const value = { subject: ['math', 'english', 'physics', 'chinese', 'science', 'morality', 'history'].includes(parsed.subject || '') ? parsed.subject! : 'math', selected: typeof parsed.selected === 'string' ? parsed.selected.slice(0, 100) : defaults.selected,
+    const value = { subject: ['math', 'english', 'physics', 'chinese', 'science', 'morality', 'history', 'geography', 'biology', 'chemistry'].includes(parsed.subject || '') ? parsed.subject! : 'math', selected: typeof parsed.selected === 'string' ? parsed.selected.slice(0, 100) : defaults.selected,
         stage: ['', 'primary', 'junior', 'senior'].includes(parsed.stage || '') ? parsed.stage || '' : '', volume: typeof parsed.volume === 'string' ? parsed.volume.slice(0, 40) : '', domain: typeof parsed.domain === 'string' ? parsed.domain.slice(0, 100) : '', depth: [1, 2, 3, 9999].includes(parsed.depth || 0) ? parsed.depth! : 2 };
     cache.set(owner, { raw, value }); return value;
 }
@@ -19,4 +19,4 @@ export function useKnowledgeFilters(owner: string) {
     function save(next: KnowledgeFilters) { const raw = JSON.stringify(next); let memoryOnly = false; try { localStorage.setItem('knowledge-filters:' + owner, raw); } catch { memoryOnly = true; } cache.set(owner, { raw, value: next, memoryOnly }); listeners.forEach(f => f()); }
     return { value, save };
 }
-export function subjectForTopic(id: string) { return id.startsWith('cne_') ? 'english' : id.startsWith('cnp_') ? 'physics' : id.startsWith('cnc_') ? 'chinese' : id.startsWith('cns_') ? 'science' : id.startsWith('cnd_') ? 'morality' : id.startsWith('cnh_') ? 'history' : 'math'; }
+export function subjectForTopic(id: string) { return id.startsWith('cne_') ? 'english' : id.startsWith('cnp_') ? 'physics' : id.startsWith('cnc_') ? 'chinese' : id.startsWith('cns_') ? 'science' : id.startsWith('cnd_') ? 'morality' : id.startsWith('cnh_') ? 'history' : id.startsWith('cng_') ? 'geography' : id.startsWith('cnb_') ? 'biology' : id.startsWith('cnk_') ? 'chemistry' : 'math'; }

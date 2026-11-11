@@ -14,7 +14,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
         const parsed = schema.safeParse(await req.json()); if (!parsed.success) return NextResponse.json({ message: 'Invalid action' }, { status: 400 });
         const body = parsed.data, row = await prisma.learningSession.findFirst({ where: { id: (await ctx.params).id, userId: user.id } }); if (!row) return NextResponse.json({ message: 'Not found' }, { status: 404 });
         if (row.revision !== body.revision || !COMPATIBLE_DATASET_REVISIONS.includes(row.datasetVersion)) return NextResponse.json({ message: 'Session changed' }, { status: 409 });
-        const old = parseLearning(row.state); let state = old, corrected: ReturnType<typeof applyLearningAnswer> | undefined;
+        const old = parseLearning(row.state, row.datasetVersion); let state = old, corrected: ReturnType<typeof applyLearningAnswer> | undefined;
         if (body.action === 'extend') { if (!old.engine || old.engine.limit >= 60) return NextResponse.json({ message: 'Limit reached' }, { status: 400 }); state = replayLearning(old, old.history, Math.min(60, old.engine.limit + 10)); }
         else if (body.action === 'undo') { if (!old.history.length) return NextResponse.json({ message: 'No answer to undo' }, { status: 400 }); state = replayLearning(old, old.history.slice(0, -1)); }
         else {
@@ -25,7 +25,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
         }
         const result = await prisma.$transaction(async tx => {
             const locked = await tx.learningSession.updateMany({ where: { id: row.id, userId: user.id, revision: body.revision }, data: { revision: { increment: 1 } } }); if (!locked.count) return null;
-            if (corrected && !('manual' in corrected)) corrected.history.errorItemId = await archiveLearningMistake(tx, user.id, getCatalog().byId.get(corrected.history.question.topicId)!, corrected.history, row.profileId);
+            if (corrected && !('manual' in corrected)) corrected.history.errorItemId = await archiveLearningMistake(tx, user.id, getCatalog(row.datasetVersion).byId.get(corrected.history.question.topicId)!, corrected.history, row.profileId, row.datasetVersion);
             return tx.learningSession.update({ where: { id: row.id }, data: { state: JSON.stringify(state), status: nextLearningQuestion(state) ? 'active' : 'completed' } });
         });
         return result ? NextResponse.json(learningView(result), noStore) : NextResponse.json({ message: 'Session changed' }, { status: 409 });

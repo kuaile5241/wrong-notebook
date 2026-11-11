@@ -9,7 +9,7 @@ New [textbook shelf and import management](doc/TEXTBOOKS.en.md): learn by book/u
 
 New [English vocabulary atlas](doc/VOCABULARY.en.md): stage-based browsing, illustrations, UK/US recordings, four practice modes, favorites and account-synced FSRS reviews. Textbook mappings remain limited to verified material.
 
-Practice now includes seven subjects, including junior-high history, with an account review map and chapter rechecks. See [online practice](doc/ONLINE_LEARNING.en.md).
+Practice now includes ten subjects, including geography, biology, chemistry and junior-high history, with an account review map and chapter rechecks. See [online practice](doc/ONLINE_LEARNING.en.md).
 
 Administrators can manage registered users, roles, activation, AI and backup permissions, and access expiry. Expiry blocks existing sessions and new logins; extending access restores use. See [account access](doc/ACCOUNT_ACCESS.en.md).
 
@@ -553,3 +553,7 @@ Aliyun natural narration supports Beijing CosyVoice. See [configuration and prev
 [Persistent audio and concurrent synthesis deduplication](doc/PERSISTENT_AUDIO.en.md) reuse completed audio for identical text and synthesis parameters.
 
 The learning homepage [remembers subject, grade, chapter and count per account](doc/LEARNING_FILTER_MEMORY.en.md).
+
+## Taxonomy update (2026-11-11)
+
+Pinned upstream `07941bcf70bff6a59105e953b8d0e78f1dfa0d55`: 3442 topics, 13915 questions and 4915 links across ten subjects. Geography, biology and chemistry are now available; textbook chapters, curriculum metadata and illustrated questions were updated. Sujiao math and Yilin English mappings are shown as drafts in topic details. Existing Xiangjiao textbook shelves remain intact. Screening infers mastery only along hard prerequisite edges. Old sessions and backup restores use the retained immutable 068db3c data and engine; rewritten questions do not reuse old answers, blindspots or mistake identities.

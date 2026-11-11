@@ -1,12 +1,14 @@
 import { readProfileSettings } from './profiles';
 import type { Prisma } from '@prisma/client';
 import { generateUniqueShortId } from '@/lib/short-id';
-import { SUBJECT_NAMES, topicStage, topicSubject, volumeLabel } from './catalog';
+import { DATASET_REVISION, LEGACY_DATASET_REVISION, getCatalog, sameQuestion, SUBJECT_NAMES, topicStage, topicSubject, volumeLabel } from './catalog';
 import type { AnswerHistory, Topic } from './types';
 
 /** 只为答错的公共题创建私有错题；已归档题再次练对时保留一次新的作答。 */
-export async function archiveLearningMistake(tx: Prisma.TransactionClient, userId: string, topic: Topic, h: AnswerHistory, profileId = '') {
-    const key = topicSubject(topic), stage = topicStage(topic), source = `cn-math-taxonomy:${profileId ? profileId + ':' : ''}${h.question.id}`;
+export async function archiveLearningMistake(tx: Prisma.TransactionClient, userId: string, topic: Topic, h: AnswerHistory, profileId = '', datasetVersion = DATASET_REVISION) {
+    const legacyQuestion = getCatalog(LEGACY_DATASET_REVISION).questionsById.get(h.question.id);
+    const changed = legacyQuestion && !sameQuestion(h.question, legacyQuestion);
+    const key = topicSubject(topic), stage = topicStage(topic), source = `cn-math-taxonomy:${profileId ? profileId + ':' : ''}${h.question.id}${changed ? ':' + datasetVersion.slice(0, 7) : ''}`;
     const existing = await tx.errorItem.findFirst({ where: { userId, source } });
     if (h.verdict === 'correct') {
         if (!existing) return undefined;

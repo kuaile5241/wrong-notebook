@@ -610,7 +610,7 @@ export async function POST(req: Request) {
                 if (!importAll && record.userId !== body.user.id) continue;
                 const targetUserId = importAll ? record.userId : user.id;
                 const ownedItemMap = new Map([...errorItemIdMap].filter(([oldId]) => errorItemOwnerMap.get(oldId) === targetUserId));
-                const state = restoreLearningState(record.state, record.mode, ownedItemMap);
+                const state = restoreLearningState(record.state, record.mode, ownedItemMap, record.datasetVersion);
                 const profileOwner = await tx.user.findUniqueOrThrow({ where: { id: targetUserId }, select: { learningSettings: true } });
                 const profileId = record.profileId && readProfileSettings(profileOwner.learningSettings).profiles.some(p => p.id === record.profileId) ? record.profileId : '';
                 const existing = await tx.learningSession.findFirst({ where: { id: record.id } });

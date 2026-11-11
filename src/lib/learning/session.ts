@@ -1,8 +1,7 @@
 import { randomUUID, createHash } from 'node:crypto';
 import { z } from 'zod';
 import type { LearningSession } from '@prisma/client';
-import * as Engine from './vendor/engine';
-import { getCatalog, publicQuestion } from './catalog';
+import { getCatalog, publicQuestion, DATASET_REVISION } from './catalog';
 import type { AnswerHistory, BankQuestion, LearningView, StoredLearning, TopicStatus } from './types';
 
 export const createLearningSchema = z.object({
@@ -14,26 +13,27 @@ export const answerLearningSchema = z.object({
     answer: z.string().max(5000).default(''), selfResult: z.enum(['correct', 'wrong', 'skip']).optional(),
     skip: z.boolean().optional(),
 });
-export function parseLearning(raw: string): StoredLearning { return JSON.parse(raw) as StoredLearning; }
-export function learningGraph(engine: StoredLearning['engine']) { const catalog = getCatalog(); return engine?.graphMode === 'full' ? catalog.fullGraph : catalog.graph; }
+export function parseLearning(raw: string, datasetVersion = DATASET_REVISION): StoredLearning { return { ...JSON.parse(raw), datasetVersion } as StoredLearning; }
+export function learningGraph(engine: StoredLearning['engine'], datasetVersion = DATASET_REVISION) { const catalog = getCatalog(datasetVersion); return engine?.graphMode === 'full' ? catalog.fullGraph : catalog.graph; }
 export function nextLearningQuestion(state: StoredLearning): BankQuestion | null {
-    const catalog = getCatalog();
-    return state.engine ? Engine.nextItem(learningGraph(state.engine), state.engine)?.question ?? null
+    const catalog = getCatalog(state.datasetVersion);
+    return state.engine ? catalog.engine.nextItem(learningGraph(state.engine, state.datasetVersion), state.engine)?.question ?? null
         : catalog.questionsById.get(state.queue[state.history.length]) ?? null;
 }
-export function createLearningState(topicIds: string[], mode: string, count: number, avoid: string[] = [], confirm = 2): StoredLearning {
-    const { byId, graph, questions } = getCatalog();
+export function createLearningState(topicIds: string[], mode: string, count: number, avoid: string[] = [], confirm = 2, datasetVersion = DATASET_REVISION): StoredLearning {
+    const { byId, graph, fullGraph, questions, engine: Engine } = getCatalog(datasetVersion);
     if (topicIds.some(id => !byId.has(id))) throw new Error('UNKNOWN_TOPIC');
     const seed = randomUUID();
-    if (mode === 'diagnose' || mode === 'screen') return { engine: { ...Engine.createSession(getCatalog().fullGraph, topicIds, { limit: count, confirm, mode, seed, avoid }), graphMode: 'full' }, queue: [], history: [] };
+    if (mode === 'diagnose' || mode === 'screen') return { datasetVersion, engine: { ...Engine.createSession(fullGraph, topicIds, { limit: count, confirm, mode, seed, avoid }), graphMode: 'full' }, queue: [], history: [] };
     void graph;
     const targets = new Set(topicIds), seen = new Set(avoid);
     const candidates = questions.filter(q => targets.has(q.topicId)).map(q => ({ q,
         order: createHash('sha256').update(seed + q.id).digest('hex') }));
     candidates.sort((a, b) => Number(seen.has(a.q.id)) - Number(seen.has(b.q.id)) || a.order.localeCompare(b.order));
-    return { engine: null, queue: candidates.slice(0, count).map(c => c.q.id), history: [] };
+    return { datasetVersion, engine: null, queue: candidates.slice(0, count).map(c => c.q.id), history: [] };
 }
 export function applyLearningAnswer(state: StoredLearning, q: BankQuestion, input: z.infer<typeof answerLearningSchema>): { state: StoredLearning; history: AnswerHistory } | { manual: true } {
+    const Engine = getCatalog(state.datasetVersion).engine;
     let verdict: AnswerHistory['verdict'], method: AnswerHistory['method'] = 'rule';
     if (input.skip) verdict = 'skip';
     else {
@@ -44,11 +44,12 @@ export function applyLearningAnswer(state: StoredLearning, q: BankQuestion, inpu
         } else verdict = judged.verdict;
     }
     const history: AnswerHistory = { requestId: input.requestId, question: q, answer: input.answer, verdict, method };
-    const engine = state.engine ? { ...Engine.applyAnswer(learningGraph(state.engine), state.engine, q.topicId, verdict, { text: input.answer }), ...(state.engine.graphMode ? { graphMode: state.engine.graphMode } : {}) } : null;
+    const extra = { text: input.answer, pin: true, qid: q.id, prompt: q.prompt };
+    const engine = state.engine ? { ...Engine.applyAnswer(learningGraph(state.engine, state.datasetVersion), state.engine, q.topicId, verdict, extra), ...(state.engine.graphMode ? { graphMode: state.engine.graphMode } : {}) } : null;
     return { state: { ...state, engine, history: [...state.history, history] }, history };
 }
 export function learningView(row: LearningSession): LearningView {
-    const state = parseLearning(row.state), catalog = getCatalog(), question = nextLearningQuestion(state);
+    const state = parseLearning(row.state, row.datasetVersion), catalog = getCatalog(row.datasetVersion), Engine = catalog.engine, question = nextLearningQuestion(state);
     const topics: TopicStatus[] = [];
     if (state.engine) for (const id of state.engine.order) {
         const topic = catalog.byId.get(id); if (!topic) continue;
@@ -59,7 +60,7 @@ export function learningView(row: LearningSession): LearningView {
         const status = pending ? 'pending' : result.s === 'mastered' ? (result.src === 'direct' ? (selfAssessed ? 'self' : 'direct') : 'inferred') : result.s === 'shaky' ? 'shaky' : 'weak';
         topics.push({ id, name: topic.name, chapter: topic.chapter, status });
     }
-    const report = state.engine ? { ...Engine.summarize(learningGraph(state.engine), state.engine), chapters: Engine.chapterSummary(learningGraph(state.engine), state.engine) } : undefined;
+    const report = state.engine ? { ...Engine.summarize(learningGraph(state.engine, state.datasetVersion), state.engine), chapters: Engine.chapterSummary(learningGraph(state.engine, state.datasetVersion), state.engine) } : undefined;
     const pathIds = new Set(report?.path.map(p => p.id) ?? []);
     const network = report ? { topics: catalog.topics.filter(t => pathIds.has(t.id)), dependencies: catalog.dependencies.filter(d => pathIds.has(d.topicId) && pathIds.has(d.prerequisiteId)) } : undefined;
     const relatedIds = new Set(report?.roots.flatMap(r => [...r.pendingPrereqs, ...r.outOfScopePrereqs, ...r.externalPrereqs]) ?? []);
